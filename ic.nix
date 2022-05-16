@@ -16,7 +16,7 @@ in (rustPlatform.buildRustPackage rec {
     runHook postUnpack
   '';
   sourceRoot = "${name}/rs";
-  nativeBuildInputs = [ moc cmake clang pkgconfig python3 pkgs.rustfmt ];
+  nativeBuildInputs = [ moc cmake clang pkgconfig python3 rustfmt protobuf ];
   buildInputs = [ libclang.lib libiconv llvm.lib lmdb openssl rocksdb sqlite ]
     ++ (if stdenv.isDarwin then
       with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
