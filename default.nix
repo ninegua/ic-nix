@@ -47,4 +47,16 @@ in let
     inherit pkgs;
     source = sources.sdk;
   };
-in { inherit motoko ic sdk; }
+  shellFor = proj:
+    let drvs = builtins.attrValues proj;
+    in pkgs.mkShell {
+      nobuildPhase = "touch $out";
+      buildInputs = builtins.concatMap (drv: drv.buildInputs) drvs;
+      nativeBuildInputs = builtins.concatMap (drv: drv.nativeBuildInputs) drvs;
+    };
+
+in {
+  motoko = motoko // { shell = shellFor motoko; };
+  ic = ic // { shell = shellFor ic; };
+  sdk = sdk // { shell = shellFor sdk; };
+}

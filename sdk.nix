@@ -23,4 +23,4 @@ let
       export DFX_ASSETS=$PWD/dfx_assets
     '';
   };
-in dfx
+in { inherit dfx; }
