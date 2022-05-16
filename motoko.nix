@@ -18,7 +18,7 @@ let
       # pulls in wasm-ld
       llvmPackages_13.lld
       llvmPackages_13.bintools
-      rustc-nightly
+      rust-nightly
       rust-bindgen
       python3
     ] ++ pkgs.lib.optional pkgs.stdenv.isDarwin [ libiconv ];
@@ -133,7 +133,7 @@ in rec {
     vendorRustStdDeps = "${cargoVendorTools}/bin/vendor-rust-std-deps";
 
     # SHA256 of Rust std deps
-    rustStdDepsHash = "sha256-MIYFGp4QhoEK8wVtED1yolKnufBhv+ylEfMK/MAJ6q8=";
+    rustStdDepsHash = "0pssda6sjpw9fby0wrl1502x66k924x9isqdw8lw96jzj6w2xaxw";
 
     # Vendor directory for Rust std deps
     rustStdDeps = pkgs.stdenvNoCC.mkDerivation {
@@ -144,8 +144,8 @@ in rec {
       buildCommand = ''
         mkdir $out
         cd $out
-        echo ${vendorRustStdDeps} ${pkgs.rustc-nightly} .
-        ${vendorRustStdDeps} ${pkgs.rustc-nightly} .
+        echo ${vendorRustStdDeps} ${pkgs.rust-nightly} .
+        ${vendorRustStdDeps} ${pkgs.rust-nightly} .
       '';
 
       outputHash = rustStdDepsHash;
@@ -222,7 +222,7 @@ in rec {
     # message.
     preFixup = ''
       remove-references-to \
-        -t ${rustc-nightly} \
+        -t ${rust-nightly} \
         -t ${rtsDeps} \
         -t ${rustStdDeps} \
         $out/rts/mo-rts.wasm $out/rts/mo-rts-debug.wasm

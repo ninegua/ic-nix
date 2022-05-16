@@ -2,7 +2,7 @@
   "ic": {
     "branch": "master",
     "repo": "https://github.com/ninegua/ic",
-    "rev": "30d4a0dcfd20c3cd00fb0fc6b60dfbf6e5c6e9ea",
+    "rev": "7bee6be826a5d8acdce2a949c6a6d651b747de6d",
     "type": "git"
   },
   "sdk": {

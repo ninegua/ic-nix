@@ -4,6 +4,7 @@ let
     (import (builtins.fetchTarball
       "https://github.com/oxalica/rust-overlay/archive/master.tar.gz"))
     (self: super: {
+      rust-bindgen = super.rust-bindgen.overrideAttrs (_: { doCheck = false; });
       rust-stable = super.rust-bin.stable.latest.default.override {
         targets = [ "wasm32-unknown-unknown" ];
       };
@@ -11,7 +12,7 @@ let
         rustc = self.rust-stable;
         cargo = self.rust-stable;
       };
-      rustc-nightly = self.rust-bin.nightly."2022-05-16".default.override {
+      rust-nightly = self.rust-bin.nightly."2022-05-16".default.override {
         targets = [
           "wasm32-unknown-emscripten"
           "wasm32-wasi"

@@ -18,8 +18,10 @@ in (rustPlatform.buildRustPackage rec {
   sourceRoot = "${name}/rs";
   nativeBuildInputs = [ moc cmake clang pkgconfig python3 pkgs.rustfmt ];
   buildInputs = [ libclang.lib libiconv llvm.lib lmdb openssl rocksdb sqlite ]
-    ++ lib.optionals stdenv.isDarwin
-    (with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]);
+    ++ (if stdenv.isDarwin then
+      with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
+    else
+      [ libunwind ]);
   ROCKSDB_LIB_DIR = "${rocksdb}/lib";
   ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
   LIBCLANG_PATH = "${libclang.lib}/lib";
