@@ -1,0 +1,40 @@
+{
+  "ic": {
+    "branch": "master",
+    "repo": "https://github.com/ninegua/ic",
+    "rev": "30d4a0dcfd20c3cd00fb0fc6b60dfbf6e5c6e9ea",
+    "type": "git"
+  },
+  "sdk": {
+    "branch": "master",
+    "repo": "https://github.com/dfinity/sdk",
+    "rev": "13c325dcc8b289456fea6992b975caab7aadfba3",
+    "type": "git"
+  },
+  "motoko": {
+    "branch": "master",
+    "repo": "https://github.com/dfinity/motoko",
+    "rev": "b2e7dc80b4c8743dcc756c419d69f750c7a6a9f4",
+    "type": "git"
+  },
+  "motoko-base": {
+    "branch": "next-moc",
+    "repo": "https://github.com/dfinity/motoko-base",
+    "rev": "6f80c49d0f708c11d95895893ef3237cc7b05234",
+    "type": "git"
+  },
+  "musl-wasi": {
+    "branch": "main",
+    "repo": "https://github.com/WebAssembly/wasi-libc",
+    "rev": "5ccfab77b097a5d0184f91184952158aa5904c8d",
+    "sha256": "1kxcy616vnqw4q2xkng9q67mgmq3gw2h4z6hkcwrqw1fjjp5qnbz",
+    "type": "git"
+  },
+  "libtommath": {
+    "branch": "master",
+    "repo": "https://github.com/libtom/libtommath",
+    "sha256": "0cj4xdbh874hi8hx9ajygqk5411cnv260mfjrn68fsi9a6dw56ff",
+    "rev": "6ca6898bf37f583c4cc9943441cd60dd69f4b8f2",
+    "type": "git"
+  }
+}
