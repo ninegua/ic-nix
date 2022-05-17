@@ -85,11 +85,11 @@ let
       LIBZ_SYS_STATIC = 1;
       RUSTFLAGS = [
         "-Clinker=${stdenv.cc}/bin/cc"
+      ] ++ lib.optionals (!stdenv.isDarwin) [
         "-Lnative=${pkgsStatic.zlib}/lib"
         "-Lnative=${lmdb.out}/lib"
         "-lstatic=lmdb"
         "-lstatic=z"
-      ] ++ lib.optionals (!stdenv.isDarwin) [
         "-Ctarget-feature=-crt-static"
         "-Clink-arg=-export-dynamic"
       ];
@@ -102,8 +102,10 @@ let
 
   wasm-binaries = (buildIC { targets = wasms; }).overrideAttrs (super: {
     name = "ic-wasm";
-    buildPhase =
-      "cargo build --profile canister-release --target wasm32-unknown-unknown $cargoBuildFlags";
+    buildPhase = ''
+      unset RUSTFLAGS;
+      cargo build --profile canister-release --target wasm32-unknown-unknown $cargoBuildFlags
+    '';
     installPhase = ''
       mkdir -p $out/bin
       for name in ${wasm-names}; do
