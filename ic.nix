@@ -47,32 +47,41 @@ let
 
   buildIC = { targets }:
     let
+      stdenv = llvmPackages.libcxxStdenv;
+      linker = writeShellScript "linker.sh" ''
+        ${stdenv.cc}/bin/c++ ''${@/-lc++/} -nostdlib++ ${libcxx}/lib/libc++.a ${libcxxabi}/lib/libc++abi.a
+      '';
       cargoBuildFlags =
         lib.strings.concatMapStringsSep " " (t: "--bin " + t) targets;
     in (rustPlatform.buildRustPackage rec {
       name = "ic";
-      stdenv = pkgs.libcxxStdenv;
+      targetNames = lib.strings.concatStringsSep " " targets;
+      hostTriple = stdenv.hostPlatform.config;
       src = source;
       unpackPhase = ''
         cp -r $src ${name}
         echo source root is ${sourceRoot}
         chmod -R u+w -- "$sourceRoot"
         runHook postUnpack
-        test -n $TARGET_BUILD_TARGET || export CARGO_BUILD_TARGET
       '';
       sourceRoot = "${name}/rs";
       nativeBuildInputs =
         [ moc cmake clang pkgconfig python3 rustfmt protobuf ];
       buildInputs = [
         libclang.lib
-        libiconv
         llvm.lib
         rocksdb
         lmdb.dev
-        pkgsStatic.openssl
-        pkgsStatic.sqlite
+        openssl-static
+        sqlite
+        zlib-static
       ] ++ (if stdenv.isDarwin then
-        with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
+        with darwin.apple_sdk.frameworks; [
+          CoreServices
+          Foundation
+          Security
+          libiconv-static
+        ]
       else
         [ libunwind ]);
       cargoSha256 = "sha256-zg1NLVIb3vkGiNfLOiBp+ycPPhWu5f59+Lsw57YIY/k=";
@@ -81,36 +90,47 @@ let
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
       ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
       LIBCLANG_PATH = "${libclang.lib}/lib";
-      OPENSSL_STATIC = "yes";
-      LIBZ_SYS_STATIC = 1;
       RUSTFLAGS = [
-        "-Clinker=${stdenv.cc}/bin/cc"
-      ] ++ lib.optionals (!stdenv.isDarwin) [
-        "-Lnative=${pkgsStatic.zlib}/lib"
+        "-Clinker=${linker}"
+        "-Lnative=${zlib-static}/lib"
+        "-Lnative=${openssl-static.out}/lib"
         "-Lnative=${lmdb.out}/lib"
+        "-lstatic=ssl"
+        "-lstatic=crypto"
         "-lstatic=lmdb"
         "-lstatic=z"
-        "-Ctarget-feature=-crt-static"
-        "-Clink-arg=-export-dynamic"
+      ] ++ lib.optionals stdenv.isDarwin [
+        "-Lnative=${libiconv-static.out}/lib"
+        "-lstatic=iconv"
       ];
+
       inherit cargoBuildFlags;
+      profile = "release";
+      buildPhase = ''
+        cargo build --profile ${profile} --target ${hostTriple} $cargoBuildFlags
+      '';
+      installPhase = ''
+        mkdir -p $out/bin
+        for name in ${targetNames}; do
+          install -m 755 target/${hostTriple}/release/$name $out/bin
+        done
+      '';
     });
 
   binaries = buildIC { targets = bins ++ wasms; };
 
   wasm-names = lib.strings.concatStringsSep " " wasms;
 
-  wasm-binaries = (buildIC { targets = wasms; }).overrideAttrs (super: {
+  wasm-binaries = (buildIC { targets = wasms; }).overrideAttrs (super: rec {
     name = "ic-wasm";
-    buildPhase = ''
-      unset RUSTFLAGS;
-      cargo build --profile canister-release --target wasm32-unknown-unknown $cargoBuildFlags
-    '';
+    RUSTFLAGS = [ ];
+    hostTriple = "wasm32-unknown-unknown";
+    profile = "canister-release";
     installPhase = ''
       mkdir -p $out/bin
       for name in ${wasm-names}; do
         ${binaryen}/bin/wasm-opt -O2 -o $out/bin/$name.wasm \
-          target/wasm32-unknown-unknown/canister-release/$name.wasm
+          target/${hostTriple}/${profile}/$name.wasm
       done
     '';
   });

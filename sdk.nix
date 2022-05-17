@@ -2,8 +2,12 @@
 with pkgs;
 let
 
-  buildInputs = [ libiconv openssl ] ++ lib.optionals stdenv.isDarwin
-    (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
+  buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
+    (with darwin.apple_sdk.frameworks; [
+      DiskArbitration
+      Foundation
+      libiconv-static
+    ]);
   shell = stdenv.mkDerivation {
     name = "ic";
     inherit nativeBuildInputs;
@@ -26,5 +30,12 @@ let
       mkdir -p $out/share/dfx-canisters/
       cp $src/src/distributed/*.{wasm,did} $out/share/dfx-canisters/
     '';
+    RUSTFLAGS =
+      [ "-Lnative=${openssl-static.out}/lib" "-lstatic=ssl" "-lstatic=crypto" ]
+      ++ lib.optionals stdenv.isDarwin [
+        "-Lnative=${libiconv-static.out}/lib"
+        "-lstatic=iconv"
+      ];
   };
+
 in { inherit dfx; }
