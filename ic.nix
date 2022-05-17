@@ -89,7 +89,7 @@ let
         "-Lnative=${lmdb.out}/lib"
         "-lstatic=lmdb"
         "-lstatic=z"
-      ] ++ lib.optionals (not stdenv.isDarwin) [
+      ] ++ lib.optionals (!stdenv.isDarwin) [
         "-Ctarget-feature=-crt-static"
         "-Clink-arg=-export-dynamic"
       ];
