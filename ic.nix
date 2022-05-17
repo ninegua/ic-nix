@@ -26,7 +26,24 @@ let
     "lifeline"
   ];
 
-  rocksdb = rocksdb_6_23;
+  rocksdb = pkgsStatic.rocksdb_6_23.overrideAttrs (_: {
+    cmakeFlags = [
+      "-DPORTABLE=1"
+      "-DWITH_JEMALLOC=0"
+      "-DWITH_JNI=0"
+      "-DWITH_BENCHMARK_TOOLS=0"
+      "-DWITH_TESTS=1"
+      "-DWITH_TOOLS=0"
+      "-DWITH_BZ2=0"
+      "-DWITH_LZ4=0"
+      "-DWITH_SNAPPY=0"
+      "-DWITH_ZLIB=1"
+      "-DWITH_ZSTD=0"
+      "-DWITH_GFLAGS=0"
+      "-DUSE_RTTI=1"
+      "-DROCKSDB_BUILD_SHARED=0"
+    ];
+  });
 
   buildIC = { targets }:
     let
@@ -34,6 +51,7 @@ let
         lib.strings.concatMapStringsSep " " (t: "--bin " + t) targets;
     in (rustPlatform.buildRustPackage rec {
       name = "ic";
+      stdenv = pkgs.libcxxStdenv;
       src = source;
       unpackPhase = ''
         cp -r $src ${name}
@@ -45,21 +63,34 @@ let
       sourceRoot = "${name}/rs";
       nativeBuildInputs =
         [ moc cmake clang pkgconfig python3 rustfmt protobuf ];
-      buildInputs =
-        [ libclang.lib libiconv llvm.lib lmdb openssl rocksdb sqlite ]
-        ++ (if stdenv.isDarwin then
-          with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
-        else
-          [ libunwind ]);
+      buildInputs = [
+        libclang.lib
+        libiconv
+        llvm.lib
+        rocksdb
+        lmdb.dev
+        pkgsStatic.openssl
+        pkgsStatic.sqlite
+      ] ++ (if stdenv.isDarwin then
+        with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
+      else
+        [ libunwind ]);
+      cargoSha256 = "sha256-zg1NLVIb3vkGiNfLOiBp+ycPPhWu5f59+Lsw57YIY/k=";
+      doCheck = false;
+
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
       ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
       LIBCLANG_PATH = "${libclang.lib}/lib";
       OPENSSL_STATIC = "yes";
-      cargoSha256 = "sha256-zg1NLVIb3vkGiNfLOiBp+ycPPhWu5f59+Lsw57YIY/k=";
-      doCheck = false;
-      ${if stdenv.isDarwin then null else "RUSTC_CUSTOM_ARGS"} = [
+      LIBZ_SYS_STATIC = 1;
+      RUSTFLAGS = [
+        "-Clinker=${stdenv.cc}/bin/cc"
+        "-Lnative=${pkgsStatic.zlib}/lib"
+        "-Lnative=${lmdb.out}/lib"
+        "-lstatic=lmdb"
+        "-lstatic=z"
+      ] ++ lib.optionals (not stdenv.isDarwin) [
         "-Ctarget-feature=-crt-static"
-        "-lstatic=stdc++"
         "-Clink-arg=-export-dynamic"
       ];
       inherit cargoBuildFlags;
@@ -70,6 +101,7 @@ let
   wasm-names = lib.strings.concatStringsSep " " wasms;
 
   wasm-binaries = (buildIC { targets = wasms; }).overrideAttrs (super: {
+    name = "ic-wasm";
     buildPhase =
       "cargo build --profile canister-release --target wasm32-unknown-unknown $cargoBuildFlags";
     installPhase = ''

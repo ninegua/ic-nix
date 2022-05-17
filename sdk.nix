@@ -15,12 +15,16 @@ let
     inherit buildInputs;
     nativeBuildInputs = [ pkg-config ];
     preConfigure = ''
-      mkdir dfx_assets
-      touch dfx_assets/binary_cache.tgz
-      touch dfx_assets/assetstorage_canister.tgz
-      touch dfx_assets/wallet_canister.tgz
-      touch dfx_assets/ui_canister.tgz
       export DFX_ASSETS=$PWD/dfx_assets
+      mkdir $DFX_ASSETS
+      tar -czf "$DFX_ASSETS"/assetstorage_canister.tgz -C $src/src/distributed assetstorage.did assetstorage.wasm
+      tar -czf "$DFX_ASSETS"/wallet_canister.tgz -C $src/src/distributed wallet.did wallet.wasm
+      tar -czf "$DFX_ASSETS"/ui_canister.tgz -C $src/src/distributed ui.did ui.wasm
+      touch dfx_assets/binary_cache.tgz
+    '';
+    postInstall = ''
+      mkdir $out/share/dfx-canisters/
+      cp $src/src/distributed/*.{wasm,did} $out/share/dfx-canisters/
     '';
   };
 in { inherit dfx; }
