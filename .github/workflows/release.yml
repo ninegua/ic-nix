@@ -66,13 +66,11 @@ jobs:
 
     steps:
     - name: Maximize build space
-      uses: easimon/maximize-build-space@master
-      with:
-        root-reserve-mb: 512
-        swap-size-mb: 1024
-        remove-dotnet: 'true'
-        remove-android: 'true'
-        remove-haskell: 'true'
+      run: |
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /opt/ghc
+        df
       if: contains(matrix.os, 'ubuntu')
 
     - uses: actions/checkout@v2.3.4
