@@ -91,7 +91,6 @@ let
       ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
       LIBCLANG_PATH = "${libclang.lib}/lib";
       RUSTFLAGS = [
-        "-Clinker=${linker}"
         "-Lnative=${zlib-static}/lib"
         "-Lnative=${openssl-static.out}/lib"
         "-Lnative=${lmdb.out}/lib"
@@ -100,6 +99,7 @@ let
         "-lstatic=lmdb"
         "-lstatic=z"
       ] ++ lib.optionals stdenv.isDarwin [
+        "-Clinker=${linker}"
         "-Lnative=${libiconv-static.out}/lib"
         "-lstatic=iconv"
       ];
