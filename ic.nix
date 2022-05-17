@@ -72,8 +72,8 @@ let
         llvm.lib
         rocksdb
         lmdb.dev
-        openssl-static
         sqlite
+        openssl-static
         zlib-static
       ] ++ (if stdenv.isDarwin then
         with darwin.apple_sdk.frameworks; [
@@ -86,20 +86,19 @@ let
         [ libunwind ]);
       cargoSha256 = "sha256-zg1NLVIb3vkGiNfLOiBp+ycPPhWu5f59+Lsw57YIY/k=";
       doCheck = false;
+      OPENSSL_STATIC = "yes";
+      LIBZ_SYS_STATIC = 1;
 
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
       ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
       LIBCLANG_PATH = "${libclang.lib}/lib";
       RUSTFLAGS = [
+        "-Clinker=${linker}"
         "-Lnative=${zlib-static}/lib"
-        "-Lnative=${openssl-static.out}/lib"
         "-Lnative=${lmdb.out}/lib"
-        "-lstatic=ssl"
-        "-lstatic=crypto"
         "-lstatic=lmdb"
         "-lstatic=z"
       ] ++ lib.optionals stdenv.isDarwin [
-        "-Clinker=${linker}"
         "-Lnative=${libiconv-static.out}/lib"
         "-lstatic=iconv"
       ];
