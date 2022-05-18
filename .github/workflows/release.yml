@@ -42,7 +42,7 @@ jobs:
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: nix-build --pure release.nix
 
-    - run: nix-env -iA nixpkgs.gnutar
+    - run: nix-env -f '<nixpkgs>' -iA gnutar
       if: contains(matrix.os, 'macos')
 
     - name: Pack binaries
