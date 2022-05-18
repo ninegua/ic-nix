@@ -15,8 +15,10 @@ jobs:
         os: [ ubuntu-latest, macos-latest ]
         include:
           - os: ubuntu-latest
+            name: linux
             prefix: nixos
           - os: macos-latest
+            name: darwin
             prefix: nixpkgs
           - channel: '21.11'
             channel-darwin: '21.11-darwin'
