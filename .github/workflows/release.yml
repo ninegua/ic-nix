@@ -42,8 +42,12 @@ jobs:
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: nix-build --pure release.nix
 
+    - run: nix-env -iA nixpkgs.gnutar
+      if: contains(matrix.os, 'macos')
+
     - name: Pack binaries
       run: |
+        tar --version
         export name=ic-binaries-$(echo ${{ github.ref }} | cut -d/ -f3)
         tar -zcv -C $(nix-build --pure release.nix --no-out-link -A binaries)/bin/ --transform "s,^.,$name," -f $name-${{ matrix.name }}-x86_64.tar.gz .
 
