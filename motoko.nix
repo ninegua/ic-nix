@@ -65,8 +65,10 @@ let
     removeReferencesTo
   ];
 
-  ocaml_exe = name: bin: rts:
-    let profile = "release";
+  ocaml_exe = name: bins: rts:
+    let
+      profile = "release";
+      binaries = pkgs.lib.strings.concatStringsSep " " bins;
     in pkgs.stdenv.mkDerivation {
       inherit name;
 
@@ -85,12 +87,12 @@ let
       '' + pkgs.lib.optionalString (rts != null) ''
         ./rts/gen.sh ${rts}/rts
       '' + ''
-        make DUNE_OPTS="--display=short --profile ${profile} $extraDuneOpts" ${bin}
+        make DUNE_OPTS="--display=short --profile ${profile} $extraDuneOpts" ${binaries}
       '';
 
       installPhase = ''
         mkdir -p $out/bin
-        cp --verbose --dereference ${bin} $out/bin
+        cp --verbose --dereference ${binaries} $out/bin
       '' + pkgs.lib.optionalString pkgs.stdenv.isDarwin ''
         # there are references to darwin system libraries
         # in the binaries. But curiously, we can remove them
@@ -107,7 +109,9 @@ let
           -t ${ocamlPackages.menhir} \
           $out/bin/*
         # sanity check
-        $out/bin/* --help >/dev/null
+        for exe in $binaries; do
+          $out/bin/$exe --help >/dev/null
+        done
       '';
     };
 
@@ -231,11 +235,13 @@ in rec {
     allowedRequisites = [ ];
   });
 
-  moc = ocaml_exe "moc" "moc" (rts.overrideAttrs (_: { dontCheck = true; }));
-  mo-ld = ocaml_exe "mo-ld" "mo-ld" null;
-  mo-ide = ocaml_exe "mo-ide" "mo-ide" null;
-  mo-doc = ocaml_exe "mo-doc" "mo-doc" null;
-  didc = ocaml_exe "didc" "didc" null;
-  deser = ocaml_exe "deser" "deser" null;
-  candid-tests = ocaml_exe "candid-tests" "candid-tests" null;
+  moc = ocaml_exe "moc" [
+    "moc"
+    "mo-ld"
+    "mo-ide"
+    "mo-doc"
+    "didc"
+    "deser"
+    "candid-tests"
+  ] (rts.overrideAttrs (_: { dontCheck = true; }));
 }

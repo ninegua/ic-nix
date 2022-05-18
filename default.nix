@@ -13,14 +13,17 @@ let
         cargo = self.rust-stable;
       };
       rust-nightly = self.rust-bin.nightly."2022-05-16".default.override {
-        targets = [
-          "wasm32-unknown-emscripten"
-          "wasm32-wasi"
-          "i686-unknown-linux-gnu"
-        ];
+        targets = [ "wasm32-unknown-emscripten" "wasm32-wasi" ];
         extensions = [ "rust-src" ];
       };
       v8 = self.v8_8_x;
+      zlib-static =
+        (super.pkgsStatic.zlib.override ({ splitStaticOutput = true; })).static;
+      openssl-static = super.pkgsStatic.openssl.override ({ static = true; });
+      libiconv-static = super.pkgsStatic.libiconvReal.override {
+        enableStatic = true;
+        enableShared = false;
+      };
     })
   ]);
   sourcesnix = builtins.fetchurl {
@@ -47,4 +50,18 @@ in let
     inherit pkgs;
     source = sources.sdk;
   };
-in { inherit motoko ic sdk; }
+  shellFor = proj:
+    let drvs = builtins.attrValues proj;
+    in pkgs.mkShell {
+      nobuildPhase = "touch $out";
+      buildInputs = builtins.concatMap (drv: drv.buildInputs) drvs;
+      nativeBuildInputs = builtins.concatMap (drv: drv.nativeBuildInputs) drvs;
+    };
+
+in {
+  inherit pkgs;
+  shell = shellFor (motoko // ic // sdk);
+  motoko = motoko // { shell = shellFor motoko; };
+  ic = ic // { shell = shellFor ic; };
+  sdk = sdk // { shell = shellFor sdk; };
+}
