@@ -1,7 +1,13 @@
 # Build Internet Computer Projects with Nix
 
-![ci](https://github.com/ninegua/ic-nix/actions/workflows/ci.yml/badge.svg)
+![ci](https://github.com/ninegua/ic-nix/actions/workflows/ci.yml/badge.svg?branch=main)
 ![release](https://github.com/ninegua/ic-nix/actions/workflows/release.yml/badge.svg)
+
+Usage:
+
+- To build a project, run `nix-build -A <project>`.
+- To get a development environment for a project (sources not included here), run `nix-shell -A <project>.shell`.
+- To download pre-built binaries, go to [release page](https://github.com/ninegua/ic-nix/releases).
 
 Supported projects:
 
@@ -29,14 +35,10 @@ Feature:
 - [x] Dynamic binaries with minimal dependencies: glibc on Linux, system libs on OS X.
 - [x] Build Wasm binaries with nix-build.
 - [x] Develop with nix-shell.
+- [x] Build release binaries on Github.
 - [ ] Build and run all tests.
-- [ ] Build release binaries on Github (static build if possible).
 
-Note that this effort requires no nix support of a project unless it already has (and plans to continue) nix support.
-
-Usage:
-
-Run `nix-build -A <project>` to build it, or `nix-shell -A <project>.shell` to enter a nix shell.
+Note that this effort requires no nix support of a project unless it already has.
 
 [ic]: https://github.com/dfinity/ic
 [sdk]: https://github.com/dfinity/sdk
