@@ -1,5 +1,8 @@
 # Build Internet Computer Projects with Nix
 
+![ci](https://github.com/ninegua/ic-nix/actions/workflows/ci.yml/badge.svg)
+![release](https://github.com/ninegua/ic-nix/actions/workflows/release.yml/badge.svg)
+
 Supported projects:
 
  - [ic]
