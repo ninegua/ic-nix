@@ -22,9 +22,10 @@ Supported nixpkgs:
 
 Feature:
 
-- [x] Build native binaries with nix-build.
-- [ ] Build Wasm binaries with nix-build.
-- [ ] Develop with nix-shell.
+- [x] Build native binaries with nix-build with glibc.
+- [x] Dynamic binaries with minimal dependencies: glibc on Linux, system libs on OS X.
+- [x] Build Wasm binaries with nix-build.
+- [x] Develop with nix-shell.
 - [ ] Build and run all tests.
 - [ ] Build release binaries on Github (static build if possible).
 
@@ -32,7 +33,7 @@ Note that this effort requires no nix support of a project unless it already has
 
 Usage:
 
-Run `nix-build -A <project>` to build it, or `nix-shell -A <project>` to enter a nix shell.
+Run `nix-build -A <project>` to build it, or `nix-shell -A <project>.shell` to enter a nix shell.
 
 [ic]: https://github.com/dfinity/ic
 [sdk]: https://github.com/dfinity/sdk
