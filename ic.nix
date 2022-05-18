@@ -51,15 +51,16 @@ let
         [ "-Wno-error=deprecated-copy" "-Wno-error=unused-private-field" ];
     });
 
-  buildIC = { targets }:
+  buildIC =
+    { targets, hostTriple ? stdenv.hostPlatform.config, profile ? "release" }:
     let
       linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
       cargoBuildFlags =
         lib.strings.concatMapStringsSep " " (t: "--bin " + t) targets;
     in (rustPlatform.buildRustPackage rec {
+      inherit profile hostTriple cargoBuildFlags;
       name = "ic";
       targetNames = lib.strings.concatStringsSep " " targets;
-      hostTriple = stdenv.hostPlatform.config;
       src = source;
       unpackPhase = ''
         cp -r $src ${name}
@@ -102,8 +103,6 @@ let
         "-lstatic=iconv"
       ];
 
-      inherit cargoBuildFlags;
-      profile = "release";
       buildPhase = ''
         cargo build --profile ${profile} --target ${hostTriple} $cargoBuildFlags
       '';
@@ -119,16 +118,18 @@ let
 
   wasm-names = lib.strings.concatStringsSep " " wasms;
 
-  wasm-binaries = (buildIC { targets = wasms; }).overrideAttrs (super: rec {
-    name = "ic-wasm";
-    RUSTFLAGS = [ ];
+  wasm-binaries = (buildIC {
+    targets = wasms;
     hostTriple = "wasm32-unknown-unknown";
     profile = "canister-release";
+  }).overrideAttrs (self: rec {
+    name = "ic-wasm";
+    RUSTFLAGS = [ ];
     installPhase = ''
       mkdir -p $out/bin
       for name in ${wasm-names}; do
         ${binaryen}/bin/wasm-opt -O2 -o $out/bin/$name.wasm \
-          target/${hostTriple}/${profile}/$name.wasm
+          target/${self.hostTriple}/${self.profile}/$name.wasm
       done
     '';
   });
