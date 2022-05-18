@@ -34,7 +34,7 @@ let
 in let
   pkgs = pkgs_with_overlay;
   sources = import sourcesnix {
-    sourcesFile = ./sources.json;
+    sourcesFile = ./nix/sources.json;
     inherit pkgs;
   };
   motoko = import ./motoko.nix {
