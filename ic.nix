@@ -85,8 +85,6 @@ let
         [ libunwind ]);
       cargoSha256 = "sha256-zg1NLVIb3vkGiNfLOiBp+ycPPhWu5f59+Lsw57YIY/k=";
       doCheck = false;
-      OPENSSL_STATIC = "yes";
-      LIBZ_SYS_STATIC = 1;
 
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
       ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";

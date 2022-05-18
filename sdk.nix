@@ -4,11 +4,7 @@ let
   stdenv = llvmPackages_11.libcxxStdenv;
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
-    (with darwin.apple_sdk.frameworks; [
-      DiskArbitration
-      Foundation
-      libiconv-static
-    ]);
+    (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
   shell = stdenv.mkDerivation {
     name = "ic";
     inherit nativeBuildInputs;
