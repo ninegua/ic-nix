@@ -35,6 +35,9 @@ jobs:
       if: contains(matrix.os, 'macos')
 
     - uses: cachix/cachix-action@v10
+      with:
+        name: ninegua
+        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: nix-build --pure release.nix
 
     - name: Pack binaries
