@@ -60,6 +60,7 @@ in let
 
 in {
   inherit pkgs;
+  shell = shellFor (motoko // ic // sdk);
   motoko = motoko // { shell = shellFor motoko; };
   ic = ic // { shell = shellFor ic; };
   sdk = sdk // { shell = shellFor sdk; };
