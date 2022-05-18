@@ -1,7 +1,8 @@
 { pkgs, source }:
 with pkgs;
 let
-
+  stdenv = llvmPackages_11.libcxxStdenv;
+  linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk.frameworks; [
       DiskArbitration
@@ -30,12 +31,12 @@ let
       mkdir -p $out/share/dfx-canisters/
       cp $src/src/distributed/*.{wasm,did} $out/share/dfx-canisters/
     '';
-    RUSTFLAGS =
-      [ "-Lnative=${openssl-static.out}/lib" "-lstatic=ssl" "-lstatic=crypto" ]
-      ++ lib.optionals stdenv.isDarwin [
-        "-Lnative=${libiconv-static.out}/lib"
-        "-lstatic=iconv"
-      ];
+    RUSTFLAGS = lib.optionals stdenv.isDarwin [
+      "-Clinker=${linker}"
+      "-Lnative=${libcxxabi}/lib"
+      "-Lnative=${libiconv-static.out}/lib"
+      "-lstatic=iconv"
+    ];
   };
 
 in { inherit dfx; }

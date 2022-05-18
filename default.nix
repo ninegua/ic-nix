@@ -20,8 +20,10 @@ let
       zlib-static =
         (super.pkgsStatic.zlib.override ({ splitStaticOutput = true; })).static;
       openssl-static = super.pkgsStatic.openssl.override ({ static = true; });
-      libiconv-static =
-        super.pkgsStatic.libiconvReal.override { enableStatic = true; };
+      libiconv-static = super.pkgsStatic.libiconvReal.override {
+        enableStatic = true;
+        enableShared = false;
+      };
     })
   ]);
   sourcesnix = builtins.fetchurl {

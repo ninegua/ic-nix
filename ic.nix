@@ -26,7 +26,7 @@ let
     "lifeline"
   ];
 
-  llvmPackages = llvmPackages_13;
+  llvmPackages = llvmPackages_11;
   stdenv = llvmPackages.libcxxStdenv;
 
   rocksdb =
@@ -47,23 +47,13 @@ let
         "-DUSE_RTTI=1"
         "-DROCKSDB_BUILD_SHARED=0"
       ];
-      NIX_CFLAGS_COMPILE = [
-        "-Wno-error=deprecated-copy"
-        "-Wno-error=unused-private-field"
-        "-Wno-error=unused-but-set-variable"
-      ];
+      NIX_CFLAGS_COMPILE =
+        [ "-Wno-error=deprecated-copy" "-Wno-error=unused-private-field" ];
     });
 
   buildIC = { targets }:
     let
-      linker = writeShellScript "linker.sh" ''
-        args=''${@//-lc++/}
-        args=''${args//-lstdc++/}
-        args=''${args//-lc++abi/}
-        args=''${args//-liconv/}
-        ${stdenv.cc}/bin/c++ -L ${libiconv-static.out}/lib $args \
-          -nostdlib++ ${libcxx}/lib/libc++.a ${libcxxabi}/lib/libc++abi.a
-      '';
+      linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
       cargoBuildFlags =
         lib.strings.concatMapStringsSep " " (t: "--bin " + t) targets;
     in (rustPlatform.buildRustPackage rec {
