@@ -98,7 +98,7 @@ jobs:
     - name: Pack binaries
       run: |
         export name=ic-binaries-$(echo ${{ github.ref }} | cut -d/ -f3)
-        tar -zcv -C $(nix-build release.nix --no-out-link -A release.binaries)/bin/ --transform "s,^.,$name," -f $name-${{ os.name }}-x86_64.tar.gz .
+        tar -zcv -C $(nix-build release.nix --no-out-link -A release.binaries)/bin/ --transform "s,^.,$name," -f $name-${{ matrix.name }}-x86_64.tar.gz .
       if: matrix.channel == '21.11'
 
     - name: Pack canisters
