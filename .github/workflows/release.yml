@@ -34,6 +34,7 @@ jobs:
         nix_path: nixpkgs=channel:${{ matrix.prefix }}-${{ matrix.channel-darwin }}
       if: contains(matrix.os, 'macos')
 
+    - uses: cachix/cachix-action@v10
     - run: nix-build --pure release.nix
 
     - name: Pack binaries
