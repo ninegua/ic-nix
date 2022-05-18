@@ -9,8 +9,8 @@ let
     name = "icx-proxy";
     src = source;
     cargoSha256 = "0q7r5r7vgwqxwmznj1sin8ww9gbkzyg467rqcq22n0297azbshs6";
-    buildInputs = [ openssl-static ]
-      ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk.frameworks; [ ]);
+    buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
+      (with darwin.apple_sdk.frameworks; [ Security ]);
     nativeBuildInputs = [ pkg-config ];
     RUSTFLAGS = lib.optionals stdenv.isDarwin [
       "-Clinker=${linker}"
