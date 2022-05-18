@@ -26,30 +26,43 @@ let
     "lifeline"
   ];
 
-  rocksdb = pkgsStatic.rocksdb_6_23.overrideAttrs (_: {
-    cmakeFlags = [
-      "-DPORTABLE=1"
-      "-DWITH_JEMALLOC=0"
-      "-DWITH_JNI=0"
-      "-DWITH_BENCHMARK_TOOLS=0"
-      "-DWITH_TESTS=1"
-      "-DWITH_TOOLS=0"
-      "-DWITH_BZ2=0"
-      "-DWITH_LZ4=0"
-      "-DWITH_SNAPPY=0"
-      "-DWITH_ZLIB=1"
-      "-DWITH_ZSTD=0"
-      "-DWITH_GFLAGS=0"
-      "-DUSE_RTTI=1"
-      "-DROCKSDB_BUILD_SHARED=0"
-    ];
-  });
+  llvmPackages = llvmPackages_13;
+  stdenv = llvmPackages.libcxxStdenv;
+
+  rocksdb =
+    (pkgsStatic.rocksdb_6_23.override ({ inherit stdenv; })).overrideAttrs (_: {
+      cmakeFlags = [
+        "-DPORTABLE=1"
+        "-DWITH_JEMALLOC=0"
+        "-DWITH_JNI=0"
+        "-DWITH_BENCHMARK_TOOLS=0"
+        "-DWITH_TESTS=1"
+        "-DWITH_TOOLS=0"
+        "-DWITH_BZ2=0"
+        "-DWITH_LZ4=0"
+        "-DWITH_SNAPPY=0"
+        "-DWITH_ZLIB=1"
+        "-DWITH_ZSTD=0"
+        "-DWITH_GFLAGS=0"
+        "-DUSE_RTTI=1"
+        "-DROCKSDB_BUILD_SHARED=0"
+      ];
+      NIX_CFLAGS_COMPILE = [
+        "-Wno-error=deprecated-copy"
+        "-Wno-error=unused-private-field"
+        "-Wno-error=unused-but-set-variable"
+      ];
+    });
 
   buildIC = { targets }:
     let
-      stdenv = llvmPackages.libcxxStdenv;
       linker = writeShellScript "linker.sh" ''
-        ${stdenv.cc}/bin/c++ ''${@/-lc++/} -nostdlib++ ${libcxx}/lib/libc++.a ${libcxxabi}/lib/libc++abi.a
+        args=''${@//-lc++/}
+        args=''${args//-lstdc++/}
+        args=''${args//-lc++abi/}
+        args=''${args//-liconv/}
+        ${stdenv.cc}/bin/c++ -L ${libiconv-static.out}/lib $args \
+          -nostdlib++ ${libcxx}/lib/libc++.a ${libcxxabi}/lib/libc++abi.a
       '';
       cargoBuildFlags =
         lib.strings.concatMapStringsSep " " (t: "--bin " + t) targets;
@@ -66,22 +79,17 @@ let
       '';
       sourceRoot = "${name}/rs";
       nativeBuildInputs =
-        [ moc cmake clang pkgconfig python3 rustfmt protobuf ];
+        [ moc cmake llvmPackages.clang pkg-config python3 rustfmt protobuf ];
       buildInputs = [
-        libclang.lib
-        llvm.lib
+        llvmPackages.libclang.lib
+        llvmPackages.llvm.lib
         rocksdb
         lmdb.dev
         sqlite
         openssl-static
         zlib-static
       ] ++ (if stdenv.isDarwin then
-        with darwin.apple_sdk.frameworks; [
-          CoreServices
-          Foundation
-          Security
-          libiconv-static
-        ]
+        with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
       else
         [ libunwind ]);
       cargoSha256 = "sha256-zg1NLVIb3vkGiNfLOiBp+ycPPhWu5f59+Lsw57YIY/k=";
@@ -91,14 +99,15 @@ let
 
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
       ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
-      LIBCLANG_PATH = "${libclang.lib}/lib";
+      LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
       RUSTFLAGS = [
+        "-Clinker=${linker}"
+        "-Lnative=${libcxxabi}/lib"
         "-Lnative=${zlib-static}/lib"
         "-Lnative=${lmdb.out}/lib"
         "-lstatic=lmdb"
         "-lstatic=z"
       ] ++ lib.optionals stdenv.isDarwin [
-        "-Clinker=${linker}"
         "-Lnative=${libiconv-static.out}/lib"
         "-lstatic=iconv"
       ];
