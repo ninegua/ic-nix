@@ -105,8 +105,7 @@ jobs:
       run: |
         export name=ic-canisters-$(echo ${{ github.ref }} | cut -d/ -f3)
         tar -zcv -C $(nix-build release.nix --no-out-link -A release.canisters)/share/ --transform "s,^.,$name," -f $name-wasm32.tar.gz .
-      if: matrix.channel == '21.11'
-      if: contains(matrix.os, 'ubuntu')
+      if: matrix.channel == '21.11' && contains(matrix.os, 'ubuntu')
 
     - name: Upload binaries
       uses: svenstaro/upload-release-action@v2
@@ -124,5 +123,4 @@ jobs:
         tag: ${{ github.ref }}
         file: ic-canisters-*.tar.gz
         file_glob: true
-      if: matrix.channel == '21.11'
-      if: contains(matrix.os, 'ubuntu')
+      if: matrix.channel == '21.11' && contains(matrix.os, 'ubuntu')
