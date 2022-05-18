@@ -56,8 +56,10 @@ jobs:
         include:
           - os: ubuntu-latest
             prefix: nixos
+            name: linux
           - os: macos-latest
             prefix: nixpkgs
+            name: darwin
           - channel: '21.11'
             channel-darwin: '21.11-darwin'
           - channel: 'unstable'
@@ -90,3 +92,37 @@ jobs:
         name: ninegua
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: nix-build -A ${{ matrix.project }}
+
+    - run: nix-build release.nix
+
+    - name: Pack binaries
+      run: |
+        export name=ic-binaries-$(echo ${{ github.ref }} | cut -d/ -f3)
+        tar -zcv -C $(nix-build release.nix --no-out-link -A release.binaries)/bin/ --transform "s,^.,$name," -f $name-${{ os.name }}-x86_64.tar.gz .
+      if: matrix.channel == '21.11'
+
+    - name: Pack canisters
+      run: |
+        export name=ic-canisters-$(echo ${{ github.ref }} | cut -d/ -f3)
+        tar -zcv -C $(nix-build release.nix --no-out-link -A release.canisters)/share/ --transform "s,^.,$name," -f $name-wasm32.tar.gz .
+      if: matrix.channel == '21.11'
+      if: contains(matrix.os, 'ubuntu')
+
+    - name: Upload binaries
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: ic-binaries-*.tar.gz
+        file_glob: true
+      if: matrix.channel == '21.11'
+
+    - name: Upload canisters
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: ic-canisters-*.tar.gz
+        file_glob: true
+      if: matrix.channel == '21.11'
+      if: contains(matrix.os, 'ubuntu')
