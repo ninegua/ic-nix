@@ -34,17 +34,17 @@ jobs:
         nix_path: nixpkgs=channel:${{ matrix.prefix }}-${{ matrix.channel-darwin }}
       if: contains(matrix.os, 'macos')
 
-    - run: nix-build release.nix
+    - run: nix-build --pure release.nix
 
     - name: Pack binaries
       run: |
         export name=ic-binaries-$(echo ${{ github.ref }} | cut -d/ -f3)
-        tar -zcv -C $(nix-build release.nix --no-out-link -A binaries)/bin/ --transform "s,^.,$name," -f $name-${{ matrix.name }}-x86_64.tar.gz .
+        tar -zcv -C $(nix-build --pure release.nix --no-out-link -A binaries)/bin/ --transform "s,^.,$name," -f $name-${{ matrix.name }}-x86_64.tar.gz .
 
     - name: Pack canisters
       run: |
         export name=ic-canisters-$(echo ${{ github.ref }} | cut -d/ -f3)
-        tar -zcv -C $(nix-build release.nix --no-out-link -A canisters)/share/ --transform "s,^.,$name," -f $name-wasm32.tar.gz .
+        tar -zcv -C $(nix-build --pure release.nix --no-out-link -A canisters)/share/ --transform "s,^.,$name," -f $name-wasm32.tar.gz .
       if: contains(matrix.os, 'ubuntu')
 
     - name: Upload binaries
