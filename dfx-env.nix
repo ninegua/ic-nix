@@ -28,7 +28,8 @@ let
       name = "ic-nix-bin";
       phases = [ "installPhase" "fixupPhase" "createCachePhase" ];
       buildInputs = [ coreutils ]
-        ++ lib.optionals (!stdenv.isAarch64) [ autoPatchelfHook ];
+        ++ lib.optionals (!(stdenv.isAarch64 && stdenv.isDarwin))
+        [ autoPatchelfHook ];
       installPhase = ''
         mkdir -p $out/bin $out/share
         cp -r ${binaries}/bin/* $out/bin
@@ -93,9 +94,9 @@ let
       echo
     '';
   });
-in shellFor (if builtins.elem system supported-systems then
-  prebuilt-drv
-else if force then
+in shellFor (if force then
   build-drv
+else if builtins.elem system supported-systems then
+  prebuilt-drv
 else
   warn)
