@@ -15,6 +15,8 @@ nix-shell https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar
 
 All you need is a working [nix] installation on your computer.
 
+If you compile from source, you may also setup the binary cache (courtesy of [cachix]) by `nix-shell -p cachix --run 'cachix use ninegua'` to avoid unnecessary compilation.
+
 **WARNING**
 
 1. Releases are built against the latest main branches of each project on a weekly update schedule. They may not always work. Please understand the risks before proceed.
@@ -57,3 +59,4 @@ Note that this effort requires no nix support of a project unless it already has
 [sdk]: https://github.com/dfinity/sdk
 [motoko]: https://github.com/dfinity/motoko
 [icx-proxy]: https://github.com/dfinity/icx-proxy
+[cachix]: https://github.com/cachix/cachix
