@@ -1,4 +1,4 @@
-{ pkgs, source }:
+{ pkgs, src }:
 with pkgs;
 let
   stdenv = llvmPackages_11.libcxxStdenv;
@@ -7,7 +7,7 @@ let
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
   dfx = rustPlatform.buildRustPackage {
     name = "dfx";
-    src = source;
+    inherit src;
     cargoSha256 = "1kxl8n9vyc2f5ar2whm7vihyxd3kagf0cgi11xscfr8ym086abni";
     inherit buildInputs;
     nativeBuildInputs = [ pkg-config ];

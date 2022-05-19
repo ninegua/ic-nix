@@ -1,4 +1,4 @@
-{ pkgs, source }:
+{ pkgs, src }:
 with pkgs;
 let
   stdenv = llvmPackages_11.libcxxStdenv;
@@ -7,7 +7,7 @@ let
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
   icx-proxy = rustPlatform.buildRustPackage {
     name = "icx-proxy";
-    src = source;
+    inherit src;
     cargoSha256 = "0q7r5r7vgwqxwmznj1sin8ww9gbkzyg467rqcq22n0297azbshs6";
     buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
       (with darwin.apple_sdk.frameworks; [ Security ]);

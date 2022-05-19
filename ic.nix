@@ -1,8 +1,11 @@
-{ pkgs, source, moc }:
+{ pkgs, sources, moc }:
 let
   pkgs-with-overlays = pkgs.appendOverlays ([ ]
-    ++ pkgs.lib.optionals pkgs.stdenv.isDarwin
-    [ (self: super: { lmdb = pkgs.callPackage ./nix/lmdb { }; }) ]);
+    ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+      (self: super: {
+        lmdb = self.callPackage ./nix/lmdb { src = sources.lmdb; };
+      })
+    ]);
 in let pkgs = pkgs-with-overlays;
 in with pkgs;
 let
@@ -61,7 +64,7 @@ let
       inherit profile hostTriple cargoBuildFlags;
       name = "ic";
       targetNames = lib.strings.concatStringsSep " " targets;
-      src = source;
+      src = sources.ic;
       unpackPhase = ''
         cp -r $src ${name}
         echo source root is ${sourceRoot}
@@ -140,7 +143,7 @@ let
       install -m 644 ${wasm-binaries}/bin/* $out/share/ic-canisters/
       for name in ${wasm-names}; do
         if [ $name = "ledger-canister" ]; then
-          cp ${source}/rs/rosetta-api/ledger_canister/*.did $out/share/ic-canisters/
+          cp ${sources.ic}/rs/rosetta-api/ledger_canister/*.did $out/share/ic-canisters/
         elif [ $name = "lifeline" ]; then
           true
         elif [ $name = "root-canister" ]; then

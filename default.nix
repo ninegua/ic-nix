@@ -26,33 +26,24 @@ let
       };
     })
   ]);
-  sourcesnix = builtins.fetchurl {
-    url =
-      "https://raw.githubusercontent.com/nmattia/niv/d13bf5ff11850f49f4282d59b25661c45a851936/nix/sources.nix";
-    sha256 = "0a2rhxli7ss4wixppfwks0hy3zpazwm9l3y2v9krrnyiska3qfrw";
-  };
 in let
   pkgs = pkgs_with_overlay;
-  sources = import sourcesnix {
-    sourcesFile = ./nix/sources.json;
-    inherit pkgs;
-  };
+  sources = import ./nix/sources.nix { inherit (pkgs) fetchgit; };
   motoko = import ./motoko.nix {
     inherit pkgs;
     sources = { inherit (sources) motoko libtommath musl-wasi; };
   };
   ic = import ./ic.nix {
-    inherit pkgs;
-    source = sources.ic;
+    inherit pkgs sources;
     moc = motoko.moc;
   };
   icx-proxy = import ./icx-proxy.nix {
     inherit pkgs;
-    source = sources.icx-proxy;
+    src = sources.icx-proxy;
   };
   sdk = import ./sdk.nix {
     inherit pkgs;
-    source = sources.sdk;
+    src = sources.sdk;
   };
   shellFor = proj:
     let drvs = builtins.attrValues proj;

@@ -1,0 +1,25 @@
+name: Update dependencies (weekly)
+on:
+  schedule:
+    - cron:  '0 4 * * 1'
+
+jobs:
+  updater:
+    name: 'Create PRs for nix dependencies'
+    timeout-minutes: 5 # if this takes more than 5 minutes then something's wrong
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2.3.4
+    - uses: cachix/install-nix-action@v17
+      with:
+        nix_path: nixpkgs=channel:nixpkgs-21.11
+
+    - name: create_pr
+      uses: lenra-io/create-or-update-pr-action@main
+      with:
+        name: 'Update dependencies'
+        token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
+        script: |
+          nix-shell update-nix-fetchgit --run 'update-nix-fetchgit ./nix/sources.nix'
+          git commit -a -m "Update sources.nix"
