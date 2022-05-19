@@ -4,7 +4,7 @@ let
   version = "20220519";
   system = stdenv.buildPlatform.system;
   ostypes = [ "linux" "darwin" ];
-  archs = [ "x86_64" ];
+  archs = [ "x86_64" "aarch64" ];
   supported-systems =
     builtins.concatMap (arch: builtins.map (os: arch + "-" + os) ostypes) archs;
   motoko-base = fetchGit {
