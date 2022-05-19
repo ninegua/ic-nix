@@ -1,17 +1,19 @@
 { pkgs ? import <nixpkgs> { }, force ? false }:
 with pkgs;
 let
-  version = "v0.1.9";
-  ostype = "linux";
-  arch = "x86_64";
-  system = "${arch}-${ostype}";
+  version = "20220519";
+  system = stdenv.buildPlatform.system;
+  ostypes = [ "linux" "darwin" ];
+  archs = [ "x86_64" ];
+  supported-systems =
+    builtins.concatMap (arch: builtins.map (os: arch + "-" + os) ostypes) archs;
   motoko-base = fetchGit {
     url = "https://github.com/dfinity/motoko-base";
     ref = "refs/heads/next-moc";
   };
   binaries = fetchTarball {
     url =
-      "https://github.com/ninegua/ic-nix/releases/download/${version}/ic-binaries-${version}-${ostype}-${arch}.tar.gz";
+      "https://github.com/ninegua/ic-nix/releases/download/${version}/ic-binaries-${version}-${system}.tar.gz";
   };
   canisters = fetchTarball {
     url =
@@ -91,7 +93,7 @@ let
       echo
     '';
   });
-in shellFor (if stdenv.buildPlatform.system == system then
+in shellFor (if builtins.elem system supported-systems then
   prebuilt-drv
 else if force then
   build-drv
