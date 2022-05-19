@@ -7,7 +7,11 @@ Usage:
 
 - To build a project, run `nix-build -A <project>`.
 - To get a development environment for a project (sources not included here), run `nix-shell -A <project>.shell`.
-- To download pre-built binaries, go to [release page](https://github.com/ninegua/ic-nix/releases).
+- To download the latest pre-built binaries, go to [release page](https://github.com/ninegua/ic-nix/releases/latest).
+- To start canister development with latest binaries, run `nix-shell <url to a dfx-env.tar.gz release>`.
+
+**WARNING**: Releases are built against the latest main branches of each project on a weekly update schedule.
+They may not always work. Please understand the risks before proceed.
 
 Supported projects:
 
