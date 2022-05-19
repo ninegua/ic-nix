@@ -45,19 +45,10 @@ in let
     inherit pkgs;
     src = sources.sdk;
   };
-  shellFor = proj:
-    let drvs = builtins.attrValues proj;
-    in pkgs.mkShell {
-      nobuildPhase = "touch $out";
-      buildInputs = builtins.concatMap (drv: drv.buildInputs) drvs;
-      nativeBuildInputs = builtins.concatMap (drv: drv.nativeBuildInputs) drvs;
-    };
-
 in {
   inherit pkgs;
-  shell = shellFor (motoko // ic // sdk);
-  motoko = motoko // { shell = shellFor motoko; };
-  ic = ic // { shell = shellFor ic; };
-  icx-proxy = icx-proxy // { shell = shellFor icx-proxy; };
-  sdk = sdk // { shell = shellFor sdk; };
+  motoko = motoko // { shell = motoko.moc; };
+  ic = ic // { shell = ic.binaries; };
+  icx-proxy = icx-proxy // { shell = icx-proxy.icx-proxy; };
+  sdk = sdk // { shell = sdk.sdk; };
 }

@@ -7,10 +7,6 @@ let
   archs = [ "x86_64" ];
   supported-systems =
     builtins.concatMap (arch: builtins.map (os: arch + "-" + os) ostypes) archs;
-  motoko-base = fetchGit {
-    url = "https://github.com/dfinity/motoko-base";
-    ref = "refs/heads/next-moc";
-  };
   binaries = fetchTarball {
     url =
       "https://github.com/ninegua/ic-nix/releases/download/${version}/ic-binaries-${version}-${system}.tar.gz";
@@ -23,6 +19,8 @@ let
     url =
       "https://github.com/ninegua/ic-nix/archive/refs/tags/${version}.tar.gz";
   };
+  motoko-base =
+    import "${ic-nix-source}/nix/sources.nix" { inherit (pkgs) fetchgit; };
   makeDrv = { binaries, canisters }:
     stdenv.mkDerivation {
       name = "ic-nix-bin";
