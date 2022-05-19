@@ -13,6 +13,8 @@ Usage:
 nix-shell https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar.gz
 ```
 
+All you need is a working [nix] installation on your computer.
+
 **WARNING**: Releases are built against the latest main branches of each project on a weekly update schedule.
 They may not always work. Please understand the risks before proceed.
 
@@ -48,6 +50,7 @@ Feature:
 
 Note that this effort requires no nix support of a project unless it already has.
 
+[nix]: https://nixos.org/download.html
 [ic]: https://github.com/dfinity/ic
 [sdk]: https://github.com/dfinity/sdk
 [motoko]: https://github.com/dfinity/motoko
