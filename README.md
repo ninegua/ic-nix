@@ -18,7 +18,7 @@ All you need is a working [nix] installation on your computer.
 **WARNING**
 
 1. Releases are built against the latest main branches of each project on a weekly update schedule. They may not always work. Please understand the risks before proceed.
-2. If you must look for pre-built `aarch64` binaries, please use the [20220519-aarch64](https://github.com/ninegua/ic-nix/releases/20220519-aarch64) release. They were built offline and manually uploaded.
+2. If you must look for pre-built `aarch64` binaries, please use the [20220519-aarch64](https://github.com/ninegua/ic-nix/releases/tag/20220519-aarch64) release. They were built offline and manually uploaded.
 
 Supported projects:
 
