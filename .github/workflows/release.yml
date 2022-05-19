@@ -49,7 +49,7 @@ jobs:
         export version=$(echo ${{ github.ref }} | cut -d/ -f3)
         export ostype=${{ matrix.name }}
         export arch=x86_64
-        export dir=dfx-env-$version
+        export dir=dfx-env
         mkdir $dir
         sed -e "s/^  version = .*/  version = \"$version\";/" \
             -e "s/^  ostype = .*/  ostype = \"$ostype\";/" \
@@ -74,7 +74,7 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.ref }}
-        file: dfx-env-*.tar.gz
+        file: dfx-env.tar.gz
         file_glob: true
       if: contains(matrix.os, 'ubuntu')
 
