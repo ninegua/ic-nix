@@ -5,6 +5,12 @@
         "rev": "fb3fe3ff87ce413a79f267ece80ae78f0f8b00fd",
         "type": "git"
     },
+    "icx-proxy": {
+        "branch": "main",
+        "repo": "https://github.com/dfinity/icx-proxy",
+        "rev": "c312760a62b20931431ba45e5b0168ee79ea5cda",
+        "type": "git"
+    },
     "libtommath": {
         "branch": "master",
         "repo": "https://github.com/libtom/libtommath",

@@ -46,6 +46,10 @@ in let
     source = sources.ic;
     moc = motoko.moc;
   };
+  icx-proxy = import ./icx-proxy.nix {
+    inherit pkgs;
+    source = sources.icx-proxy;
+  };
   sdk = import ./sdk.nix {
     inherit pkgs;
     source = sources.sdk;
@@ -63,5 +67,6 @@ in {
   shell = shellFor (motoko // ic // sdk);
   motoko = motoko // { shell = shellFor motoko; };
   ic = ic // { shell = shellFor ic; };
+  icx-proxy = icx-proxy // { shell = shellFor icx-proxy; };
   sdk = sdk // { shell = shellFor sdk; };
 }

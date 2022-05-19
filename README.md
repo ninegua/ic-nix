@@ -6,14 +6,19 @@
 Usage:
 
 - To build a project, run `nix-build -A <project>`.
-- To get a development environment for a project (sources not included here), run `nix-shell -A <project>.shell`.
-- To download pre-built binaries, go to [release page](https://github.com/ninegua/ic-nix/releases).
+- To enter a development environment for a project, run `nix-shell -A <project>.shell`.
+- To download the latest pre-built binaries, go to [release page](https://github.com/ninegua/ic-nix/releases/latest).
+- To start canister development with latest binaries, run `nix-shell <url to a dfx-env.tar.gz release>`.
+
+**WARNING**: Releases are built against the latest main branches of each project on a weekly update schedule.
+They may not always work. Please understand the risks before proceed.
 
 Supported projects:
 
  - [ic]
  - [sdk]
  - [motoko]
+ - [icx-proxy]
 
 Supported platforms:
 
@@ -43,3 +48,4 @@ Note that this effort requires no nix support of a project unless it already has
 [ic]: https://github.com/dfinity/ic
 [sdk]: https://github.com/dfinity/sdk
 [motoko]: https://github.com/dfinity/motoko
+[icx-proxy]: https://github.com/dfinity/icx-proxy

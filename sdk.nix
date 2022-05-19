@@ -5,10 +5,6 @@ let
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
-  shell = stdenv.mkDerivation {
-    name = "ic";
-    inherit nativeBuildInputs;
-  };
   dfx = rustPlatform.buildRustPackage {
     name = "dfx";
     src = source;
