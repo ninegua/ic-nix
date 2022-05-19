@@ -42,8 +42,20 @@ jobs:
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: nix-build --pure release.nix
 
-    - run: nix-env -f '<nixpkgs>' -iA gnutar
-      if: contains(matrix.os, 'macos')
+    - run: nix-env -f '<nixpkgs>' -iA gnutar gnused
+
+    - name: Pack dfx-env
+      run: |
+        export version=$(echo ${{ github.ref }} | cut -d/ -f3)
+        export ostype=${{ matrix.name }}
+        export arch=x86_64
+        export dir=dfx-env-$version
+        mkdir $dir
+        sed -e "s/^  version = .*/  version = \"$version\";/" \
+            -e "s/^  ostype = .*/  ostype = \"$ostype\";/" \
+            -e "s/^  arch = .*/  arch = \"$arch\";/" dfx-env.nix > $dir/default.nix
+        tar -zcvf $dir.tar.gz $dir
+      if: contains(matrix.os, 'ubuntu')
 
     - name: Pack binaries
       run: |
@@ -55,6 +67,15 @@ jobs:
       run: |
         export name=ic-canisters-$(echo ${{ github.ref }} | cut -d/ -f3)
         tar -zcv -C $(nix-build --pure release.nix --no-out-link -A canisters) --transform "s,^.,$name," -f $name-wasm32.tar.gz .
+      if: contains(matrix.os, 'ubuntu')
+
+    - name: Upload dfx-env
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: dfx-env-*.tar.gz
+        file_glob: true
       if: contains(matrix.os, 'ubuntu')
 
     - name: Upload binaries
