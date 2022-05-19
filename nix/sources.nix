@@ -1,8 +1,8 @@
 { fetchgit }: {
   ic = fetchgit {
-    url = "https://github.com/ninegua/ic"; # master
-    rev = "fb3fe3ff87ce413a79f267ece80ae78f0f8b00fd";
-    sha256 = "1s1ba6k3ign37msw1dyfkadd5q7ldlcs6kyzhb47m41k4idvf5f6";
+    url = "https://github.com/dfinity/ic"; # master
+    rev = "744085424b236b2ac990f04d2e1b41bcd9c4b674";
+    sha256 = "06p2di6rplfzww6kggafsdnp1q7l6xfyx6pj2mg3sqy1s754jbmd";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # main
