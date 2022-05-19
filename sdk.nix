@@ -31,4 +31,7 @@ let
     ];
   };
 
-in { inherit dfx; }
+in {
+  inherit dfx;
+  shell = dfx;
+}

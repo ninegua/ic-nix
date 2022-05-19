@@ -1,7 +1,6 @@
-{ pkgs ? import <nixpkgs> { }, force ? false }:
+{ pkgs ? import <nixpkgs> { }, force ? false, version ? "20220520" }:
 with pkgs;
 let
-  version = "20220519";
   system = stdenv.buildPlatform.system;
   ostypes = [ "linux" "darwin" ];
   archs = [ "x86_64" ];
@@ -23,7 +22,7 @@ let
     import "${ic-nix-source}/nix/sources.nix" { inherit (pkgs) fetchgit; };
   makeDrv = { binaries, canisters }:
     stdenv.mkDerivation {
-      name = "ic-nix-bin";
+      name = "dfx-env";
       phases = [ "installPhase" "fixupPhase" "createCachePhase" ];
       buildInputs = [ coreutils ]
         ++ lib.optionals (!(stdenv.isAarch64 && stdenv.isDarwin))

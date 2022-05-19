@@ -37,18 +37,19 @@ in let
     inherit pkgs sources;
     moc = motoko.moc;
   };
-  icx-proxy = import ./icx-proxy.nix {
-    inherit pkgs;
-    src = sources.icx-proxy;
-  };
+  utils = import ./utils.nix { inherit pkgs sources; };
   sdk = import ./sdk.nix {
     inherit pkgs;
     src = sources.sdk;
   };
-in {
-  inherit pkgs;
-  motoko = motoko // { shell = motoko.moc; };
-  ic = ic // { shell = ic.binaries; };
-  icx-proxy = icx-proxy // { shell = icx-proxy.icx-proxy; };
-  sdk = sdk // { shell = sdk.sdk; };
-}
+  depsOf = drvs:
+    pkgs.mkShell {
+      name = "deps-env";
+      nobuildPhase = "touch $out";
+      buildInputs = builtins.concatMap (drv: drv.buildInputs) drvs;
+      nativeBuildInputs = builtins.concatMap (drv: drv.nativeBuildInputs) drvs;
+    };
+  projects = { inherit motoko ic sdk utils; };
+in with builtins;
+let derivations = pkgs.lib.lists.fold (a: b: a // b) { } (attrValues projects);
+in projects // derivations // { deps = depsOf (attrValues derivations); }

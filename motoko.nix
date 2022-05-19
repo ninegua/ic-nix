@@ -244,4 +244,6 @@ in rec {
     "deser"
     "candid-tests"
   ] (rts.overrideAttrs (_: { dontCheck = true; }));
+
+  shell = moc;
 }

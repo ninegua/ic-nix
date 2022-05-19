@@ -154,4 +154,7 @@ let
       done
     '';
   };
-in { inherit binaries wasm-binaries canisters; }
+in {
+  inherit binaries wasm-binaries canisters;
+  shell = binaries;
+}
