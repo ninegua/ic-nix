@@ -23,16 +23,18 @@ let
   makeDrv = { binaries, canisters }:
     stdenv.mkDerivation {
       name = "dfx-env";
-      phases = [ "installPhase" "fixupPhase" "createCachePhase" ];
+      phases = [ "installPhase" ]
+        ++ (lib.optionals (!stdenv.isDarwin) [ "fixupPhase" ])
+        ++ [ "createCachePhase" ];
       buildInputs = [ coreutils ]
-        ++ lib.optionals (!(stdenv.isAarch64 && stdenv.isDarwin))
-        [ autoPatchelfHook ];
+        ++ lib.optionals (!stdenv.isDarwin) [ autoPatchelfHook ];
       installPhase = ''
         mkdir -p $out/bin $out/share
         cp -r ${binaries}/bin/* $out/bin
         cp -r ${canisters}/share/* $out/share
         ls -R $out
         chmod 755 $out/bin/*
+        echo $phases
       '';
       createCachePhase = ''
         dfx_version=$($out/bin/dfx --version|cut -d' ' -f2)
@@ -84,7 +86,7 @@ let
     WARNING = ''
       echo 
       echo '****************************************************************************************'
-      echo '  It appears there is no prebuilt binaries available for your system ${stdenv.system}.'
+      echo '  It appears there is no prebuilt binaries available for system ${system}.'
       echo '  Run nix-shell with `--arg force true` if you want to build it from source.'
       echo '  Note that if this is the first time you build it, it can take about an hour to finish.'
       echo '****************************************************************************************'

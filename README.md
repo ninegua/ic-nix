@@ -3,7 +3,7 @@
 ![ci](https://github.com/ninegua/ic-nix/actions/workflows/ci.yml/badge.svg?branch=main)
 ![release](https://github.com/ninegua/ic-nix/actions/workflows/release.yml/badge.svg)
 
-Usage:
+**Usage**
 
 - To build a project, run `nix-build -A <project>`.
 - To enter a development environment for a project, run `nix-shell -A <project>.shell`.
@@ -15,14 +15,19 @@ nix-shell https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar
 
 All you need is a working [nix] installation on your computer.
 
-If you compile from source, you may also setup the binary cache (courtesy of [cachix]) by `nix-shell -p cachix --run 'cachix use ninegua'` to avoid unnecessary compilation.
+For aarch64 (Apple M1) architecture, you have a couple choices:
+
+1. Compile everything from source by passing extra argument `--arg force true`.
+2. Use `x86_64` binaries by passing extra argument `--argstr system x86_64`.
+3. Use pre-built `aarch64` binaries by getting it from the [20220519-aarch64](https://github.com/ninegua/ic-nix/releases/tag/20220519-aarch64) release. These were built offline and manually uploaded.
+
+Before you compile from source, you may also want to setup the binary cache (courtesy of [cachix]) by `nix-shell -p cachix --run 'cachix use ninegua'` to avoid unnecessary compilation.
 
 **WARNING**
 
-1. Releases are built against the latest main branches of each project on a weekly update schedule. They may not always work. Please understand the risks before proceed.
-2. If you must look for pre-built `aarch64` binaries, please use the [20220519-aarch64](https://github.com/ninegua/ic-nix/releases/tag/20220519-aarch64) release. They were built offline and manually uploaded.
+Releases are built against the latest main branches of each project on a weekly update schedule. They may not always work. Please understand the risks before proceed.
 
-Supported projects:
+**Supported projects**
 
  - [ic]
  - [sdk]
