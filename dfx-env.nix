@@ -1,5 +1,7 @@
 { pkgs ? import <nixpkgs> { }, force ? false, version ? "20220520"
-, system ? pkgs.stdenv.buildPlatform.system }:
+, system ? pkgs.stdenv.buildPlatform.system, ic-nix ? fetchTarball {
+  url = "https://github.com/ninegua/ic-nix/archive/refs/tags/${version}.tar.gz";
+} }:
 with pkgs;
 let
   ostypes = [ "linux" "darwin" ];
@@ -14,25 +16,23 @@ let
     url =
       "https://github.com/ninegua/ic-nix/releases/download/${version}/ic-canisters-${version}-wasm32.tar.gz";
   };
-  ic-nix-source = fetchTarball {
-    url =
-      "https://github.com/ninegua/ic-nix/archive/refs/tags/${version}.tar.gz";
-  };
   sources =
-    import "${ic-nix-source}/nix/sources.nix" { inherit (pkgs) fetchgit; };
+    import "${ic-nix}/nix/sources.nix" { inherit (pkgs) fetchgit; };
   makeDrv = { binaries, canisters }:
     stdenv.mkDerivation {
       name = "dfx-env";
-      phases = [ "installPhase" "fixupPhase" "createCachePhase" ];
+      phases = [ "installPhase" ]
+        ++ (lib.optionals (!stdenv.isDarwin) [ "fixupPhase" ])
+        ++ [ "createCachePhase" ];
       buildInputs = [ coreutils ]
-        ++ lib.optionals (!(stdenv.isAarch64 && stdenv.isDarwin))
-        [ autoPatchelfHook ];
+        ++ lib.optionals (!stdenv.isDarwin) [ autoPatchelfHook ];
       installPhase = ''
         mkdir -p $out/bin $out/share
         cp -r ${binaries}/bin/* $out/bin
         cp -r ${canisters}/share/* $out/share
         ls -R $out
         chmod 755 $out/bin/*
+        echo $phases
       '';
       createCachePhase = ''
         dfx_version=$($out/bin/dfx --version|cut -d' ' -f2)
@@ -49,7 +49,7 @@ let
     };
   prebuilt-drv = makeDrv { inherit binaries canisters; };
   build-drv =
-    let release = import "${ic-nix-source}/release.nix" { inherit pkgs; };
+    let release = import "${ic-nix}/release.nix" { inherit pkgs; };
     in makeDrv { inherit (release) binaries canisters; };
 
   dfxBins = [
@@ -84,7 +84,7 @@ let
     WARNING = ''
       echo 
       echo '****************************************************************************************'
-      echo '  It appears there is no prebuilt binaries available for your system ${stdenv.system}.'
+      echo '  It appears there is no prebuilt binaries available for system ${system}.'
       echo '  Run nix-shell with `--arg force true` if you want to build it from source.'
       echo '  Note that if this is the first time you build it, it can take about an hour to finish.'
       echo '****************************************************************************************'
