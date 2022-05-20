@@ -16,11 +16,30 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixpkgs-21.11
 
-    - name: create_pr
-      uses: lenra-io/create-or-update-pr-action@main
+    - name: Update sources.nix
+    - run: |
+        nix-shell update-nix-fetchgit --run 'update-nix-fetchgit ./nix/sources.nix'
+        git commit -a -m "Update sources.nix"
+
+    - uses: actions/github-script@v6
       with:
-        name: 'Update dependencies'
-        token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}
         script: |
-          nix-shell update-nix-fetchgit --run 'update-nix-fetchgit ./nix/sources.nix'
-          git commit -a -m "Update sources.nix"
+          const { repo, owner } = context.repo;
+          const execa = require('execa')
+          const { head } = await execa('git', ['rev-parse', 'HEAD'])
+          const result = await github.rest.pulls.create({
+            title: 'Update source dependencies',
+            owner,
+            repo,
+            head: head,
+            base: 'main',
+            body: [
+              'This PR is auto-generated'
+            ].join('\n')
+          });
+          github.rest.issues.addLabels({
+            owner,
+            repo,
+            issue_number: result.data.number,
+            labels: ['autoupdate']
+          });

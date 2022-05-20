@@ -18,7 +18,7 @@ let
     url =
       "https://github.com/ninegua/ic-nix/archive/refs/tags/${version}.tar.gz";
   };
-  motoko-base =
+  sources =
     import "${ic-nix-source}/nix/sources.nix" { inherit (pkgs) fetchgit; };
   makeDrv = { binaries, canisters }:
     stdenv.mkDerivation {
@@ -38,7 +38,7 @@ let
         dfx_version=$($out/bin/dfx --version|cut -d' ' -f2)
         cache=$out/share/dfx/.cache/dfinity/versions/$dfx_version/
         mkdir -p $cache/base
-        cp -r ${motoko-base}/src/* $cache/base/
+        cp -r ${sources.motoko-base}/src/* $cache/base/
       '';
       /* cd $cache
          for exe in $out/bin/*; do
