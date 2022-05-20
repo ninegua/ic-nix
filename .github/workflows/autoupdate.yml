@@ -16,16 +16,12 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-21.11
 
-    - name: nix cache warm up
-      uses: cachix/cachix-action@v10
-      with:
-        name: ninegua
-        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-
     - name: Update sources.nix
       run: |
         nix-env -f '<nixpkgs>' -iA update-nix-fetchgit
         update-nix-fetchgit ./nix/sources.nix
+        git config user.email "autoupdate@github.actions"
+        git config user.name "Auto Update"
         git commit -a -m "Update sources.nix"
 
     - uses: actions/github-script@v6
