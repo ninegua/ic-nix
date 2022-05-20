@@ -18,7 +18,7 @@ jobs:
 
     - name: Update sources.nix
       run: |
-        nix-shell update-nix-fetchgit --run 'update-nix-fetchgit ./nix/sources.nix'
+        nix-shell -p update-nix-fetchgit --run 'update-nix-fetchgit ./nix/sources.nix'
         git commit -a -m "Update sources.nix"
 
     - uses: actions/github-script@v6
