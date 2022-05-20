@@ -31,8 +31,8 @@
   };
   sdk = fetchgit {
     url = "https://github.com/dfinity/sdk"; # master
-    rev = "431f12570f9f7a94c4436a352b5c86c67626e2ba";
-    sha256 = "09x7b7f3pn0hna2fm9w2jd6nwq6apik9c05ll4nps4k96cfn6x12";
+    rev = "3a225b611cd408ca752a627c30c25ce3467313dc";
+    sha256 = "09ibnja04zqib64f7kiqwssaxvqgflrp2zjs3p235vqqizjnr5sr";
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git";
