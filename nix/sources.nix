@@ -44,4 +44,9 @@
     rev = "13dd83fca5eddf48d63abc7a07cffa4fd44e4f6e"; # main
     sha256 = "0n41qjblka2z745n5vskvn9lfa1qs65mfw3196c7r0adb26xmlgz";
   };
+  ic-repl = fetchgit {
+    url = "https://github.com/chenyan2002/ic-repl";
+    rev = "41b561942281533f67299e485c4763f3ce91f787"; # master
+    sha256 = "1kxqghw2vis2xfjwawasfwsqc3ys1lbn80xgya10ikv6yvpbr05f";
+  };
 }
