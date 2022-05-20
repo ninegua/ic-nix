@@ -1,5 +1,5 @@
 { pkgs ? import <nixpkgs> { }, force ? false, version ? "20220520"
-, system ? pkgs.stdenv.buildPlatform.system, ic-nix-source ? pkgs.fetchTarball {
+, system ? pkgs.stdenv.buildPlatform.system, ic-nix-source ? fetchTarball {
   url = "https://github.com/ninegua/ic-nix/archive/refs/tags/${version}.tar.gz";
 }, release ? import "${ic-nix-source}/release.nix" { inherit pkgs; }, }:
 with pkgs;
