@@ -17,7 +17,7 @@ jobs:
         nix_path: nixpkgs=channel:nixpkgs-21.11
 
     - name: Update sources.nix
-    - run: |
+      run: |
         nix-shell update-nix-fetchgit --run 'update-nix-fetchgit ./nix/sources.nix'
         git commit -a -m "Update sources.nix"
 
