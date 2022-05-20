@@ -1,5 +1,7 @@
 { pkgs ? import <nixpkgs> { }, force ? false, version ? "20220520"
-, system ? pkgs.stdenv.buildPlatform.system }:
+, system ? pkgs.stdenv.buildPlatform.system, ic-nix-source ? pkgs.fetchTarball {
+  url = "https://github.com/ninegua/ic-nix/archive/refs/tags/${version}.tar.gz";
+}, release ? import "${ic-nix-source}/release.nix" { inherit pkgs; }, }:
 with pkgs;
 let
   ostypes = [ "linux" "darwin" ];
@@ -13,10 +15,6 @@ let
   canisters = fetchTarball {
     url =
       "https://github.com/ninegua/ic-nix/releases/download/${version}/ic-canisters-${version}-wasm32.tar.gz";
-  };
-  ic-nix-source = fetchTarball {
-    url =
-      "https://github.com/ninegua/ic-nix/archive/refs/tags/${version}.tar.gz";
   };
   sources =
     import "${ic-nix-source}/nix/sources.nix" { inherit (pkgs) fetchgit; };
@@ -50,9 +48,7 @@ let
       */
     };
   prebuilt-drv = makeDrv { inherit binaries canisters; };
-  build-drv =
-    let release = import "${ic-nix-source}/release.nix" { inherit pkgs; };
-    in makeDrv { inherit (release) binaries canisters; };
+  build-drv = makeDrv { inherit (release) binaries canisters; };
 
   dfxBins = [
     "dfx"
