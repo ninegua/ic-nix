@@ -20,20 +20,13 @@ jobs:
       run: |
         nix-env -f '<nixpkgs>' -iA update-nix-fetchgit
         update-nix-fetchgit ./nix/sources.nix
-        echo '${{ github.ref_name }}'
-        BRANCH="autoupdate-$(date +%s)"
-        git checkout -b $BRANCH
-        git config user.email "autoupdate@github.actions"
-        git config user.name "Auto Update"
-        git commit -a -m "Update sources.nix"
-        echo "BRANCH=$BRANCH" >> $GITHUB_ENV
-        echo '${{ github.ref_name }}'
 
-    - name: Create PR
-      uses: repo-sync/pull-request@v2
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
       with:
-        source_branch: "${{ env.BRANCH }}"
-        destination_branch: "main"
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        pr_label: "feature, automated pr"
-        pr_title: "Update source dependencies"
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: Update source dependencies
+        title: '[cron] Update source dependencies'
+        body: >
+          This PR is auto-generated.
+        labels: automated pr
