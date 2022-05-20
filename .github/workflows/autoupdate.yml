@@ -16,6 +16,12 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-21.11
 
+    - name: nix cache warm up
+      uses: cachix/cachix-action@v10
+      with:
+        name: ninegua
+        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
     - name: Update sources.nix
       run: |
         nix-env -f '<nixpkgs>' -iA update-nix-fetchgit
@@ -23,13 +29,13 @@ jobs:
         git config user.email "autoupdate@github.actions"
         git config user.name "Auto Update"
         git commit -a -m "Update sources.nix"
+        echo "HEAD=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
     - uses: actions/github-script@v6
       with:
         script: |
           const { repo, owner } = context.repo;
-          const execa = require('execa');
-          const { head } = await execa('git', ['rev-parse', 'HEAD']);
+          const head = process.env['HEAD'];
           const result = await github.rest.pulls.create({
             title: 'Update source dependencies',
             owner,
