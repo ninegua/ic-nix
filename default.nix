@@ -26,47 +26,30 @@ let
       };
     })
   ]);
-  sourcesnix = builtins.fetchurl {
-    url =
-      "https://raw.githubusercontent.com/nmattia/niv/d13bf5ff11850f49f4282d59b25661c45a851936/nix/sources.nix";
-    sha256 = "0a2rhxli7ss4wixppfwks0hy3zpazwm9l3y2v9krrnyiska3qfrw";
-  };
 in let
   pkgs = pkgs_with_overlay;
-  sources = import sourcesnix {
-    sourcesFile = ./nix/sources.json;
-    inherit pkgs;
-  };
+  sources = import ./nix/sources.nix { inherit (pkgs) fetchgit; };
   motoko = import ./motoko.nix {
     inherit pkgs;
     sources = { inherit (sources) motoko libtommath musl-wasi; };
   };
   ic = import ./ic.nix {
-    inherit pkgs;
-    source = sources.ic;
+    inherit pkgs sources;
     moc = motoko.moc;
   };
-  icx-proxy = import ./icx-proxy.nix {
-    inherit pkgs;
-    source = sources.icx-proxy;
-  };
+  utils = import ./utils.nix { inherit pkgs sources; };
   sdk = import ./sdk.nix {
     inherit pkgs;
-    source = sources.sdk;
+    src = sources.sdk;
   };
-  shellFor = proj:
-    let drvs = builtins.attrValues proj;
-    in pkgs.mkShell {
+  depsOf = drvs:
+    pkgs.mkShell {
+      name = "deps-env";
       nobuildPhase = "touch $out";
       buildInputs = builtins.concatMap (drv: drv.buildInputs) drvs;
       nativeBuildInputs = builtins.concatMap (drv: drv.nativeBuildInputs) drvs;
     };
-
-in {
-  inherit pkgs;
-  shell = shellFor (motoko // ic // sdk);
-  motoko = motoko // { shell = shellFor motoko; };
-  ic = ic // { shell = shellFor ic; };
-  icx-proxy = icx-proxy // { shell = shellFor icx-proxy; };
-  sdk = sdk // { shell = shellFor sdk; };
-}
+  projects = { inherit motoko ic sdk utils; };
+in with builtins;
+let derivations = pkgs.lib.lists.fold (a: b: a // b) { } (attrValues projects);
+in projects // derivations // { deps = depsOf (attrValues derivations); }

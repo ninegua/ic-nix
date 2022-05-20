@@ -6,13 +6,15 @@ with import ./. { inherit pkgs; }; rec {
     phases = [ "installPhase" ];
     installPhase = ''
       mkdir -p $out/bin $out/share
-      cp ${motoko.moc}/bin/* $out/bin/
+      cp ${moc}/bin/* $out/bin/
       cp ${ic.binaries}/bin/{replica,ic-admin,ic-prep,ic-starter} $out/bin/
-      cp ${sdk.dfx}/bin/* $out/bin/
-      cp ${icx-proxy.icx-proxy}/bin/* $out/bin/
+      cp ${dfx}/bin/* $out/bin/
+      cp ${icx-proxy}/bin/* $out/bin/
     '' + pkgs.lib.optionalString pkgs.stdenv.isLinux (''
       for exe in $out/bin/*; do
         chmod 755 $exe
+        rpath=$(patchelf --print-rpath $exe)
+        echo $rpath | grep -q : && echo "More than 1 rpath found in $exe: $rpath" && exit 1
         patchelf --set-interpreter /lib64/ld-linux-x86-64.so.2 $exe
       done
     '');

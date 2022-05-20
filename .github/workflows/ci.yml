@@ -42,7 +42,7 @@ jobs:
       with:
         name: ninegua
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-    - run: nix-build --pure -A shell
+    - run: nix-build --pure -A deps
   
   build:
     needs: warmup

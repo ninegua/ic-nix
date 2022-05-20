@@ -1,16 +1,11 @@
-{ pkgs ? import <nixpkgs> { }, force ? false }:
+{ pkgs ? import <nixpkgs> { }, force ? false, version ? "20220520" }:
 with pkgs;
 let
-  version = "20220519";
   system = stdenv.buildPlatform.system;
   ostypes = [ "linux" "darwin" ];
   archs = [ "x86_64" ];
   supported-systems =
     builtins.concatMap (arch: builtins.map (os: arch + "-" + os) ostypes) archs;
-  motoko-base = fetchGit {
-    url = "https://github.com/dfinity/motoko-base";
-    ref = "refs/heads/next-moc";
-  };
   binaries = fetchTarball {
     url =
       "https://github.com/ninegua/ic-nix/releases/download/${version}/ic-binaries-${version}-${system}.tar.gz";
@@ -23,9 +18,11 @@ let
     url =
       "https://github.com/ninegua/ic-nix/archive/refs/tags/${version}.tar.gz";
   };
+  sources =
+    import "${ic-nix-source}/nix/sources.nix" { inherit (pkgs) fetchgit; };
   makeDrv = { binaries, canisters }:
     stdenv.mkDerivation {
-      name = "ic-nix-bin";
+      name = "dfx-env";
       phases = [ "installPhase" "fixupPhase" "createCachePhase" ];
       buildInputs = [ coreutils ]
         ++ lib.optionals (!(stdenv.isAarch64 && stdenv.isDarwin))
@@ -41,7 +38,7 @@ let
         dfx_version=$($out/bin/dfx --version|cut -d' ' -f2)
         cache=$out/share/dfx/.cache/dfinity/versions/$dfx_version/
         mkdir -p $cache/base
-        cp -r ${motoko-base}/src/* $cache/base/
+        cp -r ${sources.motoko-base}/src/* $cache/base/
       '';
       /* cd $cache
          for exe in $out/bin/*; do

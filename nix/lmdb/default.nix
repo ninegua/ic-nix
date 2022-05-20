@@ -1,14 +1,10 @@
-{ lib, stdenv, fetchgit }:
+{ src, lib, stdenv, fetchgit }:
 
 stdenv.mkDerivation rec {
   pname = "lmdb";
-  version = "0.9.26";
+  version = "0.9.70";
 
-  src = fetchgit {
-    url = "https://git.openldap.org/openldap/openldap.git";
-    rev = "a99290f253a8df45679c8e2b159e83b835e8eb24";
-    sha256 = "078948gw896h8blj4dk4638f5jfn14wkyhrvfnbk7xzxlx01plzc";
-  };
+  inherit src;
 
   postUnpack = "sourceRoot=\${sourceRoot}/libraries/liblmdb";
 
@@ -21,10 +17,7 @@ stdenv.mkDerivation rec {
   ];
 
   # Patch to fix read_only DB file permission Other(13) error.
-  patches = [
-    ./unused_read.patch
-    ./debug.patch
-  ];
+  patches = [ ./unused_read.patch ./debug.patch ];
   patchFlags = [ "-p3" ];
 
   # doCheck = true;
@@ -65,7 +58,7 @@ stdenv.mkDerivation rec {
       offering the persistence of standard disk-based databases, and is only
       limited to the size of the virtual address space.
     '';
-    homepage = http://symas.com/mdb/;
+    homepage = "http://symas.com/mdb/";
     maintainers = with maintainers; [ jb55 vcunat ];
     license = licenses.openldap;
     platforms = platforms.all;
