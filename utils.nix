@@ -17,7 +17,19 @@ let
       "-Lnative=${libcxxabi}/lib"
     ];
   };
+  vessel = rustPlatform.buildRustPackage {
+    name = "vessel";
+    src = sources.vessel;
+    cargoSha256 = "1sflslhjvwj3vbz33dw615hbfy6594s3nlwn6dnw34288xhc78k0";
+    buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
+      (with darwin.apple_sdk.frameworks; [ Security ]);
+    nativeBuildInputs = [ pkg-config ];
+    RUSTFLAGS = lib.optionals stdenv.isDarwin [
+      "-Clinker=${linker}"
+      "-Lnative=${libcxxabi}/lib"
+    ];
+  };
 in {
-  inherit icx-proxy;
+  inherit icx-proxy vessel;
   shell = icx-proxy;
 }

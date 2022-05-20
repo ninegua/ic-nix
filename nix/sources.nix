@@ -31,13 +31,17 @@
   };
   sdk = fetchgit {
     url = "https://github.com/dfinity/sdk"; # master
-    rev = "3a225b611cd408ca752a627c30c25ce3467313dc";
-    sha256 = "09ibnja04zqib64f7kiqwssaxvqgflrp2zjs3p235vqqizjnr5sr";
+    rev = "431f12570f9f7a94c4436a352b5c86c67626e2ba";
+    sha256 = "09x7b7f3pn0hna2fm9w2jd6nwq6apik9c05ll4nps4k96cfn6x12";
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git";
     rev = "55fd54dae6f90080b770dbc9dbcee5044976b7bf"; # mdb.master
     sha256 = "0syagyv0jmdmivhlyw5y78rmmm8l175pchiv5g3r1n2mhsk7624j";
   };
-
+  vessel = fetchgit {
+    url = "https://github.com/dfinity/vessel";
+    rev = "13dd83fca5eddf48d63abc7a07cffa4fd44e4f6e"; # main
+    sha256 = "0n41qjblka2z745n5vskvn9lfa1qs65mfw3196c7r0adb26xmlgz";
+  };
 }
