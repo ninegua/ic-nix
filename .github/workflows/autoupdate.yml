@@ -20,11 +20,11 @@ jobs:
       run: |
         nix-env -f '<nixpkgs>' -iA update-nix-fetchgit
         update-nix-fetchgit ./nix/sources.nix
+        BRANCH="autoupdate-$(date +%s)"
+        git checkout -b $BRANCH
         git config user.email "autoupdate@github.actions"
         git config user.name "Auto Update"
         git commit -a -m "Update sources.nix"
-        BRANCH="autoupdate-$(date +%s)"
-        git checkout -b $BRANCH
         echo "BRANCH=$BRANCH" >> $GITHUB_ENV
 
     - name: Create a PR
@@ -33,11 +33,12 @@ jobs:
         script: |
           const { repo, owner } = context.repo;
           const head = process.env['BRANCH'];
+          console.log("head", head);
           const result = await github.rest.pulls.create({
             title: 'Update source dependencies',
             owner,
             repo,
-            head: head,
+            head,
             base: 'main',
             body: [
               'This PR is auto-generated'
