@@ -1,6 +1,6 @@
 { writeShellScript, stdenv, libiconv-static, libcxx, libcxxabi }:
 writeShellScript "linker.sh" ''
-  lz=$(echo "$*"|sed -e 's/ /\n/g'|grep -q '[-]lz')
+  lz=$(echo "$*"|sed -e 's/ /\n/g'|grep '^-lz$')
   args=''${@//-lc++/}
   args=''${args//-lstdc++/}
   args=''${args//-lc++abi/}
