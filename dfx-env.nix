@@ -1,7 +1,7 @@
-{ pkgs ? import <nixpkgs> { }, force ? false, version ? "20220520" }:
+{ pkgs ? import <nixpkgs> { }, force ? false, version ? "20220520"
+, system ? pkgs.stdenv.buildPlatform.system }:
 with pkgs;
 let
-  system = stdenv.buildPlatform.system;
   ostypes = [ "linux" "darwin" ];
   archs = [ "x86_64" ];
   supported-systems =
@@ -80,15 +80,16 @@ let
       DFX_CACHE_ROOT = "${drv}/share/dfx";
     } // dfxPaths drv dfxBins);
   warn = mkShell ({
-    buildPhase = ''
+    phases = [ "WARNING" ];
+    WARNING = ''
       echo 
       echo '****************************************************************************************'
-      echo WARNING: 
       echo '  It appears there is no prebuilt binaries available for your system ${stdenv.system}.'
       echo '  Run nix-shell with `--arg force true` if you want to build it from source.'
       echo '  Note that if this is the first time you build it, it can take about an hour to finish.'
       echo '****************************************************************************************'
       echo
+      exit 1
     '';
   });
 in shellFor (if force then
