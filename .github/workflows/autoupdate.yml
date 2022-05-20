@@ -20,12 +20,14 @@ jobs:
       run: |
         nix-env -f '<nixpkgs>' -iA update-nix-fetchgit
         update-nix-fetchgit ./nix/sources.nix
+        echo '${{ github.ref_name }}'
         BRANCH="autoupdate-$(date +%s)"
         git checkout -b $BRANCH
         git config user.email "autoupdate@github.actions"
         git config user.name "Auto Update"
         git commit -a -m "Update sources.nix"
         echo "BRANCH=$BRANCH" >> $GITHUB_ENV
+        echo '${{ github.ref_name }}'
 
     - name: Create a PR
       uses: actions/github-script@v6
@@ -38,7 +40,7 @@ jobs:
             title: 'Update source dependencies',
             owner,
             repo,
-            head,
+            head: '${{ github.ref_name }}',
             base: 'main',
             body: [
               'This PR is auto-generated'
