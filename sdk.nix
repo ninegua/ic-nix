@@ -8,7 +8,7 @@ let
   dfx = rustPlatform.buildRustPackage {
     name = "dfx";
     inherit src;
-    cargoSha256 = "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    cargoSha256 = "sha256-36d9KVn29uRg2oSG290aJo0sd/Az4QK2HA1AJB6xw5s="; # cargoSha256
     inherit buildInputs;
     nativeBuildInputs = [ pkg-config ];
     preConfigure = ''
