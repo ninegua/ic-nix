@@ -66,5 +66,8 @@ Note that this effort requires no nix support of a project unless it already has
 [ic]: https://github.com/dfinity/ic
 [sdk]: https://github.com/dfinity/sdk
 [motoko]: https://github.com/dfinity/motoko
-[icx-proxy]: https://github.com/dfinity/icx-proxy
 [cachix]: https://github.com/cachix/cachix
+[candid]: https://github.com/dfinity/candid
+[icx-proxy]: https://github.com/dfinity/icx-proxy
+[ic-repl]: https://github.com/chenyan2002/ic-repl
+[vessel]: https://github.com/dfinity/vessel
