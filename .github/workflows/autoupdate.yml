@@ -19,12 +19,13 @@ jobs:
       run: |
         nix-env -f '<nixpkgs>' -iA update-nix-fetchgit
         update-nix-fetchgit ./nix/sources.nix
+        sed -i 's/"\([^")]*\)"; *# cargoSha256/"0000000000000000000000000000000000000000000000000000"; # cargoSha256/' *.nix
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
         base: 'main'
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.SCOPED_TOKEN }}
         commit-message: Update source dependencies
         title: '[cron] Update source dependencies'
         body: >

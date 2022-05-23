@@ -42,7 +42,7 @@ jobs:
       with:
         name: ninegua
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-    - run: nix-build --pure -A deps
+    - run: nix-build --pure --keep-going -A deps
   
   build:
     needs: warmup
@@ -50,7 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        project: [ 'motoko', 'ic', 'sdk', 'icx-proxy' ]
+        project: [ 'motoko', 'ic', 'sdk', 'utils' ]
         channel: [ '21.11', 'unstable' ]
         os: [ ubuntu-latest, macos-latest ]
         include:
@@ -91,4 +91,4 @@ jobs:
       with:
         name: ninegua
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-    - run: nix-build --pure -A ${{ matrix.project }}
+    - run: nix-build --pure --keep-going -A ${{ matrix.project }}
