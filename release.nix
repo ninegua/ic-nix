@@ -6,12 +6,13 @@ with import ./. { inherit pkgs; }; rec {
     phases = [ "installPhase" ];
     installPhase = ''
       mkdir -p $out/bin $out/share
-      cp ${moc}/bin/* $out/bin/
+      cp ${moc}/bin/mo* $out/bin/
       cp ${ic.binaries}/bin/{replica,ic-admin,ic-prep,ic-starter} $out/bin/
       cp ${dfx}/bin/* $out/bin/
       cp ${icx-proxy}/bin/* $out/bin/
       cp ${vessel}/bin/* $out/bin/
       cp ${ic-repl}/bin/* $out/bin/
+      cp ${candid}/bin/* $out/bin/
     '' + pkgs.lib.optionalString pkgs.stdenv.isLinux (''
       for exe in $out/bin/*; do
         chmod 755 $exe
