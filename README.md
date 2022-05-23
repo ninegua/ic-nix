@@ -32,7 +32,10 @@ Releases are built against the latest main branches of each project on a weekly 
  - [ic]
  - [sdk]
  - [motoko]
+ - [candid]
  - [icx-proxy]
+ - [ic-repl]
+ - [vessel]
 
 Supported platforms:
 
