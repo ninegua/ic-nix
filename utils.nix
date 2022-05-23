@@ -21,11 +21,11 @@ in rec {
   icx-proxy =
     mkDrv "icx-proxy" "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
   vessel =
-    mkDrv "vessel" "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    mkDrv "vessel" "sha256-YKLDYEdIkMFtM5ZTOzRJxXi3YAmGtzH+2kPyLSHV1Ok="; # cargoSha256
   ic-repl =
-    mkDrv "ic-repl" "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    mkDrv "ic-repl" "sha256-SJ+MNzOPt5APPuKaE3baz3zqYASZzbKEY0ILQfO/014="; # cargoSha256
   candid =
-    mkDrv "candid" "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    mkDrv "candid" "sha256-KejEkKUUPyZvgGp/KHcVxCpzy17cAfABUw4FLIu9N8c="; # cargoSha256
 
   shell = icx-proxy;
 }
