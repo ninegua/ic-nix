@@ -24,6 +24,8 @@ in rec {
     mkDrv "vessel" "1sflslhjvwj3vbz33dw615hbfy6594s3nlwn6dnw34288xhc78k0";
   ic-repl =
     mkDrv "ic-repl" "0pnkpzrl22s2cf2b5kcr0ihflz6gv9v176p27q7r1dwg6cvqr7s8";
+  candid =
+    mkDrv "candid" "1irppn5jq18fac0z00fwbv5p6an42mvjhzvah1pjcgqlln8c9s19";
 
   shell = icx-proxy;
 }

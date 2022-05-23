@@ -49,4 +49,10 @@
     rev = "41b561942281533f67299e485c4763f3ce91f787"; # master
     sha256 = "1kxqghw2vis2xfjwawasfwsqc3ys1lbn80xgya10ikv6yvpbr05f";
   };
+  candid = fetchgit {
+    url = "https://github.com/dfinity/candid";
+    rev = "72b681c3a4fa9cfa1b705e3346118d7eae38ef84"; # master
+    sha256 = "08p8zwq0m2wkgsc4xfn5822hcn9qk6zsmljnva9dgj716rjknjdz";
+  };
+
 }
