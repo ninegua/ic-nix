@@ -19,7 +19,7 @@ For aarch64 (Apple M1) architecture, you have a couple choices:
 
 1. Compile everything from source by passing extra argument `--arg force true`.
 2. Use `x86_64` binaries by passing extra argument `--argstr system x86_64`.
-3. Use pre-built `aarch64` binaries by getting it from the [20220519-aarch64](https://github.com/ninegua/ic-nix/releases/tag/20220519-aarch64) release. These were built offline and manually uploaded.
+3. Use pre-built `aarch64` binaries by getting it from the [20220527](https://github.com/ninegua/ic-nix/releases/tag/20220527) release. These were built offline and manually uploaded.
 
 Before you compile from source, you may also want to setup the binary cache (courtesy of [cachix]) by `nix-shell -p cachix --run 'cachix use ninegua'` to avoid unnecessary compilation.
 
