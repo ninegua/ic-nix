@@ -46,23 +46,16 @@ jobs:
 
     - name: Pack dfx-env
       run: |
-        export version=$(echo ${{ github.ref }} | cut -d/ -f3)
-        export dir=dfx-env
-        mkdir $dir
-        sed -e "s/\"20220520\"/\"$version\"/" dfx-env.nix > $dir/default.nix
-        tar -zcvf $dir.tar.gz $dir
+        VERSION=$(echo ${{ github.ref }} | cut -d/ -f3) make dfx-env.tar.gz
       if: contains(matrix.os, 'ubuntu')
 
     - name: Pack binaries
       run: |
-        tar --version
-        export name=ic-binaries-$(echo ${{ github.ref }} | cut -d/ -f3)
-        tar -zcv -C $(nix-build --pure release.nix --no-out-link -A binaries) --transform "s,^.,$name," -f $name-x86_64-${{ matrix.name }}.tar.gz .
+        VERSION=$(echo ${{ github.ref }} | cut -d/ -f3) make binaries
 
     - name: Pack canisters
       run: |
-        export name=ic-canisters-$(echo ${{ github.ref }} | cut -d/ -f3)
-        tar -zcv -C $(nix-build --pure release.nix --no-out-link -A canisters) --transform "s,^.,$name," -f $name-wasm32.tar.gz .
+        VERSION=$(echo ${{ github.ref }} | cut -d/ -f3) make canisters
       if: contains(matrix.os, 'ubuntu')
 
     - name: Upload dfx-env
