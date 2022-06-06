@@ -86,7 +86,7 @@ let
         with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
       else
         [ libunwind ]);
-      cargoSha256 = "sha256-llkt8CoDD/RVrEkKuw1sWV4fePG/epluABSdqWWiOR0="; # cargoSha256
+      cargoSha256 = "0000000000000000000000000000000000000000000000000000"; # cargoSha256
       doCheck = false;
 
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
