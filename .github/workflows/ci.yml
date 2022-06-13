@@ -23,8 +23,6 @@ jobs:
             channel-darwin: '22.05-darwin'
           - channel: '21.11'
             channel-darwin: '21.11-darwin'
-          - channel: 'unstable'
-            channel-darwin: 'unstable'
 
     steps:
     - uses: actions/checkout@v2.3.4
@@ -66,8 +64,6 @@ jobs:
             channel-darwin: '22.05-darwin'
           - channel: '21.11'
             channel-darwin: '21.11-darwin'
-          - channel: 'unstable'
-            channel-darwin: 'unstable'
 
     steps:
     - name: Maximize build space
