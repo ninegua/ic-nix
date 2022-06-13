@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        channel: [ '21.11', 'unstable' ]
+        channel: [ '21.11' ]
         os: [ ubuntu-latest, macos-latest ]
         include:
           - os: ubuntu-latest
@@ -51,7 +51,7 @@ jobs:
       fail-fast: false
       matrix:
         project: [ 'motoko', 'ic', 'sdk', 'utils' ]
-        channel: [ '21.11', 'unstable' ]
+        channel: [ '21.11' ]
         os: [ ubuntu-latest, macos-latest ]
         include:
           - os: ubuntu-latest
