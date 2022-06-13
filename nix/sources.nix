@@ -36,8 +36,8 @@
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git"; # mdb.master
-    rev = "8bc0f750939269e50e61192e854862cac870bb28";
-    sha256 = "1bxblrkfjqqlxnbnqfdj5iy68jmpmd99g33cc23csv2jihwf5wgm";
+    rev = "55fd54dae6f90080b770dbc9dbcee5044976b7bf"; # pin
+    sha256 = "0syagyv0jmdmivhlyw5y78rmmm8l175pchiv5g3r1n2mhsk7624j";
   };
   vessel = fetchgit {
     url = "https://github.com/dfinity/vessel"; # main
