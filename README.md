@@ -49,7 +49,8 @@ Supported platforms:
 Supported nixpkgs:
 
 - [x] 21.11
-- [x] unstable
+- [ ] 22.05 (a new ocaml version broke motoko compilation)
+- [ ] unstable (same as above)
 
 Feature:
 
