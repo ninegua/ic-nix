@@ -11,6 +11,24 @@ let
     inherit ocamlPackages;
     inherit (pkgs.stdenv) mkDerivation;
   };
+  # An old version of menhir is required to parse moc grammar!
+  menhirLib = ocamlPackages.menhirLib.overrideAttrs (_: {
+    version = "20211012";
+    src = pkgs.fetchFromGitLab {
+      domain = "gitlab.inria.fr";
+      owner = "fpottier";
+      repo = "menhir";
+      rev = "20211012";
+      sha256 = "08kf5apbv15n2kcr3qhyr3rvsf2lg25ackr3x9kfgiiqc0p3sz40";
+    };
+    useDune2 = true;
+  });
+  menhirSdk = ocamlPackages.menhirSdk.overrideAttrs
+    (_: { inherit (menhirLib) version src useDune2; });
+  menhir = ocamlPackages.menhir.overrideAttrs (_: {
+    inherit (menhirLib) version src useDune2;
+    buildInputs = [ menhirLib menhirSdk ];
+  });
   rtsBuildInputs = with pkgs;
     [
       # pulls in clang (wrapped) and clang-13 (unwrapped)
@@ -44,8 +62,8 @@ let
     ocamlPackages.atdgen
     ocamlPackages.checkseum
     ocamlPackages.findlib
-    ocamlPackages.menhir
-    ocamlPackages.menhirLib
+    menhir
+    menhirLib
     ocamlPackages.cow
     ocamlPackages.num
     ocamlPackages.stdint
@@ -130,14 +148,15 @@ in rec {
     cargoVendorTools = pkgs.rustPlatform.buildRustPackage rec {
       name = "cargo-vendor-tools";
       src = "${sources.motoko}/rts/${name}/";
-      cargoSha256 = "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+      cargoSha256 =
+        "sha256-CrtZQTac95MEbk3uapviLgcQjEt5VUnTOG9fiJXIAU8="; # cargoSha256
     };
 
     # Path to vendor-rust-std-deps, provided by cargo-vendor-tools
     vendorRustStdDeps = "${cargoVendorTools}/bin/vendor-rust-std-deps";
 
     # SHA256 of Rust std deps
-    rustStdDepsHash = "0pssda6sjpw9fby0wrl1502x66k924x9isqdw8lw96jzj6w2xaxw";
+    rustStdDepsHash = "sha256-vKsuuJFfmsQp4g3rmDoRaRrTBSiBZg78colfqY1qWl8=";
 
     # Vendor directory for Rust std deps
     rustStdDeps = pkgs.stdenvNoCC.mkDerivation {
