@@ -22,7 +22,7 @@ jobs:
           - channel: '21.11'
             channel-darwin: '21.11-darwin'
           - channel: '22.05'
-            channel-darwin: '22.05'
+            channel-darwin: '22.05-darwin'
 
     steps:
     - uses: actions/checkout@v2.3.4
@@ -63,7 +63,7 @@ jobs:
           - channel: '21.11'
             channel-darwin: '21.11-darwin'
           - channel: '22.05'
-            channel-darwin: '22.05'
+            channel-darwin: '22.05-darwin'
 
     steps:
     - name: Maximize build space
