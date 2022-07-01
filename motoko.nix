@@ -29,6 +29,16 @@ let
     inherit (menhirLib) version src useDune2;
     buildInputs = [ menhirLib menhirSdk ];
   });
+  wasm = ocamlPackages.wasm.overrideAttrs (_: {
+    version = "1.1.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "WebAssembly";
+      repo = "spec";
+      rev = "opam-1.1.1";
+      sha256 = "1kp72yv4k176i94np0m09g10cviqp2pnpm7jmiq6ik7fmmbknk7c";
+    };
+  });
+
   rtsBuildInputs = with pkgs;
     [
       # pulls in clang (wrapped) and clang-13 (unwrapped)
@@ -67,7 +77,7 @@ let
     ocamlPackages.cow
     ocamlPackages.num
     ocamlPackages.stdint
-    ocamlPackages.wasm
+    wasm
     ocamlPackages.vlq
     ocamlPackages.zarith
     ocamlPackages.yojson
