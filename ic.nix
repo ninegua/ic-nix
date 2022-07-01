@@ -69,6 +69,7 @@ let
         cp -r $src ${name}
         echo source root is ${sourceRoot}
         chmod -R u+w -- "$sourceRoot"
+        cd ${name} && patch -p1 < ${./nix/ic-ciborium-0.2.0.patch} && cd ..
         runHook postUnpack
       '';
       sourceRoot = "${name}/rs";
@@ -86,7 +87,7 @@ let
         with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
       else
         [ libunwind ]);
-      cargoSha256 = "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+      cargoSha256 = "sha256-B/1vTMscNSATFK1JzMWE6BAg3OyqRfTQwYhfLAR/9FM="; # cargoSha256
       doCheck = false;
 
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
