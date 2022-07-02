@@ -19,7 +19,7 @@ let
     };
 in rec {
   icx-proxy =
-    mkDrv "icx-proxy" "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
+    mkDrv "icx-proxy" "sha256-vprJ3E8vv+AWrEiajMQLVB2wTlckFYQeDQnDDoft2EI="; # cargoSha256
   vessel =
     mkDrv "vessel" "sha256-YKLDYEdIkMFtM5ZTOzRJxXi3YAmGtzH+2kPyLSHV1Ok="; # cargoSha256
   ic-repl =
