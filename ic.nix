@@ -102,6 +102,7 @@ let
         "-lstatic=z"
       ] ++ lib.optionals stdenv.isDarwin [
         "-Lnative=${libiconv-static.out}/lib"
+        "-L=${libiconv-static.out}/lib"
         "-lstatic=iconv"
       ];
 
