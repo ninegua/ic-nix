@@ -8,9 +8,9 @@ let
   dfx = rustPlatform.buildRustPackage {
     name = "dfx";
     inherit src;
-    cargoSha256 = "sha256-jSFl5XhHe5cXb58UHlfLRh1LttWqDU1XLamxR51X3Lk"; # cargoSha256
+    cargoSha256 = "sha256-xQ0ssKTi9ob6WGxkdQJ/cASqijda9psoGU3Zuh+ORb8="; # cargoSha256
     inherit buildInputs;
-    nativeBuildInputs = [ pkg-config ];
+    nativeBuildInputs = [ pkg-config cmake binaryen python3 ];
     preConfigure = ''
       export DFX_ASSETS=$PWD/dfx_assets
       mkdir -p $DFX_ASSETS
