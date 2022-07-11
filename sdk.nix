@@ -10,7 +10,7 @@ let
     inherit src;
     cargoSha256 = "sha256-xQ0ssKTi9ob6WGxkdQJ/cASqijda9psoGU3Zuh+ORb8="; # cargoSha256
     inherit buildInputs;
-    nativeBuildInputs = [ pkg-config ];
+    nativeBuildInputs = [ pkg-config cmake binaryen python3 ];
     preConfigure = ''
       export DFX_ASSETS=$PWD/dfx_assets
       mkdir -p $DFX_ASSETS
