@@ -17,6 +17,8 @@ let
     "ic-replay"
     "ic-consensus-pool-util"
     "state-tool"
+    "ic-btc-adapter"
+    "ic-canister-http-adapter"
   ];
 
   wasms = [
