@@ -5,6 +5,10 @@ let
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
+  rustPlatform = makeRustPlatform {
+    inherit (rustPackages_1_60) cargo rustc;
+    inherit stdenv;
+  };
   dfx = rustPlatform.buildRustPackage {
     name = "dfx";
     inherit src;
@@ -23,12 +27,11 @@ let
       mkdir -p $out/share/dfx-canisters/
       cp $src/src/distributed/*.{wasm,did} $out/share/dfx-canisters/
     '';
-    RUSTFLAGS = lib.optionals stdenv.isDarwin [
-      "-Clinker=${linker}"
-      "-Lnative=${libcxxabi}/lib"
-      "-Lnative=${libiconv-static.out}/lib"
-      "-lstatic=iconv"
-    ];
+    RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ]
+      ++ lib.optionals stdenv.isDarwin [
+        "-Lnative=${libiconv-static.out}/lib"
+        "-lstatic=iconv"
+      ];
   };
 
 in {

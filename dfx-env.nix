@@ -56,6 +56,8 @@ let
     "dfx"
     "replica"
     "ic-starter"
+    "ic-btc-adapter"
+    "ic-canister-http-adapter"
     "canister_sandbox"
     "ic-ref"
     "ic-starter"
