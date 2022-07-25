@@ -23,9 +23,9 @@ in rec {
   vessel =
     mkDrv "vessel" "sha256-gfCViWw6OTj1TtCmmeOq46TI5YGCO4UYRQnpl7JXs5o="; # cargoSha256
   ic-repl =
-    mkDrv "ic-repl" "sha256-r1E7nWTgPOXO/XQFzWPg1aiPMOKqupIS0//0cY/TyHE="; # cargoSha256
+    mkDrv "ic-repl" "sha256-57fk3lWvHQRzXvuTzhGlYdL9rm2NTt5NLrESj2QHQRM="; # cargoSha256
   candid =
-    mkDrv "candid" "sha256-KejEkKUUPyZvgGp/KHcVxCpzy17cAfABUw4FLIu9N8c="; # cargoSha256
+    mkDrv "candid" "sha256-g3mo2S94mIrCl93q34bhO1NT65MiecBEW5lGuWuQjwE="; # cargoSha256
 
   shell = icx-proxy;
 }

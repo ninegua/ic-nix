@@ -12,7 +12,7 @@ let
   dfx = rustPlatform.buildRustPackage {
     name = "dfx";
     inherit src;
-    cargoSha256 = "sha256-xQ0ssKTi9ob6WGxkdQJ/cASqijda9psoGU3Zuh+ORb8="; # cargoSha256
+    cargoSha256 = "sha256-yL6ZtErBnEFcqjZW+QeN4JaWvFdasZn+ayujxxwB8+I="; # cargoSha256
     inherit buildInputs;
     nativeBuildInputs = [ pkg-config cmake binaryen python3 ];
     preConfigure = ''
