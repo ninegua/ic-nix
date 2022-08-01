@@ -1,13 +1,13 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = "eef9aebd730c9550eb738b902adb1858ca22f202";
-    sha256 = "19kx9zdkr7bvkaw8b6aj95yx2k6arrwrdfg554dm3s9cg97bhdqq";
+    rev = "2cac973e810645f915e8fd0019ad2586258d52d9";
+    sha256 = "17d2syhj5y7a6v6mdmpzyls018zk5f1l1a56b2vza68bmvx92l4a";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # main
-    rev = "02a05179194d61d911cd4837ea9b5d0fb0ff5792";
-    sha256 = "1pcqqsg4v1cm3hxx8vclls6gcvr86ca26nn4sr2dl99gdga5a21s";
+    rev = "a90e666b11295320f2792d5dafc67632fea03ef5";
+    sha256 = "05r1vwqgcv370wx74nh2hn5b4zwx8flih8m69r0qp3xndk8gjvw9";
   };
   libtommath = fetchgit {
     url = "https://github.com/libtom/libtommath"; # master
@@ -16,8 +16,8 @@
   };
   motoko = fetchgit {
     url = "https://github.com/dfinity/motoko"; # master
-    rev = "c38363c5b07ac9bb5af4e4bd366a99da8a6eb50c";
-    sha256 = "0655qf59d1padg514n9fmv714fwzlzi6db0qm4rmz9sayc1rmcjh";
+    rev = "251f1858cc73a2a6463d2b4776437cd8fa281b56";
+    sha256 = "0rkc8hfv78k229bnr5qlhcxz3v5fvncjpiw1kf5l45vybpiir3b0";
   };
   motoko-base = fetchgit {
     url = "https://github.com/dfinity/motoko-base"; # next-moc
@@ -26,13 +26,13 @@
   };
   musl-wasi = fetchgit {
     url = "https://github.com/WebAssembly/wasi-libc"; # main
-    rev = "60f221a400e36ba59d99c191a86e978117320f0a";
-    sha256 = "0546wdh3ksydfdbj2gggxvsfj15zk6zyhvbyhkr0yzn1f1a22fxh";
+    rev = "6575e7d84899d282f73d36c1b1f18810502145e3";
+    sha256 = "0wfaqgqy5jkg2kkbxnmy64ld8jnp4587c9qvlzq3c6bhk1r01mm2";
   };
   sdk = fetchgit {
     url = "https://github.com/dfinity/sdk"; # master
-    rev = "be67dc283153ac88900372a1378ec699aa52fcc4";
-    sha256 = "1zqfx9ml7kw0xh1fhq5iky3yyy41yym8fwywj9s8phjnchd9pc9z";
+    rev = "62b8717183deb059193fd74e6cf0f5379bf74f0b";
+    sha256 = "01g227pxv0zxmjgqh8w86hc4b86vskn5kjdd0f9s31zag68sccf3";
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git"; # mdb.master
@@ -46,8 +46,8 @@
   };
   ic-repl = fetchgit {
     url = "https://github.com/chenyan2002/ic-repl"; # master
-    rev = "7c347dca47f247501e0031fe247d2f3c8b58a02f";
-    sha256 = "0api9mhj44cd2g2d1k2r77958spagf0dnap1ncd8ca5bvsl3wfmv";
+    rev = "50e211bf4b62cb33515aa1cbc4602d82f589f1eb";
+    sha256 = "0kpsw7nckb1cdvxgjbyxprmb6macrivaww8xspwsdlkyvgppja78";
   };
   candid = fetchgit {
     url = "https://github.com/dfinity/candid"; # master
