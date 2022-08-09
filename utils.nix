@@ -19,13 +19,13 @@ let
     };
 in rec {
   icx-proxy =
-    mkDrv "icx-proxy" "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    mkDrv "icx-proxy" "sha256-Zv9wBf32sv/bQUo4do+xejil5KQebtS/3rGbiRdomnQ="; # cargoSha256
   vessel =
-    mkDrv "vessel" "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    mkDrv "vessel" "sha256-gfCViWw6OTj1TtCmmeOq46TI5YGCO4UYRQnpl7JXs5o="; # cargoSha256
   ic-repl =
-    mkDrv "ic-repl" "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    mkDrv "ic-repl" "sha256-JE0o8htFxhU2y7V/STKnRLLMBNggZqTAz1oJWpFSZu4="; # cargoSha256
   candid =
-    mkDrv "candid" "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    mkDrv "candid" "sha256-Eex9NuWzfLaPwl3JvESlWHCTgF7QJXSG0SyUPqMEBL4="; # cargoSha256
 
   shell = icx-proxy;
 }
