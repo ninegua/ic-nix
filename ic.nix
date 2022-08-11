@@ -56,8 +56,8 @@ let
         [ "-Wno-error=deprecated-copy" "-Wno-error=unused-private-field" ];
     });
 
-  buildIC =
-    { targets, hostTriple ? stdenv.hostPlatform.config, profile ? "release" }:
+  buildIC = { customLinker, targets, hostTriple ? stdenv.hostPlatform.config
+    , profile ? "release" }:
     let
       linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
       cargoBuildFlags =
@@ -89,14 +89,14 @@ let
         with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
       else
         [ libunwind ]);
-      cargoSha256 = "sha256-X3scSRSLmGKVCl5nDh9U9BUZuGzQVWrlWBaLLwlOVew="; # cargoSha256
+      cargoSha256 =
+        "sha256-X3scSRSLmGKVCl5nDh9U9BUZuGzQVWrlWBaLLwlOVew="; # cargoSha256
       doCheck = false;
 
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
       ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
       LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
-      RUSTFLAGS = [
-        "-Clinker=${linker}"
+      RUSTFLAGS = lib.optionals customLinker [ "-Clinker=${linker}" ] ++ [
         "-Lnative=${libcxxabi}/lib"
         "-Lnative=${zlib-static}/lib"
         "-Lnative=${lmdb.out}/lib"
@@ -118,7 +118,11 @@ let
       '';
     });
 
-  binaries = buildIC { targets = bins ++ wasms; };
+  binaries = { customLinker ? true }:
+    buildIC {
+      targets = bins ++ wasms;
+      inherit customLinker;
+    };
 
   wasm-names = lib.strings.concatStringsSep " " wasms;
 
@@ -126,6 +130,7 @@ let
     targets = wasms;
     hostTriple = "wasm32-unknown-unknown";
     profile = "canister-release";
+    customLinker = false;
   }).overrideAttrs (self: rec {
     name = "ic-wasm";
     RUSTFLAGS = [ ];
@@ -152,12 +157,12 @@ let
         elif [ $name = "root-canister" ]; then
           true
         else
-          ${binaries}/bin/$name > $out/share/ic-canisters/$name.did
+          ${binaries { }}/bin/$name > $out/share/ic-canisters/$name.did
         fi
       done
     '';
   };
 in {
   inherit binaries wasm-binaries canisters;
-  shell = binaries;
+  shell = binaries { customLinker = false; };
 }
