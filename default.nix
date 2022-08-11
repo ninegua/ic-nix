@@ -49,7 +49,8 @@ in let
       buildInputs = builtins.concatMap (drv: drv.buildInputs) drvs;
       nativeBuildInputs = builtins.concatMap (drv: drv.nativeBuildInputs) drvs;
     };
-  projects = { inherit motoko ic sdk utils; };
+  ic-no-shell = ic // { shell = null; };
+  projects = { inherit motoko ic ic-no-shell sdk utils; };
 in with builtins;
 let derivations = pkgs.lib.lists.fold (a: b: a // b) { } (attrValues projects);
 in projects // derivations // { deps = depsOf (attrValues derivations); }

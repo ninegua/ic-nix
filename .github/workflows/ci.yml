@@ -50,7 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        project: [ 'motoko', 'ic', 'sdk', 'utils' ]
+        project: [ 'motoko', 'ic-no-shell', 'sdk', 'utils' ]
         channel: [ '21.11', '22.05' ]
         os: [ ubuntu-latest, macos-latest ]
         include:
