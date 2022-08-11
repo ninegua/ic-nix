@@ -118,11 +118,13 @@ let
       '';
     });
 
-  binaries = { customLinker ? true }:
+  mkBinaries = { customLinker }:
     buildIC {
       targets = bins ++ wasms;
       inherit customLinker;
     };
+
+  binaries = mkBinaries { customLinker = true; };
 
   wasm-names = lib.strings.concatStringsSep " " wasms;
 
@@ -157,12 +159,12 @@ let
         elif [ $name = "root-canister" ]; then
           true
         else
-          ${binaries { }}/bin/$name > $out/share/ic-canisters/$name.did
+          ${binaries}/bin/$name > $out/share/ic-canisters/$name.did
         fi
       done
     '';
   };
 in {
-  inherit (binaries { }) wasm-binaries canisters;
-  shell = binaries { customLinker = false; };
+  inherit binaries wasm-binaries canisters;
+  shell = mkBinaries { customLinker = false; };
 }
