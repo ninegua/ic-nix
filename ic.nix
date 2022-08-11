@@ -163,6 +163,6 @@ let
     '';
   };
 in {
-  inherit binaries wasm-binaries canisters;
+  inherit (binaries { }) wasm-binaries canisters;
   shell = binaries { customLinker = false; };
 }
