@@ -16,8 +16,7 @@ let
     url =
       "https://github.com/ninegua/ic-nix/releases/download/${version}/ic-canisters-${version}-wasm32.tar.gz";
   };
-  sources =
-    import "${ic-nix}/nix/sources.nix" { inherit (pkgs) fetchgit; };
+  sources = import "${ic-nix}/nix/sources.nix" { inherit (pkgs) fetchgit; };
   makeDrv = { binaries, canisters }:
     stdenv.mkDerivation {
       name = "dfx-env";
@@ -48,9 +47,8 @@ let
       */
     };
   prebuilt-drv = makeDrv { inherit binaries canisters; };
-  build-drv =
-    let release = import "${ic-nix}/release.nix" { inherit pkgs; };
-    in makeDrv { inherit (release) binaries canisters; };
+  build-drv = let release = import "${ic-nix}/release.nix" { inherit pkgs; };
+  in makeDrv { inherit (release) binaries canisters; };
 
   dfxBins = [
     "dfx"
