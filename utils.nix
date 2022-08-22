@@ -25,7 +25,7 @@ in rec {
   ic-repl = mkDrv "ic-repl"
     "sha256-Oj4O/xReqxvkZU5/YrgtpThjuEatZBVjnDWJo/3Qltg="; # cargoSha256
   candid = mkDrv "candid"
-    " sha256-IGMF5oTj+6bSe6m/90UvTb1XHsasVBbjtbHcQ1SBHcI="; # cargoSha256
+    "sha256-IGMF5oTj+6bSe6m/90UvTb1XHsasVBbjtbHcQ1SBHcI="; # cargoSha256
 
   shell = icx-proxy;
 }
