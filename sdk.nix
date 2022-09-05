@@ -21,7 +21,7 @@ let
       export DFX_ASSETS="$PWD/dfx_assets"
       mkdir -p "$DFX_ASSETS"
       touch "$DFX_ASSETS/binary_cache.tgz"
-      tar -czf "$DFX_ASSETS"/assetstorage_canister.tgz -C $src/src/distributed assetstorage.did assetstorage.wasm
+      tar -czf "$DFX_ASSETS"/assetstorage_canister.tgz -C $src/src/distributed assetstorage.did assetstorage.wasm.gz
       tar -czf "$DFX_ASSETS"/wallet_canister.tgz -C $src/src/distributed wallet.did wallet.wasm
       tar -czf "$DFX_ASSETS"/ui_canister.tgz -C $src/src/distributed ui.did ui.wasm
     '';
