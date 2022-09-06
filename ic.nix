@@ -106,6 +106,7 @@ let
         "-Lall=${libiconv-static.out}/lib"
         "-lstatic=iconv"
       ];
+      RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
 
       buildPhase = ''
         cargo build --profile ${profile} --target ${hostTriple} $cargoBuildFlags
