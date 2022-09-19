@@ -1,8 +1,8 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = "7464a8cf40e619666673a0939cdc88cc0dafa156";
-    sha256 = "1gryfviqvcjnbjf9w6d71gg0i1ns8kmvdyb77nkqbzdqspr8gclp";
+    rev = "50c53c8e996e7b00b88c2f43120c46534cc499f6";
+    sha256 = "1v7fgcws7pf2id5cmiz9328k9w1rsillbbnizjyl2i8i6h0vh3d7";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # main
@@ -16,8 +16,8 @@
   };
   motoko = fetchgit {
     url = "https://github.com/dfinity/motoko"; # master
-    rev = "c8fbcb889844b8b7a77dedbf75379912809f2c2e";
-    sha256 = "1sffy4vlcl4xhd8l3z7hx3m6v0wcjz5la8bag81dlb27slx9x1hi";
+    rev = "e111bd09da3daaa01ebd6f81c68462f8036012df";
+    sha256 = "0m8n4pvv2srqy1k5b8zqqlq7cas81hj749cvnj1w1a6yvdimim54";
   };
   motoko-base = fetchgit {
     url = "https://github.com/dfinity/motoko-base"; # next-moc
@@ -26,13 +26,13 @@
   };
   musl-wasi = fetchgit {
     url = "https://github.com/WebAssembly/wasi-libc"; # main
-    rev = "2057ce9262f76f7ef5a2002fa16da219e2176896";
-    sha256 = "0k1gbdplxgl290bkd7z99020d8crqc3kq4vdrivl9iabpk95l9dd";
+    rev = "c40403f9b02f1b71c73a0537518ba26f91c194c4";
+    sha256 = "00v78srd4f1k3b0kddkyhyd5wq6bigppdsh88gmx401kxh0kjps3";
   };
   sdk = fetchgit {
     url = "https://github.com/dfinity/sdk"; # master
-    rev = "9fce71de0f92c90b4079c37d13771ee36b481d70";
-    sha256 = "1dy41hdqlqs1sxp4cq6jq1anw74crs8c35lraab64whqg0h77v59";
+    rev = "c8a1d862e548436a9b59a932ac0eb315ae47e7e1";
+    sha256 = "1hisx9rlyq6lnsq60l25zpljvf66vhr0bsf4s4zmsrba64lj7sxp";
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git"; # mdb.master
@@ -46,8 +46,8 @@
   };
   ic-repl = fetchgit {
     url = "https://github.com/chenyan2002/ic-repl"; # master
-    rev = "9f163efdae0ffca8163e57ca4c26fb19add017f6";
-    sha256 = "1798idsnckziadcdfh6w9f0n159n6xagpnvfsrzlgbfmmgzqadmx";
+    rev = "97cf04148739cd6b0f9b5ac4a7bc7029ed11c1f6";
+    sha256 = "0j9w748ivbk82w6vqryb2ss2pg7v3zvfzk3zbmmvk03dhvdfp2n7";
   };
   candid = fetchgit {
     url = "https://github.com/dfinity/candid"; # master
