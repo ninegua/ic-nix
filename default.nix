@@ -7,6 +7,7 @@ let
       rust-bindgen = super.rust-bindgen.overrideAttrs (_: { doCheck = false; });
       rust-stable = super.rust-bin.stable.latest.default.override {
         targets = [ "wasm32-unknown-unknown" ];
+        extensions = [ "rust-src" ];
       };
       rustPlatform = super.makeRustPlatform {
         rustc = self.rust-stable;
