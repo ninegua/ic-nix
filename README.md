@@ -23,6 +23,17 @@ For aarch64 (Apple M1) architecture, you have a couple choices:
 
 Before you compile from source, you may also want to setup the binary cache (courtesy of [cachix]) by `nix-shell -p cachix --run 'cachix use ninegua'` to avoid unnecessary compilation.
 
+**VSCode/direnv**
+
+Assuming you're developing on `ic`.
+
+1. Make sure you have [`direnv`](https://direnv.net/) installed.
+1. Clone this repo next to `ic`.
+2. Under `ic/rs`: run `echo "use nix ../../ic-nix/default.nix -A ic.shell" > .envrc`. 
+3. In the same directory, run `direnv allow .`
+
+If using VSCode, you should also install the [direnv vscode extension](https://marketplace.visualstudio.com/items?itemName=mkhl.direnv), to make sure that rust-analyzer will be using the same versions of Rust as your shell.
+
 **WARNING**
 
 Releases are built against the latest main branches of each project on a weekly update schedule. They may not always work. Please understand the risks before proceed.
