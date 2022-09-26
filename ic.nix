@@ -19,6 +19,8 @@ let
     "state-tool"
     "ic-btc-adapter"
     "ic-canister-http-adapter"
+    "canister_sandbox"
+    "sandbox_launcher"
   ];
 
   wasms = [
