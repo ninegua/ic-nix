@@ -1,8 +1,8 @@
 diff --git a/rs/rosetta-api/icrc1/Cargo.toml b/rs/rosetta-api/icrc1/Cargo.toml
-index 9e71f5da5..13c80970f 100644
+index a9546d5745..53c798948f 100644
 --- a/rs/rosetta-api/icrc1/Cargo.toml
 +++ b/rs/rosetta-api/icrc1/Cargo.toml
-@@ -7,7 +7,7 @@ edition = "2018"
+@@ -7,7 +7,7 @@ edition = "2021"
  
  [dependencies]
  candid = "0.7.10"
@@ -12,10 +12,10 @@ index 9e71f5da5..13c80970f 100644
  ic-base-types = { path = "../../types/base_types" }
  ic-crypto-sha = { path = "../../crypto/sha" }
 diff --git a/rs/rosetta-api/icrc1/archive/Cargo.toml b/rs/rosetta-api/icrc1/archive/Cargo.toml
-index 12341d96c..df9efb850 100644
+index 5b35340b8e..583a591d79 100644
 --- a/rs/rosetta-api/icrc1/archive/Cargo.toml
 +++ b/rs/rosetta-api/icrc1/archive/Cargo.toml
-@@ -7,7 +7,7 @@ edition = "2018"
+@@ -7,7 +7,7 @@ edition = "2021"
  
  [dependencies]
  candid = "0.7.10"
@@ -24,24 +24,37 @@ index 12341d96c..df9efb850 100644
  ic-base-types = { path = "../../../types/base_types" }
  ic-cdk = { version = "0.5.1" }
  ic-cdk-macros = { version = "0.5.1" }
-diff --git a/rs/rosetta-api/icrc1/ledger/Cargo.toml b/rs/rosetta-api/icrc1/ledger/Cargo.toml
-index ba7edaebd..99330c932 100644
---- a/rs/rosetta-api/icrc1/ledger/Cargo.toml
-+++ b/rs/rosetta-api/icrc1/ledger/Cargo.toml
+diff --git a/rs/rosetta-api/icrc1/index/Cargo.toml b/rs/rosetta-api/icrc1/index/Cargo.toml
+index 97931e8dd4..a593b03170 100644
+--- a/rs/rosetta-api/icrc1/index/Cargo.toml
++++ b/rs/rosetta-api/icrc1/index/Cargo.toml
 @@ -8,7 +8,7 @@ edition = "2018"
  [dependencies]
  async-trait = "0.1.53"
  candid = "0.7.10"
 -ciborium = { git = "https://github.com/enarx/ciborium", rev = "e719537c99b564c3674a56defe53713c702c6f46" }
 +ciborium = "0.2.0"
+ dfn_core = { path = "../../../rust_canisters/dfn_core" }
+ dfn_http_metrics = { path = "../../../rust_canisters/dfn_http_metrics" }
+ ic-base-types = { path = "../../../types/base_types" }
+diff --git a/rs/rosetta-api/icrc1/ledger/Cargo.toml b/rs/rosetta-api/icrc1/ledger/Cargo.toml
+index f0c0d00baf..3c17aab2c0 100644
+--- a/rs/rosetta-api/icrc1/ledger/Cargo.toml
++++ b/rs/rosetta-api/icrc1/ledger/Cargo.toml
+@@ -12,7 +12,7 @@ path = "src/main.rs"
+ [dependencies]
+ async-trait = "0.1.53"
+ candid = "0.7.10"
+-ciborium = { git = "https://github.com/enarx/ciborium", rev = "e719537c99b564c3674a56defe53713c702c6f46" }
++ciborium = "0.2.0"
+ dfn_http_metrics = {path = "../../../rust_canisters/dfn_http_metrics"}
  hex = "0.4.2"
  ic-base-types = { path = "../../../types/base_types" }
- ic-crypto-tree-hash = { path = "../../../crypto/tree_hash" }
 diff --git a/rs/rosetta-api/ledger_canister/Cargo.toml b/rs/rosetta-api/ledger_canister/Cargo.toml
-index be012afec..5bd451f3f 100644
+index 3c7e6281e9..341aac0408 100644
 --- a/rs/rosetta-api/ledger_canister/Cargo.toml
 +++ b/rs/rosetta-api/ledger_canister/Cargo.toml
-@@ -9,7 +9,7 @@ edition = "2018"
+@@ -9,7 +9,7 @@ edition = "2021"
  async-trait = "0.1.53"
  byteorder = "1.4"
  candid = "0.7.10"
