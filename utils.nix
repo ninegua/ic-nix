@@ -20,7 +20,7 @@ let
   mkDrv = mkDrv_ [ ];
 in rec {
   icx-proxy = mkDrv "icx-proxy"
-    "sha256-fan+p71fd+vGcbYwZoak6h/agn4nXpziSycg24MBacU="; # cargoSha256
+    "sha256-Zv9wBf32sv/bQUo4do+xejil5KQebtS/3rGbiRdomnQ="; # cargoSha256
   vessel = mkDrv "vessel"
     "sha256-gfCViWw6OTj1TtCmmeOq46TI5YGCO4UYRQnpl7JXs5o="; # cargoSha256
   ic-repl = mkDrv "ic-repl"

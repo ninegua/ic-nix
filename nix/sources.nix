@@ -6,8 +6,8 @@
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # rev-c619cc4
-    rev = "4f732947846f3314e73db185e2932ad5a05c37b3";
-    sha256 = "0axwm3kxy5lyv9wx18bf86ra76ribk07i5v0rqfrijyfh2biv2ar";
+    rev = "c619cc48b192361f0a4d62241ccab01662d5505a";
+    sha256 = "sha256-0GkxF1i9PGJLrEsiPxeYl/9GUk+BaTIjj36BVkb4Unw=";
   };
   libtommath = fetchgit {
     url = "https://github.com/libtom/libtommath"; # master
