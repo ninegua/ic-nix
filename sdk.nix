@@ -15,7 +15,7 @@ let
     cargoSha256 =
       "zoUD27oI4xze5Ekw4a9qLApyU7lqPwfEhhMC9h+PtVQ="; # cargoSha256
     inherit buildInputs;
-    nativeBuildInputs = [ pkg-config cmake binaryen python3 ];
+    nativeBuildInputs = [ perl pkg-config cmake binaryen python3 ];
     preConfigure = ''
       export DFX_VERSION=$(cat src/dfx/Cargo.toml |grep version|head -n1|sed -e 's/^.*"\(.*\)"/\1/')
       export DFX_CONFIG_ROOT="$PWD"
