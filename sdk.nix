@@ -17,6 +17,7 @@ let
     inherit buildInputs;
     nativeBuildInputs = [ pkg-config cmake binaryen python3 ];
     preConfigure = ''
+      export DFX_VERSION=$(cat src/dfx/Cargo.toml |grep version|head -n1|sed -e 's/^.*"\(.*\)"/\1/')
       export DFX_CONFIG_ROOT="$PWD"
       export DFX_ASSETS="$PWD/dfx_assets"
       mkdir -p "$DFX_ASSETS"

@@ -19,6 +19,8 @@ let
     "state-tool"
     "ic-btc-adapter"
     "ic-canister-http-adapter"
+    "canister_sandbox"
+    "sandbox_launcher"
   ];
 
   wasms = [
@@ -88,7 +90,7 @@ let
       ] ++ (if stdenv.isDarwin then
         with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
       else
-        [ libunwind ]);
+        [ libunwind-static ]);
       cargoSha256 =
         "sha256-CNo1d2t4jgfGG6jmBm/+AZds+JL9V9hy4ZRGRh0mQo0="; # cargoSha256
       doCheck = false;
@@ -96,6 +98,7 @@ let
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
       ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
       LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
+      CFLAGS = [ "-I${libunwind-static.dev}/include" ];
       RUSTFLAGS = lib.optionals customLinker [ "-Clinker=${linker}" ] ++ [
         "-Lnative=${libcxxabi}/lib"
         "-Lnative=${zlib-static}/lib"
