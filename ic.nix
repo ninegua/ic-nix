@@ -73,7 +73,6 @@ let
         cp -r $src ${name}
         echo source root is ${sourceRoot}
         chmod -R u+w -- "$sourceRoot"
-        cd ${name} && patch -p1 < ${./nix/ic-ciborium-0.2.0.patch} && cd ..
         runHook postUnpack
       '';
       sourceRoot = "${name}/rs";
@@ -92,7 +91,7 @@ let
       else
         [ libunwind-static ]);
       cargoSha256 =
-        "sha256-CNo1d2t4jgfGG6jmBm/+AZds+JL9V9hy4ZRGRh0mQo0="; # cargoSha256
+        "sha256-7etHQuvY4DzTigRx0Ksij68ArKIS5RA/TjoCshT0ZUI="; # cargoSha256
       doCheck = false;
 
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";

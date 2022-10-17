@@ -5,9 +5,9 @@ let
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
-  mkDrv = name: cargoSha256:
+  mkDrv_ = cargoPatches: name: cargoSha256:
     rustPlatform.buildRustPackage {
-      inherit name cargoSha256;
+      inherit name cargoSha256 cargoPatches;
       src = sources."${name}";
       buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
         (with darwin.apple_sdk.frameworks; [ Security ]);
@@ -17,15 +17,16 @@ let
         "-Lnative=${libcxxabi}/lib"
       ];
     };
+  mkDrv = mkDrv_ [ ];
 in rec {
   icx-proxy = mkDrv "icx-proxy"
     "sha256-Zv9wBf32sv/bQUo4do+xejil5KQebtS/3rGbiRdomnQ="; # cargoSha256
   vessel = mkDrv "vessel"
     "sha256-gfCViWw6OTj1TtCmmeOq46TI5YGCO4UYRQnpl7JXs5o="; # cargoSha256
   ic-repl = mkDrv "ic-repl"
-    "sha256-gYGNlqim9uIs8W0kkWJ/PN5Hv1762GPu/MpJ+ty7+ow="; # cargoSha256
-  candid = mkDrv "candid"
-    "sha256-k4Db2v0ocO7QWYWX4/YVdUN8sUga3LPZJQlvdPA/Ev4="; # cargoSha256
+    "sha256-MQGBqRj/wVSCHA5/tt03DUvetBRCZUfHRthroaXZe54="; # cargoSha256
+  candid = mkDrv_ [ ./nix/candid-2202-10-14.patch ] "candid"
+    "sha256-lGseViht9q/AVGA9NpBDS5ls9BJFCJgHsrX9gMCJPJ8="; # cargoSha256
 
   shell = icx-proxy;
 }
