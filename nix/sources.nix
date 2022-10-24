@@ -1,13 +1,13 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = "6c92d6c25397d1e23090ecbf7f384a98d9361562";
-    sha256 = "184jc35w12cbh0wlcmgli06dqsmdmwbz3hz9jdbgk15jwy288hg0";
+    rev = "d4729f7303caa02b4bde2e930cf78260a0e23c2a";
+    sha256 = "0lkij2bb4ca710bl3l7y14zcm6kvqsy050pf3k80wini1rwy4xr4";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # master
     rev = "c619cc48b192361f0a4d62241ccab01662d5505a"; # pin
-    sha256 = "sha256-0GkxF1i9PGJLrEsiPxeYl/9GUk+BaTIjj36BVkb4Unw=";
+    sha256 = "0z2jz135d0byiwik4sc19x94dzwpk0bky8jbmi5n4g5xb0bk2sfh";
   };
   libtommath = fetchgit {
     url = "https://github.com/libtom/libtommath"; # master
@@ -16,13 +16,13 @@
   };
   motoko = fetchgit {
     url = "https://github.com/dfinity/motoko"; # master
-    rev = "2a4346579ad80b389558b80b9751364394d90ebf";
-    sha256 = "0lf1mad6m6r3lasp9yrg1mgzrxd6fx9kcani7fksipz2dfb7h978";
+    rev = "ce35f96c3541488fe7a24146e629427b50d6a42e";
+    sha256 = "0cfdnq1yywba8qbg6xmdy219payj864pc3sfim4wb3hcwaxnx675";
   };
   motoko-base = fetchgit {
     url = "https://github.com/dfinity/motoko-base"; # next-moc
-    rev = "08507fc9dc425144242434b8fa762c3287077335";
-    sha256 = "0ns15g605fw9p8bi89h41hlw3q7qbj29362yhn8ccpy1bngah207";
+    rev = "d52aecd7dabe3f5f8169b7680fe0a0702a67b0e3";
+    sha256 = "08sbys84lnvjpf2822zli500hyi6yc07rrvmcbcgrpyzjkgp48l3";
   };
   musl-wasi = fetchgit {
     url = "https://github.com/WebAssembly/wasi-libc"; # main
@@ -31,8 +31,8 @@
   };
   sdk = fetchgit {
     url = "https://github.com/dfinity/sdk"; # master
-    rev = "b7cc0287970fa2a2440b8aa77a7620716b4b616f";
-    sha256 = "1f476hkpg6gd256cvr42h0b2irg8gnigz0dccgvi0bzx1h1dgd3y";
+    rev = "db3de4defbeb5a171152ee366fc51e52260804b4";
+    sha256 = "188305b184l3ipwknk8m6qx9s4k77zs127af4kj9w13jv8ky763v";
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git"; # mdb.master
@@ -46,8 +46,8 @@
   };
   ic-repl = fetchgit {
     url = "https://github.com/chenyan2002/ic-repl"; # master
-    rev = "2d8b43ab96e1688b29acb56d25f91acad28be6fa";
-    sha256 = "1jmvliijg2p59ng6m68hlvsb26cmj1lpqnci80gh83vw5bqwbd16";
+    rev = "7913f8b9eb91f66e71b4f5c5d4421fa52e08b97e";
+    sha256 = "1b1q5hvpybdh4cqwcfh294qc2ia6bd0vx1hfc8sw2w15hy8jv1q0";
   };
   candid = fetchgit {
     url = "https://github.com/dfinity/candid"; # master
