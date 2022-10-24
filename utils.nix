@@ -24,7 +24,7 @@ in rec {
   vessel = mkDrv "vessel"
     "sha256-gfCViWw6OTj1TtCmmeOq46TI5YGCO4UYRQnpl7JXs5o="; # cargoSha256
   ic-repl = mkDrv "ic-repl"
-    "sha256-MQGBqRj/wVSCHA5/tt03DUvetBRCZUfHRthroaXZe54="; # cargoSha256
+    "sha256-TtepDvRu4KZjEDXIv19OjZu5/E+CUgfxC91c0jNdJg4="; # cargoSha256
   candid = mkDrv_ [ ./nix/candid-2202-10-14.patch ] "candid"
     "sha256-lGseViht9q/AVGA9NpBDS5ls9BJFCJgHsrX9gMCJPJ8="; # cargoSha256
 
