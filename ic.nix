@@ -25,7 +25,7 @@ let
 
   wasms = [
     "registry-canister"
-    "ledger-canister"
+    "icp-ledger"
     "genesis-token-canister"
     "governance-canister"
     "root-canister"
@@ -155,8 +155,8 @@ let
       mkdir -p $out/share/ic-canisters/
       install -m 644 ${wasm-binaries}/bin/* $out/share/ic-canisters/
       for name in ${wasm-names}; do
-        if [ $name = "ledger-canister" ]; then
-          cp ${sources.ic}/rs/rosetta-api/ledger_canister/*.did $out/share/ic-canisters/
+        if [ $name = "icp-ledger" ]; then
+          cp ${sources.ic}/rs/rosetta-api/icp_ledger/*.did $out/share/ic-canisters/
         elif [ $name = "lifeline" ]; then
           true
         elif [ $name = "root-canister" ]; then
