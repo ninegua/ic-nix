@@ -22,11 +22,11 @@ in rec {
   icx-proxy = mkDrv "icx-proxy"
     "sha256-Zv9wBf32sv/bQUo4do+xejil5KQebtS/3rGbiRdomnQ="; # cargoSha256
   vessel = mkDrv "vessel"
-    "sha256-gfCViWw6OTj1TtCmmeOq46TI5YGCO4UYRQnpl7JXs5o="; # cargoSha256
+    "sha256-OQp+lq21gz7QRyWmokxKqBRaXGkuvMtlgi1Z+vI7VbQ="; # cargoSha256
   ic-repl = mkDrv "ic-repl"
-    "sha256-TtepDvRu4KZjEDXIv19OjZu5/E+CUgfxC91c0jNdJg4="; # cargoSha256
-  candid = mkDrv_ [ ./nix/candid-2202-10-14.patch ] "candid"
-    "sha256-lGseViht9q/AVGA9NpBDS5ls9BJFCJgHsrX9gMCJPJ8="; # cargoSha256
+    "sha256-Yxb5NhuB+ieOfTAhsijKsjl2ZMzwhqDbiY3RHNmzFZQ="; # cargoSha256
+  candid = mkDrv "candid"
+    "sha256-7bBrLVs/GSlzNnJktkbtMrsnunPy7PqKnkPSrVyjVxY="; # cargoSha256
 
   shell = icx-proxy;
 }
