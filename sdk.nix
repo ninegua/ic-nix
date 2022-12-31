@@ -8,7 +8,7 @@ let
   rustPackages_ =
     (if pkgs ? "rustPackages_1_60" then rustPackages_1_60 else rustPackages);
   rustPlatform = makeRustPlatform {
-    inherit rustPackages_ cargo rustc;
+    inherit (rustPackages_) cargo rustc;
     inherit stdenv;
   };
   dfx = rustPlatform.buildRustPackage {
