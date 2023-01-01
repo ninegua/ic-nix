@@ -5,15 +5,11 @@ let
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
-  rustPlatform = makeRustPlatform {
-    inherit (rustPackages_1_60) cargo rustc;
-    inherit stdenv;
-  };
   dfx = rustPlatform.buildRustPackage {
     name = "dfx";
     inherit src;
     cargoSha256 =
-      "sha256-gS/vD0Cb3LujeT6nhZPHLmGvlnqJiuFaQOqt3HTwbCw="; # cargoSha256
+      "sha256-2nR7hzT0cJ2RRhp2ibPXbWdzRKfdYEs3dmMnSoc/VOE="; # cargoSha256
     inherit buildInputs;
     nativeBuildInputs = [ perl pkg-config cmake binaryen python3 ];
     preConfigure = ''
