@@ -7,7 +7,7 @@ let
   ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_12;
   obelisk = import "${sources.motoko}/nix/ocaml-obelisk.nix" {
     inherit (pkgs) lib fetchFromGitHub;
-    inherit (ocamlPackages) ocaml dune_2;
+    inherit (ocamlPackages) ocaml dune_3;
     inherit ocamlPackages;
     inherit (pkgs.stdenv) mkDerivation;
   };
@@ -67,7 +67,7 @@ let
     export CLANG="${pkgs.clang_13}/bin/clang"
   '';
   commonBuildInputs = with pkgs; [
-    ocamlPackages.dune_2
+    ocamlPackages.dune_3
     ocamlPackages.ocaml
     ocamlPackages.atdgen
     ocamlPackages.checkseum
@@ -159,14 +159,14 @@ in rec {
       name = "cargo-vendor-tools";
       src = "${sources.motoko}/rts/${name}/";
       cargoSha256 =
-        "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+        "sha256-gzLk4kNBSbd8ujJ/7mNs/vwCu76ASqtyoVU84PdaJCw="; # cargoSha256
     };
 
     # Path to vendor-rust-std-deps, provided by cargo-vendor-tools
     vendorRustStdDeps = "${cargoVendorTools}/bin/vendor-rust-std-deps";
 
     # SHA256 of Rust std deps
-    rustStdDepsHash = "sha256-vKsuuJFfmsQp4g3rmDoRaRrTBSiBZg78colfqY1qWl8=";
+    rustStdDepsHash = "sha256-sRerHg2LoEiH/dBR/lY/e80rZQv+SFQTOCX9CD+NV+s=";
 
     # Vendor directory for Rust std deps
     rustStdDeps = pkgs.stdenvNoCC.mkDerivation {
@@ -191,7 +191,7 @@ in rec {
       name = "motoko-rts-deps";
       src = "${sources.motoko}/rts";
       sourceRoot = "rts/motoko-rts-tests";
-      sha256 = "sha256-VKNXQ7uT5njmZ4RlF1Lebyy7hPSw+KRjG8ntCXfw/Y4";
+      sha256 = "sha256-jCk92mPwXd8H8zEH4OMdcEwFM8IiYdlhYdYr+WzDW5E=";
       copyLockfile = true;
     };
 
