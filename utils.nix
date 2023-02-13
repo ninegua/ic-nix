@@ -20,13 +20,13 @@ let
   mkDrv = mkDrv_ [ ];
 in rec {
   icx-proxy = mkDrv "icx-proxy"
-    "sha256-Zv9wBf32sv/bQUo4do+xejil5KQebtS/3rGbiRdomnQ="; # cargoSha256
+    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   vessel = mkDrv "vessel"
-    "sha256-OQp+lq21gz7QRyWmokxKqBRaXGkuvMtlgi1Z+vI7VbQ="; # cargoSha256
+    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   ic-repl = mkDrv "ic-repl"
-    "sha256-Yxb5NhuB+ieOfTAhsijKsjl2ZMzwhqDbiY3RHNmzFZQ="; # cargoSha256
+    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   candid = mkDrv "candid"
-    "sha256-7bBrLVs/GSlzNnJktkbtMrsnunPy7PqKnkPSrVyjVxY="; # cargoSha256
+    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
 
   shell = icx-proxy;
 }
