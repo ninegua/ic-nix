@@ -18,7 +18,7 @@ let
     "ic-consensus-pool-util"
     "state-tool"
     "ic-btc-adapter"
-    "ic-canister-http-adapter"
+    "ic-https-outcalls-adapter"
     "canister_sandbox"
     "sandbox_launcher"
   ];

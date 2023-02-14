@@ -55,7 +55,7 @@ let
     "replica"
     "ic-starter"
     "ic-btc-adapter"
-    "ic-canister-http-adapter"
+    "ic-https-outcalls-adapter"
     "canister_sandbox"
     "ic-ref"
     "ic-starter"
