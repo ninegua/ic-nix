@@ -19,8 +19,6 @@ jobs:
             prefix: nixos
           - os: macos-latest
             prefix: nixpkgs
-          - channel: '22.11'
-            channel-darwin: '22.11-darwin'
           - channel: '22.05'
             channel-darwin: '22.05-darwin'
 
@@ -60,8 +58,6 @@ jobs:
           - os: macos-latest
             prefix: nixpkgs
             name: darwin
-          - channel: '22.11'
-            channel-darwin: '22.11-darwin'
           - channel: '22.05'
             channel-darwin: '22.05-darwin'
 
