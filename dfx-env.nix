@@ -51,12 +51,12 @@ let
   in makeDrv { inherit (release) binaries canisters; };
 
   dfxBins = [
+    "canister_sandbox"
     "dfx"
-    "replica"
     "ic-starter"
     "ic-btc-adapter"
     "ic-https-outcalls-adapter"
-    "canister_sandbox"
+    "ic-state-machine-tests"
     "ic-ref"
     "ic-starter"
     "icx-proxy"
