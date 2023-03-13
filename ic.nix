@@ -18,7 +18,7 @@ let
     "ic-consensus-pool-util"
     "state-tool"
     "ic-btc-adapter"
-    "ic-canister-http-adapter"
+    "ic-https-outcalls-adapter"
     "canister_sandbox"
     "sandbox_launcher"
   ];
@@ -75,7 +75,7 @@ let
         chmod -R u+w -- "$sourceRoot"
         runHook postUnpack
       '';
-      sourceRoot = "${name}/rs";
+      sourceRoot = "${name}";
       nativeBuildInputs =
         [ moc cmake llvmPackages.clang pkg-config python3 rustfmt protobuf ];
       buildInputs = [
@@ -91,7 +91,7 @@ let
       else
         [ libunwind-static ]);
       cargoSha256 =
-        "sha256-QRWX+rsjeVP+OUBMGr7bna+5sdJ8LbEZIKw2Fuawegc="; # cargoSha256
+        "sha256-MPOXuoe0/mWsbX2e5Bpw9yeh9gmJQvXbI+tKc0F437I="; # cargoSha256
       doCheck = false;
 
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";

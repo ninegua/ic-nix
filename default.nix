@@ -13,7 +13,7 @@ let
         rustc = self.rust-stable;
         cargo = self.rust-stable;
       };
-      rust-nightly = self.rust-bin.nightly."2022-05-16".default.override {
+      rust-nightly = self.rust-bin.nightly."2022-12-15".default.override {
         targets = [ "wasm32-unknown-emscripten" "wasm32-wasi" ];
         extensions = [ "rust-src" ];
       };

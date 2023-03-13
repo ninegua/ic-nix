@@ -59,8 +59,8 @@ Supported platforms:
 
 Supported nixpkgs:
 
-- [x] 21.11
 - [x] 22.05
+- [ ] 22.11 (WIP)
 - [ ] unstable
 
 Feature:
