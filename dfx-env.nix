@@ -73,12 +73,18 @@ let
         }_PATH";
       value = "${drv}/bin/${name}";
     }) list);
+  # Workaround for the name change that is yet to be incorporated into dfx
+  modify = paths:
+    (paths // {
+      "DFX_IC_CANISTER_HTTP_ADAPTER_PATH" =
+        paths."DFX_IC_HTTPS_OUTCALLS_ADAPTER_PATH";
+    });
   shellFor = drv:
     mkShell ({
       nobuildPhase = "touch $out";
       nativeBuildInputs = [ drv ];
       DFX_CACHE_ROOT = "${drv}/share/dfx";
-    } // dfxPaths drv dfxBins);
+    } // modify (dfxPaths drv dfxBins));
   warn = mkShell ({
     phases = [ "WARNING" ];
     WARNING = ''
