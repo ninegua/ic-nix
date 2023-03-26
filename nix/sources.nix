@@ -9,6 +9,11 @@
     rev = "c619cc48b192361f0a4d62241ccab01662d5505a"; # pin
     sha256 = "0z2jz135d0byiwik4sc19x94dzwpk0bky8jbmi5n4g5xb0bk2sfh";
   };
+  idl2json = fetchgit {
+    url = "https://github.com/dfinity/idl2json"; # master
+    rev = "9758d82e66f53a08ccf421c2593b60e3e6fb86fc";
+    sha256 = "sha256-haUd2ePFyL0B4X5GGm0qGJMF32vnDDWfFoVijRVepXU=";
+  };
   libtommath = fetchgit {
     url = "https://github.com/libtom/libtommath"; # master
     rev = "6ca6898bf37f583c4cc9943441cd60dd69f4b8f2"; # pin
