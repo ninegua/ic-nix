@@ -82,4 +82,5 @@ Note that this effort requires no nix support of a project unless it already has
 [candid]: https://github.com/dfinity/candid
 [icx-proxy]: https://github.com/dfinity/icx-proxy
 [ic-repl]: https://github.com/chenyan2002/ic-repl
+[idl2json]: https://github.com/dfinity/idl2json
 [vessel]: https://github.com/dfinity/vessel
