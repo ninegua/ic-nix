@@ -10,6 +10,7 @@ with import ./. { inherit pkgs; }; rec {
       cp ${ic.binaries}/bin/{replica,ic-admin,ic-prep,ic-starter,ic-btc-adapter,ic-https-outcalls-adapter,canister_sandbox,sandbox_launcher} $out/bin/
       cp ${dfx}/bin/* $out/bin/
       cp ${icx-proxy}/bin/* $out/bin/
+      cp ${idl2json}/bin/* $out/bin/
       cp ${vessel}/bin/* $out/bin/
       cp ${ic-repl}/bin/* $out/bin/
       cp ${candid}/bin/* $out/bin/

@@ -21,6 +21,8 @@ let
 in rec {
   icx-proxy = mkDrv "icx-proxy"
     "sha256-Zv9wBf32sv/bQUo4do+xejil5KQebtS/3rGbiRdomnQ="; # cargoSha256
+  idl2json = mkDrv "idl2json"
+    "sha256-o3cOoFbjhRBwndcEDq0D6rsqunKyWb+oNHLrcH5zs+Q="; # cargoSha256
   vessel = mkDrv "vessel"
     "sha256-+gx9kKgS4M+usVWK/sK34/7XFob5Vn4K6Ha5rBJ9Dgs="; # cargoSha256
   ic-repl = mkDrv "ic-repl"
