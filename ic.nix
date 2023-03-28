@@ -21,6 +21,7 @@ let
     "ic-https-outcalls-adapter"
     "canister_sandbox"
     "sandbox_launcher"
+    "ic-state-machine-tests"
   ];
 
   wasms = [
