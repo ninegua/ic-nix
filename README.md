@@ -46,6 +46,7 @@ Releases are built against the latest main branches of each project on a weekly 
  - [candid]
  - [icx-proxy]
  - [ic-repl]
+ - [ic-wasm]
  - [idl2json]
  - [vessel]
 
@@ -83,5 +84,6 @@ Note that this effort requires no nix support of a project unless it already has
 [candid]: https://github.com/dfinity/candid
 [icx-proxy]: https://github.com/dfinity/icx-proxy
 [ic-repl]: https://github.com/chenyan2002/ic-repl
+[ic-wasm]: https://github.com/dfinity/ic-wasm
 [idl2json]: https://github.com/dfinity/idl2json
 [vessel]: https://github.com/dfinity/vessel
