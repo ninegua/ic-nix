@@ -46,6 +46,7 @@ Releases are built against the latest main branches of each project on a weekly 
  - [candid]
  - [icx-proxy]
  - [ic-repl]
+ - [idl2json]
  - [vessel]
 
 Supported platforms:
