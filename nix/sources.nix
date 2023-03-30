@@ -54,6 +54,11 @@
     rev = "58374a36f80d25b1aeefb2e0e7b962cf20fcd755";
     sha256 = "1100m8s6w7gl2wh255n0d1d8c8jkbplkwzrcxxrr418v3gkd189w";
   };
+  ic-wasm = fetchgit {
+    url = "https://github.com/dfinity/ic-wasm"; # master
+    rev = "67b991570fe48a55d9d92c33fd91db552fcb8647";
+    sha256 = "sha256-kM25Td80ODGmxV3C9hbQ4qSggYLQ9JkCK4VXqBxrKl0=";
+  };
   candid = fetchgit {
     url = "https://github.com/dfinity/candid"; # master
     rev = "0ae3c22c6df17f7e09fb49c5ce5fe77653884e10";
