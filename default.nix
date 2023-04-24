@@ -12,6 +12,7 @@ let
       rustPlatform = super.makeRustPlatform {
         rustc = self.rust-stable;
         cargo = self.rust-stable;
+        stdenv = self.llvmPackages_11.libcxxStdenv;
       };
       rust-nightly = self.rust-bin.nightly."2022-12-15".default.override {
         targets = [ "wasm32-unknown-emscripten" "wasm32-wasi" ];

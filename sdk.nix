@@ -5,6 +5,7 @@ let
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
+  ic_btc_canister = builtins.fetchurl https://github.com/dfinity/bitcoin-canister/releases/latest/download/ic-btc-canister.wasm.gz;
   dfx = rustPlatform.buildRustPackage {
     name = "dfx";
     inherit src;
@@ -22,6 +23,8 @@ let
       tar -czf "$DFX_ASSETS"/assetstorage_canister.tgz -C $src/src/distributed assetstorage.did assetstorage.wasm.gz
       tar -czf "$DFX_ASSETS"/wallet_canister.tgz -C $src/src/distributed wallet.did wallet.wasm
       tar -czf "$DFX_ASSETS"/ui_canister.tgz -C $src/src/distributed ui.did ui.wasm
+      DIR=`dirname ${ic_btc_canister}`
+      tar -czf "$DFX_ASSETS"/btc_canister.tgz -C $DIR ${ic_btc_canister}
     '';
     postInstall = ''
       mkdir -p $out/share/dfx-canisters/
