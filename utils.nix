@@ -20,17 +20,17 @@ let
   mkDrv = mkDrv_ false [ ];
 in rec {
   icx-proxy = mkDrv "icx-proxy"
-    "sha256-Zv9wBf32sv/bQUo4do+xejil5KQebtS/3rGbiRdomnQ="; # cargoSha256
+    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   idl2json = mkDrv "idl2json"
-    "sha256-o3cOoFbjhRBwndcEDq0D6rsqunKyWb+oNHLrcH5zs+Q="; # cargoSha256
+    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   vessel = mkDrv "vessel"
-    "sha256-+gx9kKgS4M+usVWK/sK34/7XFob5Vn4K6Ha5rBJ9Dgs="; # cargoSha256
+    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   ic-repl = mkDrv "ic-repl"
-    "sha256-x6xNF5Pg2Tu0uYX0o0Ywoh87k434Bk56zHvrfVCrTWU="; # cargoSha256
+    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   ic-wasm = mkDrv_ true [ ] "ic-wasm"
-    "sha256-js3P+d7MMKVOa6nijXfVF4TokM6+PtBYBzTCdbY8sIw="; # cargoSha256
+    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   candid = mkDrv "candid"
-    "sha256-3DtEkpyeJi2VcpJOXnZCPvwrQH/C9Tnr4xjZ/X4PQsQ="; # cargoSha256
+    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
 
   shell = icx-proxy;
 }

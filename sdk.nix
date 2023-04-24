@@ -9,7 +9,7 @@ let
     name = "dfx";
     inherit src;
     cargoSha256 =
-      "sha256-q7N0FyGimKJoE4Uj2m2F6ixk/oJGrOAuE3qGXeUwhg4="; # cargoSha256
+      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
     inherit buildInputs;
     nativeBuildInputs = [ perl pkg-config cmake binaryen python3 ];
     preConfigure = ''
