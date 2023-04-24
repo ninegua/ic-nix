@@ -9,9 +9,10 @@ let
     name = "dfx";
     inherit src;
     cargoSha256 =
-      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+      "sha256-PPL8pXUfPIoOSEYnF9rnMvHKQB+iHi2G75XhTy/WG40="; # cargoSha256
     inherit buildInputs;
     nativeBuildInputs = [ perl pkg-config cmake binaryen python3 ];
+    cargoPatches = [ ./nix/sdk-ic-certification-0.23.2.patch ];
     preConfigure = ''
       export DFX_VERSION=$(cat src/dfx/Cargo.toml |grep version|head -n1|sed -e 's/^.*"\(.*\)"/\1/')
       export DFX_CONFIG_ROOT="$PWD"
