@@ -4,7 +4,7 @@ let
   stdenv = llvmPackages_11.libcxxStdenv;
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
-    (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
+    (with darwin.apple_sdk_11.frameworks; [ DiskArbitration ]);
   ic_btc_canister = builtins.fetchurl
     "https://github.com/dfinity/bitcoin-canister/releases/latest/download/ic-btc-canister.wasm.gz";
   dfx = rustPlatform.buildRustPackage {
