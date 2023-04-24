@@ -12,10 +12,7 @@ let
       buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
         (with darwin.apple_sdk.frameworks; [ Security ]);
       nativeBuildInputs = [ pkg-config ];
-      RUSTFLAGS = lib.optionals stdenv.isDarwin [
-        "-Clinker=${linker}"
-        "-Lnative=${libcxxabi}/lib"
-      ];
+      RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ];
     };
   mkDrv = mkDrv_ false [ ];
 in rec {
