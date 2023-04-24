@@ -61,8 +61,8 @@
   };
   candid = fetchgit {
     url = "https://github.com/dfinity/candid"; # master
-    rev = "55d34ec060bd9dc735ed577e6924ddac79a415bf";
-    sha256 = "0v7lzp36h4xjg5qx7qcvh5jawxmc80ph1x5rmaddifp9mzb6vjhi";
+    rev = "0ae3c22c6df17f7e09fb49c5ce5fe77653884e10";
+    sha256 = "0m7pvm4sawamixm30dqx4zlf8vr3966fdpbgad5qjc0zzpzazq51";
   };
 
 }
