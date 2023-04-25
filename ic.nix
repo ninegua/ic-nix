@@ -92,7 +92,7 @@ let
       else
         [ libunwind-static ]);
       cargoSha256 =
-        "sha256-024mBZOkISDCxOUQG3GraBX/648rNklBAQGl01OOdQw="; # cargoSha256
+        "sha256-mu7ey2r7Z0RnSjzgPpL77p6h5yvil34VJA6Pp9SOv18="; # cargoSha256
       doCheck = false;
 
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";

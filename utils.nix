@@ -12,10 +12,7 @@ let
       buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
         (with darwin.apple_sdk.frameworks; [ Security ]);
       nativeBuildInputs = [ pkg-config ];
-      RUSTFLAGS = lib.optionals stdenv.isDarwin [
-        "-Clinker=${linker}"
-        "-Lnative=${libcxxabi}/lib"
-      ];
+      RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ];
     };
   mkDrv = mkDrv_ false [ ];
 in rec {
@@ -26,11 +23,11 @@ in rec {
   vessel = mkDrv "vessel"
     "sha256-+gx9kKgS4M+usVWK/sK34/7XFob5Vn4K6Ha5rBJ9Dgs="; # cargoSha256
   ic-repl = mkDrv "ic-repl"
-    "sha256-x6xNF5Pg2Tu0uYX0o0Ywoh87k434Bk56zHvrfVCrTWU="; # cargoSha256
+    "sha256-nOXdfGdMhG5ou3uzPhRs5HNE8i5NYbRXyDL30BmDy3U="; # cargoSha256
   ic-wasm = mkDrv_ true [ ] "ic-wasm"
-    "sha256-js3P+d7MMKVOa6nijXfVF4TokM6+PtBYBzTCdbY8sIw="; # cargoSha256
+    "sha256-4gi8eBI42JggMesDEK/Lo73MWV2UduR8oci0Z0ld89o="; # cargoSha256
   candid = mkDrv "candid"
     "sha256-3DtEkpyeJi2VcpJOXnZCPvwrQH/C9Tnr4xjZ/X4PQsQ="; # cargoSha256
 
-  shell = icx-proxy;
+  shell = ic-wasm;
 }
