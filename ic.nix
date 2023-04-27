@@ -22,6 +22,7 @@ let
     "canister_sandbox"
     "sandbox_launcher"
     "ic-state-machine-tests"
+    "sns"
   ];
 
   wasms = [
