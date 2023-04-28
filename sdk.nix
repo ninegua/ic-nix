@@ -34,7 +34,6 @@ let
     postInstall = ''
       mkdir -p $out/share/dfx-canisters/
       cp $src/src/distributed/*.{wasm,did} $out/share/dfx-canisters/
-      grep replica-rev $src/src/dfx/assets/dfx-asset-sources.toml | sed -e "s/^[^']*'//" -e "s/'//" > $out/share/replica-rev
     '';
     RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ]
       ++ lib.optionals stdenv.isDarwin [
