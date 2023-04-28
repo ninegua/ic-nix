@@ -2,8 +2,7 @@
 with import ./. { inherit pkgs; };
 let
   sources = import ./nix/sources.nix { inherit (pkgs) fetchgit; };
-  ic_commit = builtins.unsafeDiscardStringContext
-    (pkgs.lib.strings.fileContents "${sdk.dfx}/share/replica-rev");
+  ic_commit = sources.ic.rev;
   wasm_names = [
     "registry-canister.wasm"
     "governance-canister_test.wasm"
@@ -11,7 +10,7 @@ let
     "ledger-canister_notify-method.wasm"
     "root-canister.wasm"
     "cycles-minting-canister.wasm"
-    "lifeline.wasm"
+    "lifeline_canister.wasm"
     "genesis-token-canister.wasm"
     "identity-canister.wasm"
     "nns-ui-canister.wasm"
@@ -69,8 +68,8 @@ in rec {
         cp $file $out/share/wasms/$target
         gunzip -k $out/share/wasms/$target || echo skip
       done
-      test -f $out/share/wasms/lifeline.wasm && cp $out/share/wasms/lifeline.wasm $out/share/wasms/lifeline_canister.wasm
-      test -f $out/share/wasms/lifeline.wasm.gz && cp $out/share/wasms/lifeline.wasm $out/share/wasms/lifeline_canister.wasm.gz
+      test -f $out/share/wasms/lifeline_canister.wasm && cp $out/share/wasms/lifeline_canister.wasm $out/share/wasms/lifeline.wasm
+      test -f $out/share/wasms/lifeline_canister.wasm.gz && cp $out/share/wasms/lifeline_canister.wasm.gz $out/share/wasms/lifeline.wasm.gz
       mv $out/share/wasms/nns-dapp_t2.wasm $out/share/wasms/nns-dapp_local.wasm
     '';
   };
