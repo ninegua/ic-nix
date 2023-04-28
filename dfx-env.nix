@@ -65,6 +65,7 @@ let
     "mo-ide"
     "replica"
     "sandbox_launcher"
+    "sns"
   ];
   dfxPaths = drv: list:
     builtins.listToAttrs (builtins.map (name: {
