@@ -28,7 +28,7 @@ let
       installPhase = ''
         mkdir -p $out/bin $out/share
         cp -r ${binaries}/bin/* $out/bin
-        cp -r ${canisters}/share/* $out/share
+        cp -r ${canisters}/share/{dfx-canisters,ic-canisters} $out/share
         ls -R $out
         chmod 755 $out/bin/*
         echo $phases
@@ -36,7 +36,8 @@ let
       createCachePhase = ''
         dfx_version=$($out/bin/dfx --version|cut -d' ' -f2)
         cache=$out/share/dfx/.cache/dfinity/versions/$dfx_version/
-        mkdir -p $cache/base
+        mkdir -p $cache/{base,wasms}
+        cp -r ${canisters}/share/wasms $cache/
         cp -r ${sources.motoko-base}/src/* $cache/base/
       '';
       /* cd $cache
@@ -53,9 +54,11 @@ let
   dfxBins = [
     "canister_sandbox"
     "dfx"
+    "ic-admin"
     "ic-starter"
     "ic-btc-adapter"
     "ic-https-outcalls-adapter"
+    "ic-nns-init"
     "ic-state-machine-tests"
     "ic-ref"
     "ic-starter"

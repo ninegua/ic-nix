@@ -21,6 +21,7 @@ let
     "ic-https-outcalls-adapter"
     "canister_sandbox"
     "sandbox_launcher"
+    "ic-nns-init"
     "ic-state-machine-tests"
     "sns"
   ];
@@ -171,5 +172,5 @@ let
   };
 in {
   inherit binaries wasm-binaries canisters;
-  shell = mkBinaries { customLinker = false; };
+  shell = mkBinaries { customLinker = true; };
 }
