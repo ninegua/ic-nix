@@ -21,6 +21,7 @@ let
     "ic-https-outcalls-adapter"
     "canister_sandbox"
     "sandbox_launcher"
+    "ic-nns-init"
     "ic-state-machine-tests"
     "sns"
   ];
@@ -93,7 +94,7 @@ let
       else
         [ libunwind-static ]);
       cargoSha256 =
-        "sha256-mu7ey2r7Z0RnSjzgPpL77p6h5yvil34VJA6Pp9SOv18="; # cargoSha256
+        "sha256-jux/6QzEE56o/8jxWwaF1N5UOE9wZgH6eiuZR6M+qis="; # cargoSha256
       doCheck = false;
 
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
@@ -171,5 +172,5 @@ let
   };
 in {
   inherit binaries wasm-binaries canisters;
-  shell = mkBinaries { customLinker = false; };
+  shell = mkBinaries { customLinker = true; };
 }
