@@ -1,8 +1,8 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = ""; # pin
-    sha256 = "1fkdh5mjycqx4w7kyrhiy5198n7arpgc00ka0ach2xwc0x9mdxaa";
+    rev = "0a239c213c048563577969276739b090aa31c241"; # pin
+    sha256 = "sha256-Z0RDpQ2LrN16x65h8Ied2bzd1NQa5zWVoP8G6l1PHW0=";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # master
@@ -61,8 +61,9 @@
   };
   candid = fetchgit {
     url = "https://github.com/dfinity/candid"; # master
-    rev = "55d34ec060bd9dc735ed577e6924ddac79a415bf";
-    sha256 = "0v7lzp36h4xjg5qx7qcvh5jawxmc80ph1x5rmaddifp9mzb6vjhi";
+    rev = "0ae3c22c6df17f7e09fb49c5ce5fe77653884e10";
+    sha256 = "0m7pvm4sawamixm30dqx4zlf8vr3966fdpbgad5qjc0zzpzazq51";
+
   };
 
 }
