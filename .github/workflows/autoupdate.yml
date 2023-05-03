@@ -18,7 +18,7 @@ jobs:
     - name: Update sources.nix
       run: |
         nix-env -f '<nixpkgs>' -iA update-nix-fetchgit jq gnumake
-        make update-sources
+        make update-sources clean
         sed -i 's/"\([^")]*\)"; *# cargoSha256/"0000000000000000000000000000000000000000000000000000"; # cargoSha256/' *.nix
 
     - name: Create Pull Request
