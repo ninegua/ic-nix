@@ -23,7 +23,7 @@ in rec {
   vessel = mkDrv "vessel"
     "sha256-+gx9kKgS4M+usVWK/sK34/7XFob5Vn4K6Ha5rBJ9Dgs="; # cargoSha256
   ic-repl = mkDrv "ic-repl"
-    "sha256-nOXdfGdMhG5ou3uzPhRs5HNE8i5NYbRXyDL30BmDy3U="; # cargoSha256
+    "sha256-WuCYuTXILVDDTk48882ubBDZDKX2z6bqO2bBUy/hDzI="; # cargoSha256
   ic-wasm = mkDrv_ true [ ] "ic-wasm"
     "sha256-4gi8eBI42JggMesDEK/Lo73MWV2UduR8oci0Z0ld89o="; # cargoSha256
   candid = mkDrv "candid"
