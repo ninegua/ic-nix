@@ -3,12 +3,22 @@
 ![ci](https://github.com/ninegua/ic-nix/actions/workflows/ci.yml/badge.svg?branch=main)
 ![release](https://github.com/ninegua/ic-nix/actions/workflows/release.yml/badge.svg)
 
+Unofficial build of common binaries used by developers of the [Internet Computer blockchain](https://wiki.internetcomputer.org).
+
+- Directly built from source.
+- Cross-platform (Linux and Mac OS X, both `x86_64` and `aarch64`).
+- Mostly statically linked with no extra runtime dependency other than libc.
+- Weekly release of latest versions at build time.
+- Optionally, a standalone SDK environment for nix-shell.
+
 **Usage**
+
+Depending on your objective, you can do any the following:
 
 - To build a project, run `nix-build -A <project>`.
 - To enter a development environment for a project, run `nix-shell -A <project>.shell`.
 - To download the latest pre-built binaries, go to [release page](https://github.com/ninegua/ic-nix/releases/latest).
-- To start canister development with latest build, run:
+- To start canister SDK development with latest build, run:
 ```
 nix-shell https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar.gz
 ```
@@ -19,7 +29,7 @@ For aarch64 (Apple M1) architecture, you have a couple choices:
 
 1. Compile everything from source by passing extra argument `--arg force true`.
 2. Use `x86_64` binaries by passing extra argument `--argstr system x86_64`.
-3. Use pre-built `aarch64` binaries by getting it from the [20230101](https://github.com/ninegua/ic-nix/releases/tag/20230101) release. These were built offline and manually uploaded.
+3. Use pre-built `aarch64` binaries by getting it from the [20230504](https://github.com/ninegua/ic-nix/releases/tag/20230504) release. These were built offline and manually uploaded.
 
 Before you compile from source, you may also want to setup the binary cache (courtesy of [cachix]) by `nix-shell -p cachix --run 'cachix use ninegua'` to avoid unnecessary compilation.
 
