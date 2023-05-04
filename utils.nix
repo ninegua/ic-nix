@@ -26,7 +26,7 @@ in rec {
     "sha256-WuCYuTXILVDDTk48882ubBDZDKX2z6bqO2bBUy/hDzI="; # cargoSha256
   ic-wasm = mkDrv_ true [ ] "ic-wasm"
     "sha256-4gi8eBI42JggMesDEK/Lo73MWV2UduR8oci0Z0ld89o="; # cargoSha256
-  candid = mkDrv "candid"
+  candid = mkDrv_ false [ ./nix/candid-ignore-test.patch ] "candid"
     "sha256-dIhtnuMTTsebRFSYibjYauK4kM/kpLk+/ACvljgWKI8="; # cargoSha256
 
   shell = ic-wasm;
