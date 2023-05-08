@@ -5,28 +5,30 @@ let
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
-  mkDrv_ = dontUseCargoParallelTests: cargoPatches: name: cargoSha256:
+  mkDrv_ =
+    buildFeatures: dontUseCargoParallelTests: cargoPatches: name: cargoSha256:
     rustPlatform.buildRustPackage {
-      inherit name cargoSha256 cargoPatches dontUseCargoParallelTests;
+      inherit name buildFeatures cargoSha256 cargoPatches
+        dontUseCargoParallelTests;
       src = sources."${name}";
       buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
         (with darwin.apple_sdk.frameworks; [ Security ]);
       nativeBuildInputs = [ pkg-config ];
       RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ];
     };
-  mkDrv = mkDrv_ false [ ];
+  mkDrv = mkDrv_ [ ] false [ ];
 in rec {
-  icx-proxy = mkDrv "icx-proxy"
-    "sha256-Zv9wBf32sv/bQUo4do+xejil5KQebtS/3rGbiRdomnQ="; # cargoSha256
+  icx-proxy = mkDrv_ [ "skip_body_verification" ] false [ ] "icx-proxy"
+    "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
   idl2json = mkDrv "idl2json"
     "sha256-o3cOoFbjhRBwndcEDq0D6rsqunKyWb+oNHLrcH5zs+Q="; # cargoSha256
   vessel = mkDrv "vessel"
     "sha256-+gx9kKgS4M+usVWK/sK34/7XFob5Vn4K6Ha5rBJ9Dgs="; # cargoSha256
   ic-repl = mkDrv "ic-repl"
     "sha256-WuCYuTXILVDDTk48882ubBDZDKX2z6bqO2bBUy/hDzI="; # cargoSha256
-  ic-wasm = mkDrv_ true [ ] "ic-wasm"
+  ic-wasm = mkDrv_ [ ] true [ ] "ic-wasm"
     "sha256-4gi8eBI42JggMesDEK/Lo73MWV2UduR8oci0Z0ld89o="; # cargoSha256
-  candid = mkDrv_ false [ ./nix/candid-ignore-test.patch ] "candid"
+  candid = mkDrv_ [ ] false [ ./nix/candid-ignore-test.patch ] "candid"
     "sha256-dIhtnuMTTsebRFSYibjYauK4kM/kpLk+/ACvljgWKI8="; # cargoSha256
 
   shell = ic-wasm;

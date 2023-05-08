@@ -6,8 +6,8 @@
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # master
-    rev = "c619cc48b192361f0a4d62241ccab01662d5505a"; # pin
-    sha256 = "0z2jz135d0byiwik4sc19x94dzwpk0bky8jbmi5n4g5xb0bk2sfh";
+    rev = "c312760a62b20931431ba45e5b0168ee79ea5cda"; # pin
+    sha256 = "sha256-UaU9g9yLHVT2DY5UvZWGJAVZrSabEbdtJfFwvXXHqDs=";
   };
   idl2json = fetchgit {
     url = "https://github.com/dfinity/idl2json"; # master
