@@ -262,7 +262,7 @@ in rec {
         -t ${rustStdDeps} \
         $out/rts/mo-rts.wasm $out/rts/mo-rts-debug.wasm
       remove-references-to \
-        -t ${nixpkgs.rustc-nightly} \
+        -t ${rust-nightly} \
         -t ${rtsDeps} \
         -t ${rustStdDeps} \
         $out/rts/mo-rts-incremental.wasm $out/rts/mo-rts-incremental-debug.wasm
