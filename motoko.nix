@@ -191,7 +191,7 @@ in rec {
       name = "motoko-rts-deps";
       src = "${sources.motoko}/rts";
       sourceRoot = "rts/motoko-rts-tests";
-      sha256 = "sha256-jCk92mPwXd8H8zEH4OMdcEwFM8IiYdlhYdYr+WzDW5E=";
+      sha256 = "sha256-bmJF19LIvTMZnj78XF30lxqRlvQaZ0YlqCO2wnwmiNg=";
       copyLockfile = true;
     };
 
@@ -249,6 +249,8 @@ in rec {
       mkdir -p $out/rts
       cp mo-rts.wasm $out/rts
       cp mo-rts-debug.wasm $out/rts
+      cp mo-rts-incremental.wasm $out/rts
+      cp mo-rts-incremental-debug.wasm $out/rts
     '';
 
     # This needs to be self-contained. Remove mention of nix path in debug
@@ -259,6 +261,11 @@ in rec {
         -t ${rtsDeps} \
         -t ${rustStdDeps} \
         $out/rts/mo-rts.wasm $out/rts/mo-rts-debug.wasm
+      remove-references-to \
+        -t ${rust-nightly} \
+        -t ${rtsDeps} \
+        -t ${rustStdDeps} \
+        $out/rts/mo-rts-incremental.wasm $out/rts/mo-rts-incremental-debug.wasm
     '';
 
     allowedRequisites = [ ];
