@@ -19,17 +19,17 @@ let
   mkDrv = mkDrv_ [ ] false [ ];
 in rec {
   icx-proxy = mkDrv_ [ "skip_body_verification" ] false [ ] "icx-proxy"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
   idl2json = mkDrv "idl2json"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-YI59h/LbZ6dEQ/TWJ9/4SOSs1/WpFzbo0VGtlgef1Rg="; # cargoSha256
   vessel = mkDrv "vessel"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-+gx9kKgS4M+usVWK/sK34/7XFob5Vn4K6Ha5rBJ9Dgs="; # cargoSha256
   ic-repl = mkDrv "ic-repl"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-5yLIoWIThmsAdb28/+qrGHpI78RHXBEM/sFlui8BhYw="; # cargoSha256
   ic-wasm = mkDrv_ [ ] true [ ] "ic-wasm"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
-  candid = mkDrv_ [ ] false [ ./nix/candid-ignore-test.patch ] "candid"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-MNbKiYZBkUDYJJ+tWy1rjG53jHcF5d1Yrc6DfelyfGY="; # cargoSha256
+  candid = mkDrv_ [ ] false [ ] "candid"
+    "sha256-pc+wyvAa6IkgHXmPAZrvdoFcNbwgkRzcdbK63s0uZXc="; # cargoSha256
 
   shell = ic-wasm;
 }
