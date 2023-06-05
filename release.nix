@@ -44,6 +44,7 @@ in rec {
       cp ${idl2json}/bin/* $out/bin/
       cp ${vessel}/bin/* $out/bin/
       cp ${ic-repl}/bin/* $out/bin/
+      cp ${ic-wasm}/bin/* $out/bin/
       cp ${candid}/bin/* $out/bin/
     '' + pkgs.lib.optionalString pkgs.stdenv.isLinux (''
       for exe in $out/bin/*; do
