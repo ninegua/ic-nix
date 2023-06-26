@@ -5,12 +5,6 @@ let
     officialRelease = false;
   };
   ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_12;
-  obelisk = import "${sources.motoko}/nix/ocaml-obelisk.nix" {
-    inherit (pkgs) lib fetchFromGitHub;
-    inherit (ocamlPackages) ocaml dune_3;
-    inherit ocamlPackages;
-    inherit (pkgs.stdenv) mkDerivation;
-  };
   # An old version of menhir is required to parse moc grammar!
   menhirLib = ocamlPackages.menhirLib.overrideAttrs (_: {
     version = "20211012";

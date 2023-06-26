@@ -21,7 +21,7 @@ in rec {
   icx-proxy = mkDrv_ [ "skip_body_verification" ] false [ ] "icx-proxy"
     "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
   idl2json = mkDrv "idl2json"
-    "sha256-YI59h/LbZ6dEQ/TWJ9/4SOSs1/WpFzbo0VGtlgef1Rg="; # cargoSha256
+    "sha256-VTqJDYAxjkCmtpJ7mT5I6/Osg5kKce0kwWw5YjafEuA="; # cargoSha256
   vessel = mkDrv "vessel"
     "sha256-+gx9kKgS4M+usVWK/sK34/7XFob5Vn4K6Ha5rBJ9Dgs="; # cargoSha256
   ic-repl = mkDrv "ic-repl"
