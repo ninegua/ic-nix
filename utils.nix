@@ -27,7 +27,7 @@ in rec {
   ic-repl = mkDrv "ic-repl"
     "sha256-5yLIoWIThmsAdb28/+qrGHpI78RHXBEM/sFlui8BhYw="; # cargoSha256
   ic-wasm = mkDrv_ [ ] true [ ] "ic-wasm"
-    "sha256-MNbKiYZBkUDYJJ+tWy1rjG53jHcF5d1Yrc6DfelyfGY="; # cargoSha256
+    "sha256-iGCju0JG+jkysmDAeTfjNCYaSfg7N3Qqq8HpPlRHMgU="; # cargoSha256
   candid = mkDrv_ [ ] false [ ] "candid"
     "sha256-mf/+c0mV9CeUSi0Y6z4qat4zTm5CjYWODLoqRWPiBRo="; # cargoSha256
 

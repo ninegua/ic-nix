@@ -1,35 +1,19 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index 5f2975a8..3de60b55 100644
+index 5f2975a8..3a71340d 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
-@@ -2089,16 +2089,6 @@ dependencies = [
-  "syn 1.0.109",
- ]
- 
--[[package]]
--name = "ic-certification"
--version = "0.23.2"
--source = "registry+https://github.com/rust-lang/crates.io-index"
--checksum = "beb68e0ea2fe6b533ddab6ae2142274f9669acacbacd83ac64bb1cd268d33104"
--dependencies = [
-- "hex",
-- "sha2 0.10.6",
--]
--
+@@ -2092,8 +2092,7 @@ dependencies = [
  [[package]]
  name = "ic-certification"
- version = "0.24.1"
-@@ -2172,7 +2162,7 @@ dependencies = [
-  "candid 0.8.4",
-  "flate2",
-  "http",
-- "ic-certification 0.23.2",
-+ "ic-certification",
-  "leb128",
-  "log",
-  "miracl_core_bls12381",
+ version = "0.23.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "beb68e0ea2fe6b533ddab6ae2142274f9669acacbacd83ac64bb1cd268d33104"
++source = "git+https://github.com/dfinity/agent-rs.git?rev=862ddb2871db426d0e42e816a2f792d224d7bdf5#862ddb2871db426d0e42e816a2f792d224d7bdf5"
+ dependencies = [
+  "hex",
+  "sha2 0.10.6",
 diff --git a/Cargo.toml b/Cargo.toml
-index 7bfd6cee..e28c234d 100644
+index 7bfd6cee..7b077ccc 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
 @@ -72,6 +72,11 @@ version = "0.24.1"
