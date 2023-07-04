@@ -1,49 +1,24 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index 04fd0f94..3206303d 100644
+index 5f2975a8..3a71340d 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
-@@ -1969,7 +1969,7 @@ dependencies = [
-  "http",
-  "http-body",
-  "hyper-rustls",
-- "ic-certification 0.23.2 (git+https://github.com/dfinity/agent-rs.git?rev=862ddb2871db426d0e42e816a2f792d224d7bdf5)",
-+ "ic-certification",
-  "ic-verify-bls-signature",
-  "k256",
-  "leb128",
-@@ -2049,16 +2049,6 @@ dependencies = [
-  "syn 1.0.109",
- ]
- 
--[[package]]
--name = "ic-certification"
--version = "0.23.2"
--source = "registry+https://github.com/rust-lang/crates.io-index"
--checksum = "beb68e0ea2fe6b533ddab6ae2142274f9669acacbacd83ac64bb1cd268d33104"
--dependencies = [
-- "hex",
-- "sha2 0.10.6",
--]
--
+@@ -2092,8 +2092,7 @@ dependencies = [
  [[package]]
  name = "ic-certification"
  version = "0.23.2"
-@@ -2133,7 +2123,7 @@ dependencies = [
-  "candid 0.8.4",
-  "flate2",
-  "http",
-- "ic-certification 0.23.2 (registry+https://github.com/rust-lang/crates.io-index)",
-+ "ic-certification",
-  "leb128",
-  "log",
-  "miracl_core_bls12381",
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "beb68e0ea2fe6b533ddab6ae2142274f9669acacbacd83ac64bb1cd268d33104"
++source = "git+https://github.com/dfinity/agent-rs.git?rev=862ddb2871db426d0e42e816a2f792d224d7bdf5#862ddb2871db426d0e42e816a2f792d224d7bdf5"
+ dependencies = [
+  "hex",
+  "sha2 0.10.6",
 diff --git a/Cargo.toml b/Cargo.toml
-index 65469051..76704bb4 100644
+index 7bfd6cee..7b077ccc 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -71,6 +71,11 @@ version = "0.23.2"
+@@ -72,6 +72,11 @@ version = "0.24.1"
  git = "https://github.com/dfinity/agent-rs.git"
- rev = "862ddb2871db426d0e42e816a2f792d224d7bdf5"
+ rev = "b9c57f8bab23cc9936dca4560293ffe485471c6d"
  
 +[patch.crates-io.ic-certification]
 +version = "0.23.2"
@@ -51,5 +26,5 @@ index 65469051..76704bb4 100644
 +rev = "862ddb2871db426d0e42e816a2f792d224d7bdf5"
 +
  [patch.crates-io.ic-identity-hsm]
- version = "0.23.2"
+ version = "0.24.1"
  git = "https://github.com/dfinity/agent-rs.git"
