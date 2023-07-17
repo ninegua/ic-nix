@@ -1,8 +1,8 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index 5f2975a8..3a71340d 100644
+index 3a8d0048..98d725fd 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
-@@ -2092,8 +2092,7 @@ dependencies = [
+@@ -2383,8 +2383,7 @@ dependencies = [
  [[package]]
  name = "ic-certification"
  version = "0.23.2"
@@ -13,18 +13,18 @@ index 5f2975a8..3a71340d 100644
   "hex",
   "sha2 0.10.6",
 diff --git a/Cargo.toml b/Cargo.toml
-index 7bfd6cee..7b077ccc 100644
+index 12ed2869..0891dfc8 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -72,6 +72,11 @@ version = "0.24.1"
- git = "https://github.com/dfinity/agent-rs.git"
- rev = "b9c57f8bab23cc9936dca4560293ffe485471c6d"
+@@ -67,6 +67,11 @@ tokio = "1.24.2"
+ url = "2.1.0"
+ walkdir = "2.3.2"
  
 +[patch.crates-io.ic-certification]
 +version = "0.23.2"
 +git = "https://github.com/dfinity/agent-rs.git"
 +rev = "862ddb2871db426d0e42e816a2f792d224d7bdf5"
 +
- [patch.crates-io.ic-identity-hsm]
- version = "0.24.1"
+ [patch.crates-io.ic-agent]
+ version = "0.25.0"
  git = "https://github.com/dfinity/agent-rs.git"
