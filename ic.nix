@@ -107,10 +107,13 @@ let
         "-Lnative=${lmdb.out}/lib"
         "-lstatic=lmdb"
         "-lstatic=z"
-      ] ++ lib.optionals stdenv.isDarwin [
+      ] ++ (if stdenv.isDarwin then [
         "-Lall=${libiconv-static.out}/lib"
         "-lstatic=iconv"
-      ];
+      ] else [
+        "-Lnative=${lzma-static.out}/lib"
+        "-lstatic=lzma"
+      ]);
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
 
       buildPhase = ''
