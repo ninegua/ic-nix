@@ -100,7 +100,8 @@ let
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
       ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
       LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
-      CFLAGS = [ "-I${libunwind-static.dev}/include" ];
+      CFLAGS =
+        lib.optionals std.isDarwin [ "-I${libunwind-static.dev}/include" ];
       RUSTFLAGS = lib.optionals customLinker [ "-Clinker=${linker}" ] ++ [
         "-Lnative=${libcxxabi}/lib"
         "-Lnative=${zlib-static}/lib"
