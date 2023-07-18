@@ -72,6 +72,7 @@ let
       name = "ic";
       targetNames = lib.strings.concatStringsSep " " targets;
       src = sources.ic;
+      cargoPatches = [ ./nix/ic-backtrace.patch ];
       unpackPhase = ''
         cp -r $src ${name}
         echo source root is ${sourceRoot}
@@ -94,23 +95,27 @@ let
       else
         [ libunwind-static ]);
       cargoSha256 =
-        "sha256-QjscD5BThUw1A/i7R7wi07UY86wcwXxdoIYmwPeCSxQ="; # cargoSha256
+        "sha256-+foKaq7xGtFZHzl/5fgf0OhLnGFcFG9gm7fkRLDKX/g="; # cargoSha256
       doCheck = false;
 
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
       ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
       LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
-      CFLAGS = [ "-I${libunwind-static.dev}/include" ];
+      CFLAGS = lib.optionals (!stdenv.isDarwin)
+        [ "-I${libunwind-static.dev}/include" ];
       RUSTFLAGS = lib.optionals customLinker [ "-Clinker=${linker}" ] ++ [
         "-Lnative=${libcxxabi}/lib"
         "-Lnative=${zlib-static}/lib"
         "-Lnative=${lmdb.out}/lib"
         "-lstatic=lmdb"
         "-lstatic=z"
-      ] ++ lib.optionals stdenv.isDarwin [
+      ] ++ (if stdenv.isDarwin then [
         "-Lall=${libiconv-static.out}/lib"
         "-lstatic=iconv"
-      ];
+      ] else [
+        "-Lnative=${lzma-static.out}/lib"
+        "-lstatic=lzma"
+      ]);
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
 
       buildPhase = ''

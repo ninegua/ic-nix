@@ -25,11 +25,11 @@ in rec {
   vessel = mkDrv "vessel"
     "sha256-+gx9kKgS4M+usVWK/sK34/7XFob5Vn4K6Ha5rBJ9Dgs="; # cargoSha256
   ic-repl = mkDrv "ic-repl"
-    "sha256-5yLIoWIThmsAdb28/+qrGHpI78RHXBEM/sFlui8BhYw="; # cargoSha256
+    "sha256-YS4mhUgS5oQw4Eoa48AB4oMtCuq25zpoYzzsvDnyAQk="; # cargoSha256
   ic-wasm = mkDrv_ [ ] true [ ] "ic-wasm"
     "sha256-iGCju0JG+jkysmDAeTfjNCYaSfg7N3Qqq8HpPlRHMgU="; # cargoSha256
   candid = mkDrv_ [ ] false [ ] "candid"
-    "sha256-mf/+c0mV9CeUSi0Y6z4qat4zTm5CjYWODLoqRWPiBRo="; # cargoSha256
+    "sha256-9AgnmFKSeuUjGAeeEHa0Z4DV4fFPNreldEcK7H6PBJo="; # cargoSha256
 
   shell = ic-wasm;
 }

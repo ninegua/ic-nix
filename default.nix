@@ -21,14 +21,8 @@ let
       v8 = self.v8_8_x;
       zlib-static =
         (super.pkgsStatic.zlib.override ({ splitStaticOutput = true; })).static;
-      libunwind-static =
-        super.pkgsStatic.llvmPackages_11.libunwind.overrideAttrs (old: {
-          postInstall = ''
-            echo $PWD
-            mkdir -p $out
-            cp -r ../include $out/
-          '';
-        });
+      lzma-static = super.pkgsStatic.lzma;
+      libunwind-static = super.pkgsStatic.libunwind;
       openssl-static = super.pkgsStatic.openssl.override ({ static = true; });
       libiconv-static = super.pkgsStatic.libiconvReal.override {
         enableStatic = true;
