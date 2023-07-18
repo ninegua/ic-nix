@@ -1,0 +1,24 @@
+diff --git a/rs/http_endpoints/public/Cargo.toml b/rs/http_endpoints/public/Cargo.toml
+index 419dd6413f..b8a1dabbfa 100644
+--- a/rs/http_endpoints/public/Cargo.toml
++++ b/rs/http_endpoints/public/Cargo.toml
+@@ -27,6 +27,7 @@ ic-interfaces-state-manager = { path = "../../interfaces/state_manager" }
+ ic-logger = { path = "../../monitoring/logger" }
+ ic-metrics = { path = "../../monitoring/metrics" }
+ ic-pprof = { path = "../../monitoring/pprof" }
++[target.'cfg(target_os = "linux")'.dependencies]
+ ic-backtrace = { path = "../../monitoring/backtrace" }
+ ic-registry-client-helpers = { path = "../../registry/helpers" }
+ ic-registry-provisional-whitelist = { path = "../../registry/provisional_whitelist" }
+diff --git a/rs/replica/Cargo.toml b/rs/replica/Cargo.toml
+index 9fc4ffc994..9fae5ac52c 100644
+--- a/rs/replica/Cargo.toml
++++ b/rs/replica/Cargo.toml
+@@ -44,6 +44,7 @@ ic-registry-local-store = { path = "../registry/local_store" }
+ ic-registry-subnet-type = { path = "../registry/subnet_type" }
+ ic-replica-setup-ic-network =  { path = "./setup_ic_network" }
+ ic-replicated-state = { path = "../replicated_state" }
++[target.'cfg(target_os = "linux")'.dependencies]
+ ic-backtrace = { path = "../monitoring/backtrace" }
+ ic-state-manager = { path = "../state_manager" }
+ ic-sys = { path = "../sys" }
