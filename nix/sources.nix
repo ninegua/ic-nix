@@ -1,8 +1,8 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = "a17247bd86c7aa4e87742bf74d108614580f216d"; # pin
-    sha256 = "0n2an3jlczwmhz7zj5y2sw96siwan905wmfsq6giibv4qhh9yzqk";
+    rev = "9c89622231301daf93528aa3b64b4d1ec4657680"; # pin
+    sha256 = "0j155qqivm6lhyp17wdi4mrw9gym8dyqf7yak28nxas0z04vr622";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # master
@@ -21,13 +21,13 @@
   };
   motoko = fetchgit {
     url = "https://github.com/dfinity/motoko"; # master
-    rev = "5ef59d849d274b19323e290aa23e12dbfdf09682";
-    sha256 = "0lq0lmigiwaymx78f7qr31vcjvc8skqp7hh7i7m3pm5fj6q5w0fd";
+    rev = "1cdfde671614960dc22a299a2ef74f6bf0c6c223";
+    sha256 = "0x2yf2fbkqrhxr76xifnkr6kh4h5vwhps72d3dcas6yqp6296kbl";
   };
   motoko-base = fetchgit {
     url = "https://github.com/dfinity/motoko-base"; # next-moc
-    rev = "3ee2d69df7f617c8f0517d4a5c8aca97d523aff1";
-    sha256 = "093sfzxchbr6j8ly4nym9qyk1ljsv5pf0jlslbz0rr701y6ynwy9";
+    rev = "f1f6099eb8b8ddddabd96399f5f248eca1fc4baf";
+    sha256 = "0qkhf5ks21fj6pbmn3wpsb5jsqzm5ymw76h646h92kvvakybjhzg";
   };
   musl-wasi = fetchgit {
     url = "https://github.com/WebAssembly/wasi-libc"; # main
@@ -36,8 +36,8 @@
   };
   sdk = fetchgit {
     url = "https://github.com/dfinity/sdk"; # master
-    rev = "c748bea8e8556abbded5a6bfed4df4e6bbd4a3e4";
-    sha256 = "09nihqpxv577zgcdd2vz8mi091npcpnyik3mj7ml70xz0s7yrrif";
+    rev = "98a9658f14010bf9cc3471d97d59c06a5ab10a59";
+    sha256 = "1s4mlj4szmdlrd6rj6m941q559jifd85xc9m2sn0ybmpvi2k1cqy";
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git"; # mdb.master
@@ -61,8 +61,8 @@
   };
   candid = fetchgit {
     url = "https://github.com/dfinity/candid"; # master
-    rev = "5066e27c5a54d6d01c57f42e96353c268af247d2";
-    sha256 = "15ydzn5xyg472xsb58906sb9kphs4c8yv3sjpk3p9bz7kz86p4q6";
+    rev = "2c3f8a388a60559ffa27c7a68ae01a8da56c1eb5";
+    sha256 = "10234w4vwk0yq54j634qp9dmkq02xkppyy8kjczmnr6arx5j6jkd";
 
   };
 
