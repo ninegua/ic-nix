@@ -72,7 +72,7 @@ let
       name = "ic";
       targetNames = lib.strings.concatStringsSep " " targets;
       src = sources.ic;
-      cargoPatches = [ ./nix/ic-backtrace.patch ];
+      cargoPatches = [ ];
       unpackPhase = ''
         cp -r $src ${name}
         echo source root is ${sourceRoot}
@@ -95,7 +95,7 @@ let
       else
         [ libunwind-static ]);
       cargoSha256 =
-        "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+        "sha256-QY5Q6O2hxRs2X24HqaAbXZlJjdd1PQ9dWNVonTMIjno="; # cargoSha256
       doCheck = false;
 
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
