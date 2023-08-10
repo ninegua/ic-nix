@@ -15,7 +15,7 @@ let
     name = "dfx";
     inherit src;
     cargoSha256 =
-      "sha256-Ms3No325iKkDHmnIY5Z0SF8cWIz0pjSULweqpb/cKZ4="; # cargoSha256
+      "sha256-9hIXsE0q5eE9XKgH4x3x9acqJZ3lZljKUhAju5+nhxE="; # cargoSha256
     inherit buildInputs;
     nativeBuildInputs = [ perl pkg-config cmake binaryen python3 ];
     cargoPatches = [ ./nix/sdk-ic-certification-0.23.2.patch ];

@@ -29,7 +29,7 @@ in rec {
   ic-wasm = mkDrv_ [ ] true [ ] "ic-wasm"
     "sha256-iGCju0JG+jkysmDAeTfjNCYaSfg7N3Qqq8HpPlRHMgU="; # cargoSha256
   candid = mkDrv_ [ ] false [ ] "candid"
-    "sha256-9AgnmFKSeuUjGAeeEHa0Z4DV4fFPNreldEcK7H6PBJo="; # cargoSha256
+    "sha256-KAltIw1SdhP0H2OveybngcNMpa8KgUE31ctyg5oWzA8="; # cargoSha256
 
   shell = ic-wasm;
 }
