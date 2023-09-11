@@ -35,9 +35,9 @@
     sha256 = "0832z9hnrbfibgbsg5m140hhaf0rjl5087jqv452plfjia7ayw65";
   };
   sdk = fetchgit {
-    url = "https://github.com/dfinity/sdk"; # master
-    rev = "14649c82cc4756707ab07a773b897496fb5b30cf";
-    sha256 = "1wshhy2wq96xngbf22vbympyg8r7rdr70fpfbd5cbl4m15vyrsrx";
+    url = "https://github.com/ninegua/sdk"; # master
+    rev = "88f8569726fc120f7633691a4d171c3ac1cf5417";
+    sha256 = "sha256-xSZxE0ESJnV9zOPLFqjdKHbC36ANBAqJd1XzwgmhutE=";
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git"; # mdb.master
