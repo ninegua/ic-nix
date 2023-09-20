@@ -36,8 +36,8 @@
   };
   sdk = fetchgit {
     url = "https://github.com/ninegua/sdk"; # master
-    rev = "88f8569726fc120f7633691a4d171c3ac1cf5417";
-    sha256 = "sha256-xSZxE0ESJnV9zOPLFqjdKHbC36ANBAqJd1XzwgmhutE=";
+    rev = "d11f92c39a9cd42cb518cbed1b7d1eed0ba3980f";
+    sha256 = "sha256-gZqEuk8taOSZu7g5PP3njSDPucbXDT9pM8Q4Az3oYU4=";
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git"; # mdb.master
