@@ -63,7 +63,10 @@
     url = "https://github.com/dfinity/candid"; # master
     rev = "2c3f8a388a60559ffa27c7a68ae01a8da56c1eb5";
     sha256 = "10234w4vwk0yq54j634qp9dmkq02xkppyy8kjczmnr6arx5j6jkd";
-
   };
-
+  cdk-rs = fetchgit {
+    url = "https://github.com/dfinity/cdk-rs"; # main
+    rev = "a2623bc5f06ed6cebc6e4e6a8142d4fe96ec0e20";
+    sha256 = "sha256-18/gUBdyBWwdGgXXWbQNEgmAy8mGfGdGx+uTBNyoptY=";
+  };
 }
