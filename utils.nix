@@ -5,10 +5,11 @@ let
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
-  mkDrv_ =
-    buildFeatures: dontUseCargoParallelTests: cargoPatches: name: cargoSha256:
+  mkDrv = { doCheck ? true, buildFeatures ? [ ]
+    , dontUseCargoParallelTests ? false, cargoPatches ? [ ] }:
+    name: cargoSha256:
     rustPlatform.buildRustPackage {
-      inherit name buildFeatures cargoSha256 cargoPatches
+      inherit name buildFeatures cargoSha256 cargoPatches doCheck
         dontUseCargoParallelTests;
       src = sources."${name}";
       buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
@@ -16,20 +17,22 @@ let
       nativeBuildInputs = [ pkg-config ];
       RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ];
     };
-  mkDrv = mkDrv_ [ ] false [ ];
 in rec {
-  icx-proxy = mkDrv_ [ "skip_body_verification" ] false [ ] "icx-proxy"
+  icx-proxy =
+    mkDrv { buildFeatures = [ "skip_body_verification" ]; } "icx-proxy"
     "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
-  idl2json = mkDrv "idl2json"
+  idl2json = mkDrv { } "idl2json"
     "sha256-VTqJDYAxjkCmtpJ7mT5I6/Osg5kKce0kwWw5YjafEuA="; # cargoSha256
-  vessel = mkDrv "vessel"
+  vessel = mkDrv { } "vessel"
     "sha256-+gx9kKgS4M+usVWK/sK34/7XFob5Vn4K6Ha5rBJ9Dgs="; # cargoSha256
-  ic-repl = mkDrv "ic-repl"
+  ic-repl = mkDrv { } "ic-repl"
     "sha256-5yLIoWIThmsAdb28/+qrGHpI78RHXBEM/sFlui8BhYw="; # cargoSha256
-  ic-wasm = mkDrv_ [ ] true [ ] "ic-wasm"
+  ic-wasm = mkDrv { dontUseCargoParallelTests = true; } "ic-wasm"
     "sha256-iGCju0JG+jkysmDAeTfjNCYaSfg7N3Qqq8HpPlRHMgU="; # cargoSha256
-  candid = mkDrv_ [ ] false [ ] "candid"
+  candid = mkDrv { } "candid"
     "sha256-mf/+c0mV9CeUSi0Y6z4qat4zTm5CjYWODLoqRWPiBRo="; # cargoSha256
+  cdk-rs = mkDrv { doCheck = false; } "cdk-rs"
+    "sha256-qME+13d491Oo4ntbamH6kSIr0ItcUJ+HYjG+e/HXrKo="; # cargoSha256
 
   shell = ic-wasm;
 }
