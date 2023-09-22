@@ -47,6 +47,7 @@ in rec {
       cp ${ic-wasm}/bin/* $out/bin/
       cp ${candid}/bin/* $out/bin/
       cp ${cdk-rs}/bin/candid-extractor $out/bin/
+      cp ${agent-rs}/bin/* $out/bin/
     '' + pkgs.lib.optionalString pkgs.stdenv.isLinux (''
       for exe in $out/bin/*; do
         chmod 755 $exe
