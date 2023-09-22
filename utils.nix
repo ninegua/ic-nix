@@ -33,6 +33,8 @@ in rec {
     "sha256-mf/+c0mV9CeUSi0Y6z4qat4zTm5CjYWODLoqRWPiBRo="; # cargoSha256
   cdk-rs = mkDrv { doCheck = false; } "cdk-rs"
     "sha256-qME+13d491Oo4ntbamH6kSIr0ItcUJ+HYjG+e/HXrKo="; # cargoSha256
+  agent-rs = mkDrv { doCheck = false; } "agent-rs"
+    "sha256-d9LJA/H93sk3w2wakx5nQ3UOPteKAsroT/nTOW9fN3E="; # cargoSha256
 
   shell = ic-wasm;
 }

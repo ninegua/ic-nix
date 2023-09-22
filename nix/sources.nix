@@ -69,4 +69,9 @@
     rev = "a2623bc5f06ed6cebc6e4e6a8142d4fe96ec0e20";
     sha256 = "sha256-18/gUBdyBWwdGgXXWbQNEgmAy8mGfGdGx+uTBNyoptY=";
   };
+  agent-rs = fetchgit {
+    url = "https://github.com/dfinity/agent-rs"; # main
+    rev = "9c4db330d96938d95eda69bbf5878db91aae0aa1";
+    sha256 = "sha256-aSKGiG0cRMZIp8uhACuDu+roQvITPeozAVri+Xeu/U4=";
+  };
 }
