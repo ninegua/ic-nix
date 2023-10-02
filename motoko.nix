@@ -153,14 +153,14 @@ in rec {
       name = "cargo-vendor-tools";
       src = "${sources.motoko}/rts/${name}/";
       cargoSha256 =
-        "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+        "sha256-E6GTFvmZMjGsVlec7aH3QaizqIET6Dz8Csh0N1jeX+M="; # cargoSha256
     };
 
     # Path to vendor-rust-std-deps, provided by cargo-vendor-tools
     vendorRustStdDeps = "${cargoVendorTools}/bin/vendor-rust-std-deps";
 
     # SHA256 of Rust std deps
-    rustStdDepsHash = "sha256-sRerHg2LoEiH/dBR/lY/e80rZQv+SFQTOCX9CD+NV+s=";
+    rustStdDepsHash = "sha256-A3WPIx+weu4wIYV7cweGkRxYGAPt7srxBAtMEyPOkhI=";
 
     # Vendor directory for Rust std deps
     rustStdDeps = pkgs.stdenvNoCC.mkDerivation {
