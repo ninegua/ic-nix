@@ -21,11 +21,11 @@ in rec {
   icx-proxy =
     mkDrv { buildFeatures = [ "skip_body_verification" ]; } "icx-proxy"
     "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
-  idl2json = mkDrv "idl2json"
+  idl2json = mkDrv { } "idl2json"
     "sha256-snq5W3CJ3X7C8WozpTaXjLL93Ksp1t8tdexbQqqtDtU="; # cargoSha256
-  vessel = mkDrv "vessel"
+  vessel = mkDrv { } "vessel"
     "sha256-ZmGVRi+7kEqEwHQnwjTLjUElgg544wXlhebqGiW+GE8="; # cargoSha256
-  ic-repl = mkDrv "ic-repl"
+  ic-repl = mkDrv { } "ic-repl"
     "sha256-sC/XODxvyMZ8rNPzf0MFqwXVs6BO+t2Sdyk4LE+E9CY="; # cargoSha256
   ic-wasm = mkDrv { dontUseCargoParallelTests = true; } "ic-wasm"
     "sha256-c/km0yev3nJgA5v8AaNoR4Ga3W2XlPzs9GuhTKuHiJU="; # cargoSha256
