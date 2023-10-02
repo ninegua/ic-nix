@@ -5,10 +5,11 @@ let
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
-  mkDrv_ =
-    buildFeatures: dontUseCargoParallelTests: cargoPatches: name: cargoSha256:
+  mkDrv = { doCheck ? true, buildFeatures ? [ ]
+    , dontUseCargoParallelTests ? false, cargoPatches ? [ ] }:
+    name: cargoSha256:
     rustPlatform.buildRustPackage {
-      inherit name buildFeatures cargoSha256 cargoPatches
+      inherit name buildFeatures cargoSha256 cargoPatches doCheck
         dontUseCargoParallelTests;
       src = sources."${name}";
       buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
@@ -16,9 +17,9 @@ let
       nativeBuildInputs = [ pkg-config ];
       RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ];
     };
-  mkDrv = mkDrv_ [ ] false [ ];
 in rec {
-  icx-proxy = mkDrv_ [ "skip_body_verification" ] false [ ] "icx-proxy"
+  icx-proxy =
+    mkDrv { buildFeatures = [ "skip_body_verification" ]; } "icx-proxy"
     "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
   idl2json = mkDrv "idl2json"
     "sha256-snq5W3CJ3X7C8WozpTaXjLL93Ksp1t8tdexbQqqtDtU="; # cargoSha256
@@ -26,10 +27,14 @@ in rec {
     "sha256-ZmGVRi+7kEqEwHQnwjTLjUElgg544wXlhebqGiW+GE8="; # cargoSha256
   ic-repl = mkDrv "ic-repl"
     "sha256-sC/XODxvyMZ8rNPzf0MFqwXVs6BO+t2Sdyk4LE+E9CY="; # cargoSha256
-  ic-wasm = mkDrv_ [ ] true [ ] "ic-wasm"
+  ic-wasm = mkDrv { dontUseCargoParallelTests = true; } "ic-wasm"
     "sha256-c/km0yev3nJgA5v8AaNoR4Ga3W2XlPzs9GuhTKuHiJU="; # cargoSha256
-  candid = mkDrv_ [ ] false [ ] "candid"
+  candid = mkDrv { } "candid"
     "sha256-OzXZ7wrMCbaVKKa6ANizMcfMsYOlStgsRuerSxBd/2k="; # cargoSha256
+  cdk-rs = mkDrv { doCheck = false; } "cdk-rs"
+    "sha256-qME+13d491Oo4ntbamH6kSIr0ItcUJ+HYjG+e/HXrKo="; # cargoSha256
+  agent-rs = mkDrv { doCheck = false; } "agent-rs"
+    "sha256-d9LJA/H93sk3w2wakx5nQ3UOPteKAsroT/nTOW9fN3E="; # cargoSha256
 
   shell = ic-wasm;
 }
