@@ -16,8 +16,12 @@ let
     url =
       "https://github.com/ninegua/ic-nix/releases/download/${version}/ic-canisters-${version}-wasm32.tar.gz";
   };
+  extensions = fetchTarball {
+    url =
+      "https://github.com/ninegua/ic-nix/releases/download/${version}/dfx-extensions-${version}-${system}.tar.gz";
+  };
   sources = import "${ic-nix}/nix/sources.nix" { inherit (pkgs) fetchgit; };
-  makeDrv = { binaries, canisters }:
+  makeDrv = { binaries, canisters, extensions }:
     stdenv.mkDerivation {
       name = "dfx-env";
       phases = [ "installPhase" ]
@@ -39,6 +43,7 @@ let
         mkdir -p $cache/{base,wasms}
         cp -r ${canisters}/share/wasms $cache/
         cp -r ${sources.motoko-base}/src/* $cache/base/
+        cp -r ${extensions}/share/extensions $cache/
       '';
       /* cd $cache
          for exe in $out/bin/*; do
@@ -47,9 +52,9 @@ let
          done
       */
     };
-  prebuilt-drv = makeDrv { inherit binaries canisters; };
+  prebuilt-drv = makeDrv { inherit binaries canisters extensions; };
   build-drv = let release = import "${ic-nix}/release.nix" { inherit pkgs; };
-  in makeDrv { inherit (release) binaries canisters; };
+  in makeDrv { inherit (release) binaries canisters extensions; };
 
   dfxBins = [
     "canister_sandbox"

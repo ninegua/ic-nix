@@ -38,7 +38,7 @@ in rec {
     installPhase = ''
       mkdir -p $out/bin $out/share
       cp ${moc}/bin/mo* $out/bin/
-      cp ${ic.binaries}/bin/{replica,ic-admin,ic-prep,ic-starter,ic-btc-adapter,ic-https-outcalls-adapter,ic-state-machine-tests,canister_sandbox,sandbox_launcher,ic-nns-init,sns} $out/bin/
+      cp ${ic.binaries}/bin/{replica,ic-admin,ic-prep,ic-starter,ic-btc-adapter,ic-https-outcalls-adapter,ic-state-machine-tests,canister_sandbox,sandbox_launcher} $out/bin/
       cp ${dfx}/bin/* $out/bin/
       cp ${icx-proxy}/bin/* $out/bin/
       cp ${idl2json}/bin/* $out/bin/
@@ -76,4 +76,19 @@ in rec {
       mv $out/share/wasms/nns-dapp_t2.wasm $out/share/wasms/nns-dapp_local.wasm
     '';
   };
+  extensions = pkgs.stdenv.mkDerivation {
+    name = "dfx-extensions";
+    phases = [ "installPhase" ];
+    installPhase = ''
+      mkdir -p $out/share/extensions/{nns,sns}
+      cp ${dfx-extensions.src}/extensions/nns/extension.json $out/share/extensions/nns/
+      cp ${dfx-extensions.src}/extensions/sns/extension.json $out/share/extensions/sns/
+      cp ${dfx-extensions}/bin/nns $out/share/extensions/nns/
+      cp ${dfx-extensions}/bin/sns $out/share/extensions/sns/
+      cp ${ic.binaries}/bin/{ic-admin,ic-nns-init} $out/share/extensions/nns/
+      cp ${ic.binaries}/bin/sns $out/share/extensions/nns/sns-cli
+      cp ${ic.binaries}/bin/sns $out/share/extensions/sns/sns-cli
+    '';
+  };
+
 }
