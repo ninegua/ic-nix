@@ -6,15 +6,16 @@ let
   buildInputs = [ ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
   mkDrv = { doCheck ? true, buildFeatures ? [ ]
-    , dontUseCargoParallelTests ? false, cargoPatches ? [ ] }:
+    , dontUseCargoParallelTests ? false, cargoPatches ? [ ]
+    , cargoBuildFlags ? "", patchPhase ? "" }:
     name: cargoSha256:
     rustPlatform.buildRustPackage {
       inherit name buildFeatures cargoSha256 cargoPatches doCheck
-        dontUseCargoParallelTests;
+        dontUseCargoParallelTests cargoBuildFlags patchPhase;
       src = sources."${name}";
       buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
         (with darwin.apple_sdk.frameworks; [ Security ]);
-      nativeBuildInputs = [ pkg-config ];
+      nativeBuildInputs = [ pkg-config cmake perl ];
       RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ];
     };
 in rec {
@@ -35,6 +36,13 @@ in rec {
     "sha256-qME+13d491Oo4ntbamH6kSIr0ItcUJ+HYjG+e/HXrKo="; # cargoSha256
   agent-rs = mkDrv { doCheck = false; } "agent-rs"
     "sha256-d9LJA/H93sk3w2wakx5nQ3UOPteKAsroT/nTOW9fN3E="; # cargoSha256
+  dfx-extensions = mkDrv {
+    doCheck = false;
+    patchPhase =
+      "rm extensions/{nns,sns}/build.rs; sed -i 's/^build =.*$//' extensions/{nns,sns}/Cargo.toml*";
+    cargoBuildFlags = "--bin nns --bin sns";
+  } "dfx-extensions"
+    "sha256-4h/MfCao1EOdERTyKoViK/Lxrym8WPg6t8Y6ViHcuuI="; # cargoSha256
 
   shell = ic-wasm;
 }

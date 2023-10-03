@@ -58,6 +58,11 @@ jobs:
         VERSION=$(echo ${{ github.ref }} | cut -d/ -f3) make canisters
       if: contains(matrix.os, 'ubuntu')
 
+    - name: Pack extensions
+      run: |
+        VERSION=$(echo ${{ github.ref }} | cut -d/ -f3) make extensions
+      if: contains(matrix.os, 'ubuntu')
+
     - name: Upload dfx-env
       uses: svenstaro/upload-release-action@v2
       with:
@@ -67,7 +72,7 @@ jobs:
         file_glob: true
       if: contains(matrix.os, 'ubuntu')
 
-    - name: Upload binaries
+    - name: Upload ic binaries
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -75,11 +80,20 @@ jobs:
         file: ic-binaries-*.tar.gz
         file_glob: true
 
-    - name: Upload canisters
+    - name: Upload ic canisters
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.ref }}
         file: ic-canisters-*.tar.gz
+        file_glob: true
+      if: contains(matrix.os, 'ubuntu')
+
+    - name: Upload dfx extensions
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref }}
+        file: dfx-extensions-*.tar.gz
         file_glob: true
       if: contains(matrix.os, 'ubuntu')
