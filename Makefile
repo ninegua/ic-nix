@@ -1,6 +1,6 @@
 VERSION?=$(shell git rev-parse --abbrev-ref HEAD)
 SYSTEM?=$(subst ",,$(shell nix-instantiate --eval -E '(import <nixpkgs> {}).system'))
-TARGETS=dfx-env.tar.gz binaries canisters extensions
+TARGETS=dfx-env.tar.gz ic-binaries-$(VERSION)-$(SYSTEM).tar.gz ic-canisters-$(VERSION)-wasm32.tar.gz dfx-extensions-$(VERSION).tar.gz
 
 default:
 	echo $(VERSION) $(SYSTEM) $(TARGETS)
@@ -11,7 +11,7 @@ binaries: ic-binaries-$(VERSION)-$(SYSTEM).tar.gz
 
 canisters: ic-canisters-$(VERSION)-wasm32.tar.gz
 
-extensions: dfx-extensions-$(VERSION)-$(SYSTEM).tar.gz
+extensions: dfx-extensions-$(VERSION).tar.gz
 
 dfx-env:
 	mkdir dfx-env
@@ -26,7 +26,7 @@ ic-binaries-$(VERSION)-$(SYSTEM).tar.gz:
 ic-canisters-$(VERSION)-wasm32.tar.gz:
 	tar -zcv -C $$(nix-build --pure release.nix --no-out-link -A canisters) --transform "s,^.,ic-canisters-$(VERSION)," -f $@ .
 
-dfx-extensions-$(VERSION)-$(SYSTEM).tar.gz:
+dfx-extensions-$(VERSION).tar.gz:
 	tar -zcv -C $$(nix-build --pure release.nix --no-out-link -A extensions) --transform "s,^.,dfx-extensions-$(VERSION)," -f $@ .
 
 subnet-replica-versions:

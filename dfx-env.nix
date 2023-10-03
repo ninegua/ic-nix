@@ -18,7 +18,7 @@ let
   };
   extensions = fetchTarball {
     url =
-      "https://github.com/ninegua/ic-nix/releases/download/${version}/dfx-extensions-${version}-${system}.tar.gz";
+      "https://github.com/ninegua/ic-nix/releases/download/${version}/dfx-extensions-${version}.tar.gz";
   };
   sources = import "${ic-nix}/nix/sources.nix" { inherit (pkgs) fetchgit; };
   makeDrv = { binaries, canisters, extensions }:
@@ -32,18 +32,21 @@ let
       installPhase = ''
         mkdir -p $out/bin $out/share
         cp -r ${binaries}/bin/* $out/bin
-        cp -r ${canisters}/share/{dfx-canisters,ic-canisters} $out/share
+        ln -s ${canisters}/share/{dfx-canisters,ic-canisters} $out/share
         ls -R $out
-        chmod 755 $out/bin/*
         echo $phases
       '';
       createCachePhase = ''
         dfx_version=$($out/bin/dfx --version|cut -d' ' -f2)
         cache=$out/share/dfx/.cache/dfinity/versions/$dfx_version/
-        mkdir -p $cache/{base,wasms}
-        cp -r ${canisters}/share/wasms $cache/
-        cp -r ${sources.motoko-base}/src/* $cache/base/
+        mkdir -p $cache
+        ln -s $out/bin/* $cache/
+        ln -s ${canisters}/share/wasms $cache/wasms
+        ln -s ${sources.motoko-base}/src $cache/base
         cp -r ${extensions}/share/extensions $cache/
+        chmod +w $cache/extensions/{nns,sns}
+        ln -s $out/bin/{ic-admin,nns,ic-nns-init,sns-cli} $cache/extensions/nns/
+        ln -s $out/bin/{sns,sns-cli} $cache/extensions/sns/
       '';
       /* cd $cache
          for exe in $out/bin/*; do

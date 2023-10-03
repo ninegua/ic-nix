@@ -58,6 +58,11 @@ jobs:
         VERSION=$(echo ${{ github.ref }} | cut -d/ -f3) make canisters
       if: contains(matrix.os, 'ubuntu')
 
+    - name: Pack extensions
+      run: |
+        VERSION=$(echo ${{ github.ref }} | cut -d/ -f3) make extensions
+      if: contains(matrix.os, 'ubuntu')
+
     - name: Upload dfx-env
       uses: svenstaro/upload-release-action@v2
       with:
@@ -91,3 +96,4 @@ jobs:
         tag: ${{ github.ref }}
         file: dfx-extensions-*.tar.gz
         file_glob: true
+      if: contains(matrix.os, 'ubuntu')
