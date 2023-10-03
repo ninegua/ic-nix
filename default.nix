@@ -14,7 +14,7 @@ let
         cargo = self.rust-stable;
         stdenv = self.llvmPackages_11.libcxxStdenv;
       };
-      rust-nightly = self.rust-bin.nightly."2022-12-15".default.override {
+      rust-nightly = self.rust-bin.nightly."2023-04-21".default.override {
         targets = [ "wasm32-unknown-emscripten" "wasm32-wasi" ];
         extensions = [ "rust-src" ];
       };

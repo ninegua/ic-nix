@@ -160,7 +160,7 @@ in rec {
     vendorRustStdDeps = "${cargoVendorTools}/bin/vendor-rust-std-deps";
 
     # SHA256 of Rust std deps
-    rustStdDepsHash = "sha256-sRerHg2LoEiH/dBR/lY/e80rZQv+SFQTOCX9CD+NV+s=";
+    rustStdDepsHash = "sha256-A3WPIx+weu4wIYV7cweGkRxYGAPt7srxBAtMEyPOkhI=";
 
     # Vendor directory for Rust std deps
     rustStdDeps = pkgs.stdenvNoCC.mkDerivation {
