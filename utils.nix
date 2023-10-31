@@ -14,7 +14,7 @@ let
         dontUseCargoParallelTests cargoBuildFlags patchPhase;
       src = sources."${name}";
       buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
-        (with darwin.apple_sdk.frameworks; [ Security ]);
+        (with darwin.apple_sdk.frameworks; [ SystemConfiguration Security ]);
       nativeBuildInputs = [ pkg-config cmake perl ];
       RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ];
     };
