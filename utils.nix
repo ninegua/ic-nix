@@ -21,28 +21,28 @@ let
 in rec {
   icx-proxy =
     mkDrv { buildFeatures = [ "skip_body_verification" ]; } "icx-proxy"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
   idl2json = mkDrv { } "idl2json"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-2btmJ5dvyAmI9eapXiIHeeVn8/FWHsvve3YtoGK3L9k="; # cargoSha256
   vessel = mkDrv { } "vessel"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-ZmGVRi+7kEqEwHQnwjTLjUElgg544wXlhebqGiW+GE8="; # cargoSha256
   ic-repl = mkDrv { } "ic-repl"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-z6YSY3lUS4twE2+sFimsJBQceopmyQ+X+1LZ3hGzb3k="; # cargoSha256
   ic-wasm = mkDrv { dontUseCargoParallelTests = true; } "ic-wasm"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-WfA+cxZ/woDgmbXtO7oeJDCG30vNH0ZslKH/3UJupaU="; # cargoSha256
   candid = mkDrv { } "candid"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-jsOr5bPp5AzedKa02F7YDVISkuKow9VJjiojtDp0FCM="; # cargoSha256
   cdk-rs = mkDrv { doCheck = false; } "cdk-rs"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-g3RWRzitfb7cVbyoEPEHhsLf6PUDHL2jN/ky/LZvadI="; # cargoSha256
   agent-rs = mkDrv { doCheck = false; } "agent-rs"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-tgUu4KDlmhBBdbhT2PZcJHQqhlW6pseZH8tKG/aW7T4="; # cargoSha256
   dfx-extensions = mkDrv {
     doCheck = false;
     patchPhase =
       "rm extensions/{nns,sns}/build.rs; sed -i 's/^build =.*$//' extensions/{nns,sns}/Cargo.toml*";
     cargoBuildFlags = "--bin nns --bin sns";
   } "dfx-extensions"
-    "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+    "sha256-4h/MfCao1EOdERTyKoViK/Lxrym8WPg6t8Y6ViHcuuI="; # cargoSha256
 
   shell = ic-wasm;
 }
