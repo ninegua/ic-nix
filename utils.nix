@@ -14,7 +14,7 @@ let
         dontUseCargoParallelTests cargoBuildFlags patchPhase;
       src = sources."${name}";
       buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
-        (with darwin.apple_sdk.frameworks; [ Security ]);
+        (with darwin.apple_sdk.frameworks; [ SystemConfiguration Security ]);
       nativeBuildInputs = [ pkg-config cmake perl ];
       RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ];
     };
@@ -23,19 +23,19 @@ in rec {
     mkDrv { buildFeatures = [ "skip_body_verification" ]; } "icx-proxy"
     "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
   idl2json = mkDrv { } "idl2json"
-    "sha256-snq5W3CJ3X7C8WozpTaXjLL93Ksp1t8tdexbQqqtDtU="; # cargoSha256
+    "sha256-2btmJ5dvyAmI9eapXiIHeeVn8/FWHsvve3YtoGK3L9k="; # cargoSha256
   vessel = mkDrv { } "vessel"
     "sha256-ZmGVRi+7kEqEwHQnwjTLjUElgg544wXlhebqGiW+GE8="; # cargoSha256
   ic-repl = mkDrv { } "ic-repl"
-    "sha256-sC/XODxvyMZ8rNPzf0MFqwXVs6BO+t2Sdyk4LE+E9CY="; # cargoSha256
+    "sha256-z6YSY3lUS4twE2+sFimsJBQceopmyQ+X+1LZ3hGzb3k="; # cargoSha256
   ic-wasm = mkDrv { dontUseCargoParallelTests = true; } "ic-wasm"
-    "sha256-c/km0yev3nJgA5v8AaNoR4Ga3W2XlPzs9GuhTKuHiJU="; # cargoSha256
+    "sha256-WfA+cxZ/woDgmbXtO7oeJDCG30vNH0ZslKH/3UJupaU="; # cargoSha256
   candid = mkDrv { } "candid"
-    "sha256-OzXZ7wrMCbaVKKa6ANizMcfMsYOlStgsRuerSxBd/2k="; # cargoSha256
+    "sha256-jsOr5bPp5AzedKa02F7YDVISkuKow9VJjiojtDp0FCM="; # cargoSha256
   cdk-rs = mkDrv { doCheck = false; } "cdk-rs"
-    "sha256-qME+13d491Oo4ntbamH6kSIr0ItcUJ+HYjG+e/HXrKo="; # cargoSha256
+    "sha256-g3RWRzitfb7cVbyoEPEHhsLf6PUDHL2jN/ky/LZvadI="; # cargoSha256
   agent-rs = mkDrv { doCheck = false; } "agent-rs"
-    "sha256-d9LJA/H93sk3w2wakx5nQ3UOPteKAsroT/nTOW9fN3E="; # cargoSha256
+    "sha256-tgUu4KDlmhBBdbhT2PZcJHQqhlW6pseZH8tKG/aW7T4="; # cargoSha256
   dfx-extensions = mkDrv {
     doCheck = false;
     patchPhase =
