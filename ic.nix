@@ -57,7 +57,7 @@ let
         "-DUSE_RTTI=1"
         "-DROCKSDB_BUILD_SHARED=0"
       ];
-      NIX_CFLAGS_COMPILE =
+      CFLAGS =
         [ "-Wno-error=deprecated-copy" "-Wno-error=unused-private-field" ];
     });
 
