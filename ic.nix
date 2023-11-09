@@ -40,7 +40,10 @@ let
   stdenv = llvmPackages.libcxxStdenv;
 
   rocksdb =
-    (pkgsStatic.rocksdb_6_23.override ({ inherit stdenv; })).overrideAttrs (_: {
+    # (pkgsStatic.rocksdb_6_23.override ({ inherit stdenv; })).overrideAttrs (_: {
+    ((callPackage ./nix/rocksdb.nix { }).override ({
+      inherit stdenv;
+    })).overrideAttrs (_: {
       cmakeFlags = [
         "-DPORTABLE=1"
         "-DWITH_JEMALLOC=0"
@@ -84,6 +87,7 @@ let
       nativeBuildInputs =
         [ moc cmake llvmPackages.clang pkg-config python3 rustfmt protobuf ];
       buildInputs = [
+        libusb
         llvmPackages.libclang.lib
         llvmPackages.llvm.lib
         rocksdb
