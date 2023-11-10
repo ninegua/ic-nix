@@ -5,24 +5,6 @@ let
     officialRelease = false;
   };
   ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_12;
-  # An old version of menhir is required to parse moc grammar!
-  menhirLib = ocamlPackages.menhirLib.overrideAttrs (_: {
-    version = "20211012";
-    src = pkgs.fetchFromGitLab {
-      domain = "gitlab.inria.fr";
-      owner = "fpottier";
-      repo = "menhir";
-      rev = "20211012";
-      sha256 = "08kf5apbv15n2kcr3qhyr3rvsf2lg25ackr3x9kfgiiqc0p3sz40";
-    };
-    useDune2 = true;
-  });
-  menhirSdk = ocamlPackages.menhirSdk.overrideAttrs
-    (_: { inherit (menhirLib) version src useDune2; });
-  menhir = ocamlPackages.menhir.overrideAttrs (_: {
-    inherit (menhirLib) version src useDune2;
-    buildInputs = [ menhirLib menhirSdk ];
-  });
   wasm = ocamlPackages.wasm.overrideAttrs (_: {
     version = "1.1.1";
     src = pkgs.fetchFromGitHub {
@@ -61,13 +43,13 @@ let
     export CLANG="${pkgs.clang_13}/bin/clang"
   '';
   commonBuildInputs = with pkgs; [
-    ocamlPackages.dune_3
+    dune_3
     ocamlPackages.ocaml
     ocamlPackages.atdgen
     ocamlPackages.checkseum
     ocamlPackages.findlib
-    menhir
-    menhirLib
+    ocamlPackages.menhir
+    ocamlPackages.menhirLib
     ocamlPackages.cow
     ocamlPackages.num
     ocamlPackages.stdint
@@ -78,11 +60,9 @@ let
     ocamlPackages.ppxlib
     ocamlPackages.ppx_blob
     ocamlPackages.ppx_inline_test
-    ocamlPackages.ocaml-migrate-parsetree
-    ocamlPackages.ppx_tools_versioned
     ocamlPackages.bisect_ppx
-    obelisk
     ocamlPackages.uucp
+    obelisk
     perl
     removeReferencesTo
   ];
