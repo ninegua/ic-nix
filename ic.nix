@@ -72,13 +72,14 @@ let
       name = "ic";
       targetNames = lib.strings.concatStringsSep " " targets;
       src = sources.ic;
-      cargoPatches = [ ];
+      # cargoPatches = [ ./nix/ic.patch ];
       unpackPhase = ''
         cp -r $src ${name}
         echo source root is ${sourceRoot}
         chmod -R u+w -- "$sourceRoot"
         runHook postUnpack
       '';
+
       sourceRoot = "${name}";
       nativeBuildInputs =
         [ moc cmake llvmPackages.clang pkg-config python3 rustfmt protobuf ];
@@ -94,8 +95,7 @@ let
         with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
       else
         [ libunwind-static ]);
-      cargoSha256 =
-        "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+
       doCheck = false;
 
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
@@ -118,16 +118,24 @@ let
       ]);
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
 
-      buildPhase = ''
-        cargo build --profile ${profile} --target ${hostTriple} $cargoBuildFlags
-      '';
+      /* buildPhase = ''
+           cargo build --frozen --profile ${profile} --target ${hostTriple} $cargoBuildFlags
+         '';
+      */
       installPhase = ''
         mkdir -p $out/bin
         for name in ${targetNames}; do
           install -m 755 target/${hostTriple}/release/$name $out/bin
         done
       '';
-    });
+      # Placeholder, to allow a custom importCargoLock below
+      cargoSha256 = "0000000000000000000000000000000000000000000000000000";
+    }).overrideAttrs {
+      cargoDeps = rustPlatform.importCargoLock {
+        allowBuiltinFetchGit = true;
+        lockFile = "${sources.ic}/Cargo.lock";
+      };
+    };
 
   mkBinaries = { customLinker }:
     buildIC {
@@ -145,7 +153,7 @@ let
     profile = "canister-release";
     customLinker = false;
   }).overrideAttrs (self: rec {
-    name = "ic-wasm";
+    name = "ic-wasms";
     RUSTFLAGS = [ ];
     installPhase = ''
       mkdir -p $out/bin

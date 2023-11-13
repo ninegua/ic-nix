@@ -9,10 +9,14 @@ let
         targets = [ "wasm32-unknown-unknown" ];
         extensions = [ "rust-src" ];
       };
-      rustPlatform = super.makeRustPlatform {
+      rustPlatform = (super.makeRustPlatform {
         rustc = self.rust-stable;
         cargo = self.rust-stable;
         stdenv = self.llvmPackages_11.libcxxStdenv;
+      }) // {
+        importCargoLock = pkgs.callPackage ./nix/import-cargo-lock.nix {
+          cargo = self.rust-stable;
+        };
       };
       rust-nightly = self.rust-bin.nightly."2023-04-21".default.override {
         targets = [ "wasm32-unknown-emscripten" "wasm32-wasi" ];
