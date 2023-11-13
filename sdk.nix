@@ -8,7 +8,7 @@ let
       cp -r $src $out
       chmod -R +rw $out
       cd $out
-      patch -p1 < ${./nix/sdk-ic-certification-0.23.2.patch}
+      patch -p1 < ${./nix/sdk.patch}
     '';
   };
   stdenv = llvmPackages_11.libcxxStdenv;
