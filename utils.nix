@@ -23,45 +23,45 @@ in rec {
   icx-proxy = mkDrv {
     buildFeatures = [ "skip_body_verification" ];
     cargoSha256 =
-      "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
+      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   } "icx-proxy";
 
   idl2json = mkDrv {
     cargoSha256 =
-      "sha256-2btmJ5dvyAmI9eapXiIHeeVn8/FWHsvve3YtoGK3L9k="; # cargoSha256
+      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   } "idl2json";
 
   vessel = mkDrv {
     cargoSha256 =
-      "sha256-ZmGVRi+7kEqEwHQnwjTLjUElgg544wXlhebqGiW+GE8="; # cargoSha256
+      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   } "vessel";
 
   ic-repl = mkDrv {
     cargoSha256 =
-      "sha256-z6YSY3lUS4twE2+sFimsJBQceopmyQ+X+1LZ3hGzb3k="; # cargoSha256
+      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   } "ic-repl";
 
   ic-wasm = mkDrv {
     dontUseCargoParallelTests = true;
     cargoSha256 =
-      "sha256-WfA+cxZ/woDgmbXtO7oeJDCG30vNH0ZslKH/3UJupaU="; # cargoSha256
+      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   } "ic-wasm";
 
   candid = mkDrv {
     cargoSha256 =
-      "sha256-jsOr5bPp5AzedKa02F7YDVISkuKow9VJjiojtDp0FCM="; # cargoSha256
+      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   } "candid";
 
   cdk-rs = mkDrv {
     doCheck = false;
     cargoSha256 =
-      "sha256-g3RWRzitfb7cVbyoEPEHhsLf6PUDHL2jN/ky/LZvadI="; # cargoSha256
+      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   } "cdk-rs";
 
   agent-rs = mkDrv {
     doCheck = false;
     cargoSha256 =
-      "sha256-tgUu4KDlmhBBdbhT2PZcJHQqhlW6pseZH8tKG/aW7T4="; # cargoSha256
+      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
   } "agent-rs";
 
   dfx-extensions = mkDrv {
@@ -82,7 +82,7 @@ in rec {
           "sha256-QgGYo2qdRge7g6ul3PcTAyLgm+coJV2K1MiptKtFwos=";
       };
     };
-  } "dfx-extensions"; # cargoSha256
+  } "0000000000000000000000000000000000000000000000000000"; # cargoSha256
 
   shell = ic-wasm;
 }
