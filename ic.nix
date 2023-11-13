@@ -130,12 +130,12 @@ let
       '';
       # Placeholder, to allow a custom importCargoLock below
       cargoSha256 = "0000000000000000000000000000000000000000000000000000";
-    }).overrideAttrs {
+    }).overrideAttrs (_: {
       cargoDeps = rustPlatform.importCargoLock {
         allowBuiltinFetchGit = true;
         lockFile = "${sources.ic}/Cargo.lock";
       };
-    };
+    });
 
   mkBinaries = { customLinker }:
     buildIC {

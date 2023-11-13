@@ -51,12 +51,12 @@ let
     doCheck = false;
     # Placeholder, to allow a custom importCargoLock below
     cargoSha256 = "0000000000000000000000000000000000000000000000000000";
-  }).overrideAttrs {
+  }).overrideAttrs (_: {
     cargoDeps = rustPlatform.importCargoLock {
       allowBuiltinFetchGit = true;
       lockFile = "${patchedSrc}/Cargo.lock";
     };
-  };
+  });
 in {
   inherit dfx;
   shell = dfx;
