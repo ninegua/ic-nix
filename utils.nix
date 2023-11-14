@@ -76,8 +76,13 @@ in rec {
     '';
     cargoBuildFlags = "--bin nns --bin sns";
     cargoLock = {
-      allowBuiltinFetchGit = true;
       lockFile = "${sources.dfx-extensions}/Cargo.lock";
+      outputHashes = {
+        "dfx-core-0.0.1" =
+          "sha256-g2ab1LM0jE7BDUWTc017+e88cODt/IwdTxs2N/tRPt4=";
+        "ic-agent-0.25.0" =
+          "sha256-QgGYo2qdRge7g6ul3PcTAyLgm+coJV2K1MiptKtFwos=";
+      };
     };
   } "dfx-extensions";
 
