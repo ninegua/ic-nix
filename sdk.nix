@@ -26,7 +26,6 @@ let
     src = patchedSrc;
     inherit buildInputs;
     nativeBuildInputs = [ perl pkg-config cmake binaryen python3 ];
-    # cargoPatches = [ ./nix/sdk-ic-certification-0.23.2.patch ];
     preConfigure = ''
       export DFX_VERSION=$(cat src/dfx/Cargo.toml |grep version|head -n1|sed -e 's/^.*"\(.*\)"/\1/')
       export DFX_CONFIG_ROOT="$PWD"
