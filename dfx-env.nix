@@ -81,7 +81,7 @@ let
   dfxPaths = drv: list:
     builtins.listToAttrs (builtins.map (name: {
       name = "DFX_${
-          lib.strings.toUpper (lib.replaceChars [ "-" ] [ "_" ] name)
+          lib.strings.toUpper (lib.replaceStrings [ "-" ] [ "_" ] name)
         }_PATH";
       value = "${drv}/bin/${name}";
     }) list);
