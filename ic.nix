@@ -118,10 +118,9 @@ let
       ]);
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
 
-      /* buildPhase = ''
-           cargo build --frozen --profile ${profile} --target ${hostTriple} $cargoBuildFlags
-         '';
-      */
+      buildPhase = ''
+        cargo build --frozen --profile ${profile} --target ${hostTriple} $cargoBuildFlags
+      '';
       installPhase = ''
         mkdir -p $out/bin
         for name in ${targetNames}; do
