@@ -42,6 +42,7 @@ in rec {
   } "ic-repl";
 
   ic-wasm = mkDrv {
+    buildFeatures = [ "exe" ];
     dontUseCargoParallelTests = true;
     cargoPatches = [ ./nix/ic-wasm.patch ];
     cargoSha256 =
