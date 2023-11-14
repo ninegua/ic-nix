@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        channel: [ '23.05' ]
+        channel: [ '22.11' ]
         os: [ ubuntu-latest, macos-latest ]
         include:
           - os: ubuntu-latest
@@ -20,8 +20,8 @@ jobs:
           - os: macos-latest
             name: darwin
             prefix: nixpkgs
-          - channel: '23.05'
-            channel-darwin: '23.05-darwin'
+          - channel: '22.11'
+            channel-darwin: '22.11-darwin'
 
     steps:
     - uses: actions/checkout@v3
