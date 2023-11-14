@@ -1,6 +1,16 @@
 { pkgs, src }:
 with pkgs;
 let
+  patchedSrc = pkgs.stdenv.mkDerivation {
+    name = "sdk-src";
+    inherit src;
+    installPhase = ''
+      cp -r $src $out
+      chmod -R +rw $out
+      cd $out
+      patch -p1 < ${./nix/sdk.patch}
+    '';
+  };
   stdenv = llvmPackages_11.libcxxStdenv;
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
@@ -11,14 +21,11 @@ let
     ]);
   ic_btc_canister = builtins.fetchurl
     "https://github.com/dfinity/bitcoin-canister/releases/latest/download/ic-btc-canister.wasm.gz";
-  dfx = rustPlatform.buildRustPackage {
+  dfx = (rustPlatform.buildRustPackage {
     name = "dfx";
-    inherit src;
-    cargoSha256 =
-      "sha256-Zaj8W0a3+FtPW7VIdyVy6aTG2rFvyu0u33q04ZRzIqM="; # cargoSha256
+    src = patchedSrc;
     inherit buildInputs;
     nativeBuildInputs = [ perl pkg-config cmake binaryen python3 ];
-    cargoPatches = [ ./nix/sdk-ic-certification-0.23.2.patch ];
     preConfigure = ''
       export DFX_VERSION=$(cat src/dfx/Cargo.toml |grep version|head -n1|sed -e 's/^.*"\(.*\)"/\1/')
       export DFX_CONFIG_ROOT="$PWD"
@@ -40,8 +47,15 @@ let
         "-Lnative=${libiconv-static.out}/lib"
         "-lstatic=iconv"
       ];
-  };
-
+    doCheck = false;
+    # Placeholder, to allow a custom importCargoLock below
+    cargoSha256 = "0000000000000000000000000000000000000000000000000000";
+  }).overrideAttrs (_: {
+    cargoDeps = rustPlatform.importCargoLock {
+      allowBuiltinFetchGit = true;
+      lockFile = "${patchedSrc}/Cargo.lock";
+    };
+  });
 in {
   inherit dfx;
   shell = dfx;

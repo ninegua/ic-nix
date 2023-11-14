@@ -42,9 +42,11 @@ in rec {
   } "ic-repl";
 
   ic-wasm = mkDrv {
+    buildFeatures = [ "exe" ];
     dontUseCargoParallelTests = true;
+    cargoPatches = [ ./nix/ic-wasm.patch ];
     cargoSha256 =
-      "sha256-WfA+cxZ/woDgmbXtO7oeJDCG30vNH0ZslKH/3UJupaU="; # cargoSha256
+      "sha256-RA7AuUsg5lbBie+/+Ln/c9I2Ij1DT5OIdjhRXtbOS4E="; # cargoSha256
   } "ic-wasm";
 
   candid = mkDrv {
@@ -61,7 +63,7 @@ in rec {
   agent-rs = mkDrv {
     doCheck = false;
     cargoSha256 =
-      "sha256-tgUu4KDlmhBBdbhT2PZcJHQqhlW6pseZH8tKG/aW7T4="; # cargoSha256
+      "sha256-G9bK7ogkrEY6gUrKN9V5uxGS+FdtfUHoSWVVo204UAA="; # cargoSha256
   } "agent-rs";
 
   dfx-extensions = mkDrv {
@@ -82,7 +84,7 @@ in rec {
           "sha256-QgGYo2qdRge7g6ul3PcTAyLgm+coJV2K1MiptKtFwos=";
       };
     };
-  } "dfx-extensions"; # cargoSha256
+  } "dfx-extensions";
 
   shell = ic-wasm;
 }
