@@ -132,7 +132,7 @@ let
         done
       '';
       # Placeholder, to allow a custom importCargoLock below
-      cargoSha256 = "0000000000000000000000000000000000000000000000000000";
+      cargoSha256 = lib.fakeHash;
     }).overrideAttrs (_: {
       cargoDeps = rustPlatform.importCargoLock {
         lockFile = "${sources.ic}/Cargo.lock";
