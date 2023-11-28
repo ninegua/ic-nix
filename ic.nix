@@ -149,8 +149,8 @@ let
             "sha256-9Hb7CnPF+lxrVO1NAhS7EXcPVWZutJXr6UWxpptzk4U=";
           "lmdb-rkv-0.14.99" =
             "sha256-5WcUzapkrc/s3wCBNCuUDhtbp17n67rTbm2rx0qtITg=";
-          "pprof-0.10.1" =
-            "sha256-ioZ8AyFTUUev8MDZapto0yXC6G+dZzg+7ZNtTR87Rg4=";
+          "build-info-0.0.26" =
+            "sha256-WRj+9OVkdfBeLYpqzN87PhgsLrcZcYonunZNH/DEv/E=";
         };
       };
     });
