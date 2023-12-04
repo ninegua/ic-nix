@@ -38,7 +38,7 @@ in rec {
 
   ic-repl = mkDrv {
     cargoSha256 =
-      "sha256-z6YSY3lUS4twE2+sFimsJBQceopmyQ+X+1LZ3hGzb3k="; # cargoSha256
+      "sha256-R1WqmsGQDZ1Fmh1ggBI8eWVGi4Gmosv8Ctxhuwfu/L0="; # cargoSha256
   } "ic-repl";
 
   ic-wasm = mkDrv {
