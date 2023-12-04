@@ -44,9 +44,9 @@ in rec {
   ic-wasm = mkDrv {
     buildFeatures = [ "exe" ];
     dontUseCargoParallelTests = true;
-    cargoPatches = [ ./nix/ic-wasm.patch ];
+    cargoPatches = [ ];
     cargoSha256 =
-      "sha256-RA7AuUsg5lbBie+/+Ln/c9I2Ij1DT5OIdjhRXtbOS4E="; # cargoSha256
+      "sha256-a8iN/lTEVqdmogsSlT3+v3nivSG5VRhOz4/trmAsZLY="; # cargoSha256
   } "ic-wasm";
 
   candid = mkDrv {
@@ -63,7 +63,7 @@ in rec {
   agent-rs = mkDrv {
     doCheck = false;
     cargoSha256 =
-      "sha256-GL42mceUJt2Iii6TGUzhfyjnynUuPdg9YbPDOgw6/dM="; # cargoSha256
+      "sha256-8JbyNBWU3ij5qnmJ1IOSqM+qv0dhKRlwZIjR2Sss3Xg="; # cargoSha256
   } "agent-rs";
 
   dfx-extensions = mkDrv {
