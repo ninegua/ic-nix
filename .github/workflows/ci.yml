@@ -79,9 +79,9 @@ jobs:
       if: contains(matrix.os, 'ubuntu')
 
     - name: Show space
-        run: |
-          echo "Free space:"
-          df -h
+      run: |
+        echo "Free space:"
+        df -h
 
     - uses: actions/checkout@v3
 
