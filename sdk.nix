@@ -25,6 +25,7 @@ let
     name = "dfx";
     src = patchedSrc;
     inherit buildInputs;
+    cargoBuildFlags = [ "-p" "dfx" "-p" "icx-asset" ];
     nativeBuildInputs = [ perl pkg-config cmake binaryen python3 ];
     preConfigure = ''
       export DFX_VERSION=$(cat src/dfx/Cargo.toml |grep version|head -n1|sed -e 's/^.*"\(.*\)"/\1/')
