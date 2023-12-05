@@ -67,12 +67,21 @@ jobs:
 
     steps:
     - name: Maximize build space
-      run: |
-        sudo rm -rf /usr/share/dotnet
-        sudo rm -rf /usr/local/lib/android
-        sudo rm -rf /opt/ghc
-        df
+      uses: easimon/maximize-build-space@master
+      with:
+        root-reserve-mb: 50000
+        swap-size-mb: 1024
+        remove-dotnet: 'true'
+        remove-android: 'true'
+        remove-haskell: 'true'
+        remove-codeql: 'true'
+        remove-docker-images: 'true'
       if: contains(matrix.os, 'ubuntu')
+
+    - name: Show space
+        run: |
+          echo "Free space:"
+          df -h
 
     - uses: actions/checkout@v3
 
