@@ -21,6 +21,10 @@ let
       "https://github.com/ninegua/ic-nix/releases/download/${version}/dfx-extensions-${version}.tar.gz";
   };
   sources = import "${ic-nix}/nix/sources.nix" { inherit (pkgs) fetchgit; };
+  # Fix for NixOS 23.05
+  autoPatchelfHook = pkgs.autoPatchelfHook.overrideAttrs (_: {
+    propagatedBuildInputs = [ bintools (stdenv.cc.cc.libgcc or null) ];
+  });
   makeDrv = { binaries, canisters, extensions }:
     stdenv.mkDerivation {
       name = "dfx-env";

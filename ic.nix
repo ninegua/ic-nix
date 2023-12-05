@@ -40,7 +40,10 @@ let
   stdenv = llvmPackages.libcxxStdenv;
 
   rocksdb =
-    (pkgsStatic.rocksdb_6_23.override ({ inherit stdenv; })).overrideAttrs (_: {
+    # (pkgsStatic.rocksdb_6_23.override ({ inherit stdenv; })).overrideAttrs (_: {
+    ((callPackage ./nix/rocksdb.nix { }).override ({
+      inherit stdenv;
+    })).overrideAttrs (_: {
       cmakeFlags = [
         "-DPORTABLE=1"
         "-DWITH_JEMALLOC=0"
@@ -84,6 +87,7 @@ let
       nativeBuildInputs =
         [ moc cmake llvmPackages.clang pkg-config python3 rustfmt protobuf ];
       buildInputs = [
+        libusb
         llvmPackages.libclang.lib
         llvmPackages.llvm.lib
         rocksdb
@@ -128,7 +132,7 @@ let
         done
       '';
       # Placeholder, to allow a custom importCargoLock below
-      cargoSha256 = "0000000000000000000000000000000000000000000000000000";
+      cargoSha256 = lib.fakeHash;
     }).overrideAttrs (_: {
       cargoDeps = rustPlatform.importCargoLock {
         lockFile = "${sources.ic}/Cargo.lock";
@@ -149,8 +153,8 @@ let
             "sha256-9Hb7CnPF+lxrVO1NAhS7EXcPVWZutJXr6UWxpptzk4U=";
           "lmdb-rkv-0.14.99" =
             "sha256-5WcUzapkrc/s3wCBNCuUDhtbp17n67rTbm2rx0qtITg=";
-          "pprof-0.10.1" =
-            "sha256-ioZ8AyFTUUev8MDZapto0yXC6G+dZzg+7ZNtTR87Rg4=";
+          "build-info-0.0.26" =
+            "sha256-MSdLfSKIJdQdT31609XC5viatPXgioFmtuKQbdggHi4=";
         };
       };
     });

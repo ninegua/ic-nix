@@ -54,7 +54,7 @@ in rec {
       for exe in $out/bin/*; do
         chmod 755 $exe
         rpath=$(patchelf --print-rpath $exe)
-        echo $rpath | grep -q : && echo "More than 1 rpath found in $exe: $rpath" && exit 1
+        echo $rpath | sed -e 's/:/\n/g' | grep -qv libgcc/lib$ | grep -q : && echo "More than 1 rpath found in $exe: $rpath" && exit 1
         patchelf --set-interpreter /lib64/ld-linux-x86-64.so.2 $exe
       done
     '');

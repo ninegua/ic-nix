@@ -49,7 +49,7 @@ let
       ];
     doCheck = false;
     # Placeholder, to allow a custom importCargoLock below
-    cargoSha256 = "0000000000000000000000000000000000000000000000000000";
+    cargoSha256 = lib.fakeHash;
   }).overrideAttrs (_: {
     cargoDeps = rustPlatform.importCargoLock {
       allowBuiltinFetchGit = true;
