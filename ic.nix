@@ -75,7 +75,7 @@ let
       name = "ic";
       targetNames = lib.strings.concatStringsSep " " targets;
       src = sources.ic;
-      cargoPatches = [ ];
+      cargoPatches = [ ./nix/ic-os-slog.patch ];
       unpackPhase = ''
         cp -r $src ${name}
         echo source root is ${sourceRoot}

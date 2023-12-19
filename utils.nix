@@ -38,7 +38,7 @@ in rec {
 
   ic-repl = mkDrv {
     cargoSha256 =
-      "sha256-R1WqmsGQDZ1Fmh1ggBI8eWVGi4Gmosv8Ctxhuwfu/L0="; # cargoSha256
+      "sha256-+rIM7KwfOwigdesIZgxUFlnue6JqErIo1z7YIAFHCLU="; # cargoSha256
   } "ic-repl";
 
   ic-wasm = mkDrv {
@@ -51,19 +51,19 @@ in rec {
 
   candid = mkDrv {
     cargoSha256 =
-      "sha256-yy9eIlgDJAsMEnl4SBDJJ+vgINLZ24XPEXy29xhLX54="; # cargoSha256
+      "sha256-7khCAqFaj6I3zpKVRaZAxqL8q0vnGLjJWmqE8tavNAE="; # cargoSha256
   } "candid";
 
   cdk-rs = mkDrv {
     doCheck = false;
     cargoSha256 =
-      "sha256-eEnPLEJVSVV8hXJwjwTYbmBTUMrWCXpeORiugn9Jsvk="; # cargoSha256
+      "sha256-14Me3P3YFbIy7SpYn/1cvqDx8fEQrnKzdPDtirQVpHw="; # cargoSha256
   } "cdk-rs";
 
   agent-rs = mkDrv {
     doCheck = false;
     cargoSha256 =
-      "sha256-8JbyNBWU3ij5qnmJ1IOSqM+qv0dhKRlwZIjR2Sss3Xg="; # cargoSha256
+      "sha256-pMZAGCx7F0ftjm5xUHsUwUD+toBbVRSKFGSGnDTItcU"; # cargoSha256
   } "agent-rs";
 
   dfx-extensions = mkDrv {
