@@ -31,8 +31,8 @@
   };
   musl-wasi = fetchgit {
     url = "https://github.com/WebAssembly/wasi-libc"; # main
-    rev = "cc62fa82c29bfced82d280cbccc231667ee80822";
-    sha256 = "087sr3kdvwl9n1riv24r65g1y3bndafj2avgl063xkbvxscsrbzl";
+    rev = "4bac52eac3fd97157c15f86ffcab4e91533aa6f3";
+    sha256 = "0hbkpwzl0gfcxbq7kjy4wd8d28fs32hvl485fqh8i2zcnr72krgw";
   };
   sdk = fetchgit {
     url = "https://github.com/dfinity/sdk"; # master

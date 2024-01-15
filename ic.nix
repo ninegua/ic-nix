@@ -75,7 +75,7 @@ let
       name = "ic";
       targetNames = lib.strings.concatStringsSep " " targets;
       src = sources.ic;
-      cargoPatches = [ ./nix/ic-os-slog.patch ];
+      cargoPatches = [ ];
       unpackPhase = ''
         cp -r $src ${name}
         echo source root is ${sourceRoot}
@@ -153,8 +153,8 @@ let
             "sha256-9Hb7CnPF+lxrVO1NAhS7EXcPVWZutJXr6UWxpptzk4U=";
           "lmdb-rkv-0.14.99" =
             "sha256-5WcUzapkrc/s3wCBNCuUDhtbp17n67rTbm2rx0qtITg=";
-          "build-info-0.0.26" =
-            "sha256-MSdLfSKIJdQdT31609XC5viatPXgioFmtuKQbdggHi4=";
+          "build-info-0.0.27" =
+            "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
         };
       };
     });
