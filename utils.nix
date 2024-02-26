@@ -23,22 +23,22 @@ in rec {
   icx-proxy = mkDrv {
     buildFeatures = [ "skip_body_verification" ];
     cargoSha256 =
-      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+      "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
   } "icx-proxy";
 
   idl2json = mkDrv {
     cargoSha256 =
-      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+      "sha256-2btmJ5dvyAmI9eapXiIHeeVn8/FWHsvve3YtoGK3L9k="; # cargoSha256
   } "idl2json";
 
   vessel = mkDrv {
     cargoSha256 =
-      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+      "sha256-ZmGVRi+7kEqEwHQnwjTLjUElgg544wXlhebqGiW+GE8="; # cargoSha256
   } "vessel";
 
   ic-repl = mkDrv {
     cargoSha256 =
-      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+      "sha256-S08ceZO8orDHc6MELy3rkhfmXvnOB72sMwqFORMx5wE="; # cargoSha256
   } "ic-repl";
 
   ic-wasm = mkDrv {
@@ -46,24 +46,24 @@ in rec {
     dontUseCargoParallelTests = true;
     cargoPatches = [ ];
     cargoSha256 =
-      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+      "sha256-a8iN/lTEVqdmogsSlT3+v3nivSG5VRhOz4/trmAsZLY="; # cargoSha256
   } "ic-wasm";
 
   candid = mkDrv {
     cargoSha256 =
-      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+      "sha256-wv3Nz1nbuGY/amGPsSy2MCvkDKrHa0ZngU2AlJUJek4="; # cargoSha256
   } "candid";
 
   cdk-rs = mkDrv {
     doCheck = false;
     cargoSha256 =
-      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+      "sha256-FKMhOzGkHDjZivYbvYnkVAn2QMgo13/J/7gv5/NzgOE="; # cargoSha256
   } "cdk-rs";
 
   agent-rs = mkDrv {
     doCheck = false;
     cargoSha256 =
-      "0000000000000000000000000000000000000000000000000000"; # cargoSha256
+      "sha256-f/xOEBiPUAEhcu96zMl8AjI14iiYQ8xvyUPaxsv4qQA="; # cargoSha256
   } "agent-rs";
 
   dfx-extensions = mkDrv {
@@ -79,9 +79,7 @@ in rec {
       lockFile = "${sources.dfx-extensions}/Cargo.lock";
       outputHashes = {
         "dfx-core-0.0.1" =
-          "sha256-g2ab1LM0jE7BDUWTc017+e88cODt/IwdTxs2N/tRPt4=";
-        "ic-agent-0.25.0" =
-          "sha256-QgGYo2qdRge7g6ul3PcTAyLgm+coJV2K1MiptKtFwos=";
+          "sha256-SdqxP5skgt15cz9j6Yf1HMB7uU8zBnEKJV4nsDbe4zY=";
       };
     };
   } "dfx-extensions";
