@@ -38,7 +38,7 @@ in rec {
 
   ic-repl = mkDrv {
     cargoSha256 =
-      "sha256-2adj3PjS5QRYL1yaTuZmUfMgFwdMNmAOk7kaIv2/vOU="; # cargoSha256
+      "sha256-S08ceZO8orDHc6MELy3rkhfmXvnOB72sMwqFORMx5wE="; # cargoSha256
   } "ic-repl";
 
   ic-wasm = mkDrv {
@@ -51,19 +51,19 @@ in rec {
 
   candid = mkDrv {
     cargoSha256 =
-      "sha256-ST+LFD2krAE91HOnZ5sYsFVN2B1tJx+ravCUh6H5q1I="; # cargoSha256
+      "sha256-wv3Nz1nbuGY/amGPsSy2MCvkDKrHa0ZngU2AlJUJek4="; # cargoSha256
   } "candid";
 
   cdk-rs = mkDrv {
     doCheck = false;
     cargoSha256 =
-      "sha256-XwDgkSedbkei+WQhxUrJWwa4H3qEOICNuE4Lhe5w86w="; # cargoSha256
+      "sha256-FKMhOzGkHDjZivYbvYnkVAn2QMgo13/J/7gv5/NzgOE="; # cargoSha256
   } "cdk-rs";
 
   agent-rs = mkDrv {
     doCheck = false;
     cargoSha256 =
-      "sha256-u42LTPbfgvTz54S7/5r8SLvX1H76oEBsj4r9YzZsWRs="; # cargoSha256
+      "sha256-f/xOEBiPUAEhcu96zMl8AjI14iiYQ8xvyUPaxsv4qQA="; # cargoSha256
   } "agent-rs";
 
   dfx-extensions = mkDrv {
@@ -79,9 +79,7 @@ in rec {
       lockFile = "${sources.dfx-extensions}/Cargo.lock";
       outputHashes = {
         "dfx-core-0.0.1" =
-          "sha256-g2ab1LM0jE7BDUWTc017+e88cODt/IwdTxs2N/tRPt4=";
-        "ic-agent-0.25.0" =
-          "sha256-QgGYo2qdRge7g6ul3PcTAyLgm+coJV2K1MiptKtFwos=";
+          "sha256-SdqxP5skgt15cz9j6Yf1HMB7uU8zBnEKJV4nsDbe4zY=";
       };
     };
   } "dfx-extensions";
