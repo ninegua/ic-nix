@@ -1,8 +1,8 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = "3e25df8f16f794bc93caaefdce41467304d1b0c7"; # pin
-    sha256 = "1vlcrvrs6ycr1117g6267i0k3k2x44y07waallx0vj2fqy6h8fyv";
+    rev = "fff20526e154f8b8d24373efd9b50f588d147e91"; # pin
+    sha256 = "1k8g2i7yasy6f57l83m9wkdjcvh8yxrirvk6dsq7xfh6w4gl111m";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # master
@@ -11,8 +11,8 @@
   };
   idl2json = fetchgit {
     url = "https://github.com/dfinity/idl2json"; # master
-    rev = "05f41f0d540adbef9ddbec728f84c7ec92194629";
-    sha256 = "15chiw8314hyc5kb9vy46qv1qqivyrbw3ffi2fhhhn3snd3sp12b";
+    rev = "afcd4427dcea8a7cfd15133b30f3cda384a6f630";
+    sha256 = "0jmqhh2r94rgc9kqnc8q0584jqrg2rsqpq73nnjjy80kr16kgmdf";
   };
   libtommath = fetchgit {
     url = "https://github.com/libtom/libtommath"; # master
@@ -21,13 +21,13 @@
   };
   motoko = fetchgit {
     url = "https://github.com/dfinity/motoko"; # master
-    rev = "3f3af7390302a955b01b0537e0a0f6941f153b72";
-    sha256 = "1xrf164iqmsm1f8lx2nkfhqvfl9dsvl7my6j7qjf8bzn1kvn4zpc";
+    rev = "56aa1bb6871be270a8e6b57382afcae72e6404c9";
+    sha256 = "1vccas6c6apdhi99cl0pgsxrx6ixjn6npgi8a5z08ax6q17h49la";
   };
   motoko-base = fetchgit {
     url = "https://github.com/dfinity/motoko-base"; # next-moc
-    rev = "4c2a90e772e83275157e51087ef11075d29f28b2";
-    sha256 = "17ghrfgzwlz7hbapy4sq9wbckxqy4xmcj8jpqv68bng9s83zvvvn";
+    rev = "6f49e5f877742b79e97ef1b6f226a7f905ba795c";
+    sha256 = "1a6pvavjshyxhm5859zys76n0sw83wx3bigs90vqvr5nv5aw1189";
   };
   musl-wasi = fetchgit {
     url = "https://github.com/WebAssembly/wasi-libc"; # main
@@ -36,8 +36,8 @@
   };
   sdk = fetchgit {
     url = "https://github.com/dfinity/sdk"; # master
-    rev = "09228d30501464b815ffcad8e1ef985187fb1b83";
-    sha256 = "07vmwrdp44rqyaiycl5sply1agd84ypmw6m0r0idyid2nqsy2ya1";
+    rev = "9d8f17e580ed3161e3a69b48f8ca011f18f3115c";
+    sha256 = "182h0112daw1c00b0rnr3p118knmnccica4h9sy9wyzia8918411";
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git"; # mdb.master
@@ -51,32 +51,32 @@
   };
   ic-repl = fetchgit {
     url = "https://github.com/chenyan2002/ic-repl"; # master
-    rev = "78eb699a311f66a9833538d297a4c9580f935020";
-    sha256 = "0q0xmq6f4ns0iywq56nzm0k99596xg25zpjm5pwrr6lbf4msnf1d";
+    rev = "6d8fb4e448f899682c955ee533e3f8582e05e760";
+    sha256 = "0kqb1nb93gc0l10i0v6lgyrmyhh7zjl1a1mhzi1jq3q15pa1yk7i";
   };
   ic-wasm = fetchgit {
     url = "https://github.com/dfinity/ic-wasm"; # master
-    rev = "61692f44cf85b93d43311492283246bb443449d3";
-    sha256 = "1b06dphnj89qmyv4gxh8gqm1bgqfpivr4di2nl9hbvqqyx4vzb65";
+    rev = "b79469e0dca506670110cc347126f380821ce96e";
+    sha256 = "1n6gjwikigzb6vp3wj41vrggd0dn4vvh3g8nyf6cnm3s6c7np58c";
   };
   candid = fetchgit {
     url = "https://github.com/dfinity/candid"; # master
-    rev = "0b16febcf3ed057436d560ccaf62bafddff977cc";
-    sha256 = "1vdy4qf00s6hngygz0k5729gdm5p8jwmv81iyz90c5kzmbf9l751";
+    rev = "8e6b8a768f25c47a9d683e67c651c86f69fa4353";
+    sha256 = "1kz4syazvk6bskkddxplgryfqk3fi9ci1mm6kq1k5yasnh972yp4";
   };
   cdk-rs = fetchgit {
     url = "https://github.com/dfinity/cdk-rs"; # main
-    rev = "852f7b07c2bfb57ca0c339d75f15b71c6300e36c";
-    sha256 = "18y3accn3anq11zh7r8bq83jlkirbdq5myscr3fp615cwzfc4z5f";
+    rev = "ab458c44d9d405c4329ef470eab66fac33c2e151";
+    sha256 = "09xq6xjcas9c8z2vnblyb5yx47hh0v41mw1i5dkmqqv81n76f6by";
   };
   agent-rs = fetchgit {
     url = "https://github.com/dfinity/agent-rs"; # main
-    rev = "b434eec56aa16d5c404528f841168f6dac850031";
-    sha256 = "1iaf0q08ija0bxawc6rgyy4i7392hxwk5031h0cvcgg1cgd97sjp";
+    rev = "8c39e26236e3e3db6db51ffa71e34140c19d207e";
+    sha256 = "16msdn7nyvizkl0hr07l8mrbzzifkpz2janqd3i2xaxnnqvn40ii";
   };
   dfx-extensions = fetchgit {
     url = "https://github.com/dfinity/dfx-extensions"; # main
-    rev = "2b640963bbe9df5fcdfb7aed92f13e3a3a318abb";
-    sha256 = "1zwr1k2lp1chbffqc9y1i1iswpzd6cbfd33yva6q23zv2y4xx59p";
+    rev = "95dba3f117510988e4f9d45482519af9943e3557";
+    sha256 = "11gfi44vr6dlz1hh5g9b8rdwika8zp3zk10gjflhzganz1vdqw68";
   };
 }
