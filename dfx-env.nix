@@ -5,7 +5,7 @@
 with pkgs;
 let
   ostypes = [ "linux" "darwin" ];
-  archs = [ "x86_64" ];
+  archs = [ "x86_64" "aarch64" ];
   supported-systems =
     builtins.concatMap (arch: builtins.map (os: arch + "-" + os) ostypes) archs;
   binaries = fetchTarball {
