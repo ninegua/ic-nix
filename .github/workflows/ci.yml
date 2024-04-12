@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         channel: [ '22.11', '23.05' ]
-        os: [ ubuntu-latest, macos-latest ]
+        os: [ ubuntu-latest, macos-latest, macos-14 ]
         include:
           - os: ubuntu-latest
             prefix: nixos
