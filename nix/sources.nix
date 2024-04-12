@@ -61,8 +61,8 @@
   };
   candid = fetchgit {
     url = "https://github.com/dfinity/candid"; # master
-    rev = "91b9c06965834a52689c770e2c268b29a5af661a";
-    sha256 = "0s5pll18qnk4pf86yd8yq6i45h5200m05mxhhk4qqipv0jzxmr3p";
+    rev = "ae4d0f794a808b88f8b83da7eb96ca87b3d751d4";
+    sha256 = "sha256-ERfW+ERshSJo01JuyogfdpMq0E8CXLU7A20Wf333Kfc=";
   };
   cdk-rs = fetchgit {
     url = "https://github.com/dfinity/cdk-rs"; # main

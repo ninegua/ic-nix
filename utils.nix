@@ -50,8 +50,12 @@ in rec {
   } "ic-wasm";
 
   candid = mkDrv {
-    cargoSha256 =
-      "sha256-Keg9JdwqY6/M1bcqSQCXhBxesXrq+dFuS2UL6oSKGFY="; # cargoSha256
+    cargoPatches = [ ./nix/candid.patch ];
+    dontUseCargoParallelTests = true;
+    cargoLock = {
+      lockFile = "${sources.candid}/Cargo.lock";
+      outputHashes = {};
+    };
   } "candid";
 
   cdk-rs = mkDrv {
