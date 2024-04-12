@@ -20,6 +20,9 @@ jobs:
           - os: macos-latest
             name: darwin
             prefix: nixpkgs
+          - os: macos-14
+            name: darwin
+            prefix: nixpkgs
           - channel: '22.11'
             channel-darwin: '22.11-darwin'
 

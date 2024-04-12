@@ -19,6 +19,8 @@ jobs:
             prefix: nixos
           - os: macos-latest
             prefix: nixpkgs
+          - os: macos-14
+            prefix: nixpkgs
           - channel: '23.05'
             channel-darwin: '23.05-darwin'
           - channel: '22.11'
