@@ -20,12 +20,6 @@ let
       RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ];
     };
 in rec {
-  icx-proxy = mkDrv {
-    buildFeatures = [ "skip_body_verification" ];
-    cargoSha256 =
-      "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
-  } "icx-proxy";
-
   idl2json = mkDrv {
     cargoSha256 =
       "sha256-2btmJ5dvyAmI9eapXiIHeeVn8/FWHsvve3YtoGK3L9k="; # cargoSha256

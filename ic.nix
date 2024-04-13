@@ -23,6 +23,7 @@ let
     "sandbox_launcher"
     "ic-nns-init"
     "ic-state-machine-tests"
+    "icx-proxy"
     "sns"
   ];
 

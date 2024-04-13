@@ -42,7 +42,6 @@ in rec {
         cp ${dfx-extensions}/bin/{nns,sns} $out/bin/
         cp ${ic.binaries}/bin/sns $out/bin/sns-cli
         cp ${dfx}/bin/* $out/bin/
-        cp ${icx-proxy}/bin/* $out/bin/
         cp ${idl2json}/bin/* $out/bin/
         cp ${vessel}/bin/* $out/bin/
         cp ${ic-repl}/bin/* $out/bin/

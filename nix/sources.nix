@@ -4,11 +4,6 @@
     rev = "3e25df8f16f794bc93caaefdce41467304d1b0c7"; # pin
     sha256 = "1vlcrvrs6ycr1117g6267i0k3k2x44y07waallx0vj2fqy6h8fyv";
   };
-  icx-proxy = fetchgit {
-    url = "https://github.com/dfinity/icx-proxy"; # master
-    rev = "c312760a62b20931431ba45e5b0168ee79ea5cda"; # pin
-    sha256 = "0fx8qxsvsw7i4mnvf4cv4snmj194hsavsm4f1pv587cbvj1kv9ai";
-  };
   idl2json = fetchgit {
     url = "https://github.com/dfinity/idl2json"; # master
     rev = "05f41f0d540adbef9ddbec728f84c7ec92194629";
