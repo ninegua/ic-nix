@@ -18,6 +18,11 @@ let
           cargo = self.rust-stable;
         };
       };
+      # workaround for nixpkgs 23.11 for HOST_CC when invoking cargo.
+      rust = if super.rust.envVars ? setEnv then
+        super.rust // { envVars = super.rust.envVars // { setEnv = ""; }; }
+      else
+        super.rust;
       rust-nightly = self.rust-bin.nightly."2023-04-21".default.override {
         targets = [ "wasm32-unknown-emscripten" "wasm32-wasi" ];
         extensions = [ "rust-src" ];
