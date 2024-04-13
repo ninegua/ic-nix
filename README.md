@@ -25,13 +25,14 @@ nix-shell https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar
 
 All you need is a working [nix] installation on your computer.
 
-For aarch64 (Apple M1) architecture, you have a couple choices:
+**Compile-yourself from source**
 
-1. Compile everything from source by passing extra argument `--arg force true`.
-2. Use `x86_64` binaries by passing extra argument `--argstr system x86_64`.
-3. Use pre-built `aarch64` binaries by getting it from the [20231003](https://github.com/ninegua/ic-nix/releases/tag/20231003) release. These were built offline and manually uploaded.
+For those who prefer to compile from source:
+```
+nix-shell https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar.gz --arg force true
+```
 
-Before you compile from source, you may also want to setup the binary cache (courtesy of [cachix]) by `nix-shell -p cachix --run 'cachix use ninegua'` to avoid unnecessary compilation.
+You can use pre-compiled derivations by setting a binary cache (courtesy of [cachix]) `nix-shell -p cachix --run 'cachix use ninegua'`.
 
 **VSCode/direnv**
 
@@ -53,8 +54,11 @@ Releases are built against the latest main branches of each project on a weekly 
  - [ic]
  - [sdk]
  - [motoko]
+ - [agent-rs]
  - [candid]
  - [icx-proxy]
+ - [cdk-rs]
+ - [dfx-extensions]
  - [ic-repl]
  - [ic-wasm]
  - [idl2json]
@@ -64,14 +68,13 @@ Supported platforms:
 
 - [x] Linux x86-64
 - [x] Linux aarch-64 (*)
-- [x] OS X x86-64 (*)
-- [x] OS X aarch-64 (*)
+- [x] OS X x86-64
+- [x] OS X aarch-64
 
-(*) Build succeeds, but running some of the tests could fail.
+(*) No pre-built binaries because GitHub Actions has yet to offer this runner type.
 
 Supported nixpkgs:
 
-- [x] 22.11
 - [x] 23.05
 - [ ] unstable
 
@@ -97,3 +100,6 @@ Note that this effort requires no nix support of a project unless it already has
 [ic-wasm]: https://github.com/dfinity/ic-wasm
 [idl2json]: https://github.com/dfinity/idl2json
 [vessel]: https://github.com/dfinity/vessel
+[cdk-rs]: https://github.com/dfinity/cdk-rs
+[agent-rs]: https://github.com/dfinity/agent-rs
+[dfx-extensions]: https://github.com/dfinity/dfx-extensions
