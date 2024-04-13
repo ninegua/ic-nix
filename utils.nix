@@ -8,65 +8,50 @@ let
   mkDrv = { doCheck ? true, buildFeatures ? [ ]
     , dontUseCargoParallelTests ? false, cargoPatches ? [ ]
     , cargoBuildFlags ? "", postUnpack ? "", cargoLock ? null
-    , cargoSha256 ? null }:
+    , cargoSha256 ? null, outputHashes ? { } }:
     name:
     rustPlatform.buildRustPackage {
       inherit name buildFeatures cargoPatches doCheck dontUseCargoParallelTests
-        cargoBuildFlags postUnpack cargoSha256 cargoLock;
+        cargoBuildFlags postUnpack cargoSha256;
       src = sources."${name}";
       buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
         (with darwin.apple_sdk.frameworks; [ SystemConfiguration Security ]);
       nativeBuildInputs = [ pkg-config cmake perl ];
+      cargoLock = if builtins.isNull cargoLock then
+        (if builtins.isNull cargoSha256 then {
+          lockFile = "${sources."${name}"}/Cargo.lock";
+          inherit outputHashes;
+        } else
+          null)
+      else
+        cargoLock;
       RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ];
     };
 in rec {
-  icx-proxy = mkDrv {
-    buildFeatures = [ "skip_body_verification" ];
-    cargoSha256 =
-      "sha256-RkO9vjpJACsEZjgfQ57/c73EObJRB2l/5R3zt08u+WA="; # cargoSha256
-  } "icx-proxy";
+  icx-proxy =
+    mkDrv { buildFeatures = [ "skip_body_verification" ]; } "icx-proxy";
 
-  idl2json = mkDrv {
-    cargoSha256 =
-      "sha256-2btmJ5dvyAmI9eapXiIHeeVn8/FWHsvve3YtoGK3L9k="; # cargoSha256
-  } "idl2json";
+  idl2json = mkDrv { } "idl2json";
 
-  vessel = mkDrv {
-    cargoSha256 =
-      "sha256-ZmGVRi+7kEqEwHQnwjTLjUElgg544wXlhebqGiW+GE8="; # cargoSha256
-  } "vessel";
+  vessel = mkDrv { } "vessel";
 
-  ic-repl = mkDrv {
-    cargoSha256 =
-      "sha256-S08ceZO8orDHc6MELy3rkhfmXvnOB72sMwqFORMx5wE="; # cargoSha256
-  } "ic-repl";
+  ic-repl = mkDrv { } "ic-repl";
 
   ic-wasm = mkDrv {
     buildFeatures = [ "exe" ];
     dontUseCargoParallelTests = true;
-    cargoPatches = [ ];
-    cargoSha256 =
-      "sha256-a8iN/lTEVqdmogsSlT3+v3nivSG5VRhOz4/trmAsZLY="; # cargoSha256
   } "ic-wasm";
 
   candid = mkDrv {
-    cargoSha256 =
-      "sha256-wv3Nz1nbuGY/amGPsSy2MCvkDKrHa0ZngU2AlJUJek4="; # cargoSha256
+    cargoPatches = [ ./nix/candid.patch ];
+    dontUseCargoParallelTests = true;
   } "candid";
 
-  cdk-rs = mkDrv {
-    doCheck = false;
-    cargoSha256 =
-      "sha256-FKMhOzGkHDjZivYbvYnkVAn2QMgo13/J/7gv5/NzgOE="; # cargoSha256
-  } "cdk-rs";
+  cdk-rs = mkDrv { doCheck = false; } "cdk-rs";
 
-  agent-rs = mkDrv {
-    doCheck = false;
-    cargoSha256 =
-      "sha256-f/xOEBiPUAEhcu96zMl8AjI14iiYQ8xvyUPaxsv4qQA="; # cargoSha256
-  } "agent-rs";
+  agent-rs = mkDrv { doCheck = false; } "agent-rs";
 
-  dfx-extensions = mkDrv {
+  dfx-extensions = (mkDrv {
     doCheck = false;
     postUnpack = ''
       pushd $sourceRoot
@@ -75,14 +60,21 @@ in rec {
       popd
     '';
     cargoBuildFlags = "--bin nns --bin sns";
-    cargoLock = {
-      lockFile = "${sources.dfx-extensions}/Cargo.lock";
-      outputHashes = {
-        "dfx-core-0.0.1" =
-          "sha256-SdqxP5skgt15cz9j6Yf1HMB7uU8zBnEKJV4nsDbe4zY=";
-      };
+    outputHashes = {
+      "build-info-0.0.27" =
+        "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
+      "cycles-minting-canister-0.9.0" =
+        "sha256-AGgV8gEFk62aE8WPLDqthjpthhLM1Md/+P+VsCk/Mcc=";
+      "derive_more-0.99.8-alpha.0" =
+        "sha256-tEsfYC9oCAsDjinCsUDgRg3q6ruvayuA1lRmsEP9cys=";
+      "ic-btc-interface-0.2.0" =
+        "sha256-5tXrN56F5EyXQR8FzTV44ZKNxqgBOVAXD8pEKDdnBzw=";
+      "dfx-core-0.0.1" = "sha256-SdqxP5skgt15cz9j6Yf1HMB7uU8zBnEKJV4nsDbe4zY=";
     };
-  } "dfx-extensions";
+  } "dfx-extensions").overrideAttrs (_: {
+    IC_ICRC1_ARCHIVE_WASM_PATH =
+      "../../ic-icrc1-0.9.0/wasm/ic-icrc1-archive.wasm.gz";
+  });
 
   shell = ic-wasm;
 }
