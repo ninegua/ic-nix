@@ -36,7 +36,6 @@ let
     "lifeline"
   ];
 
-  llvmPackages = llvmPackages_11;
   stdenv = llvmPackages.libcxxStdenv;
 
   rocksdb =

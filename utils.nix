@@ -1,7 +1,7 @@
 { pkgs, sources }:
 with pkgs;
 let
-  stdenv = llvmPackages_11.libcxxStdenv;
+  stdenv = llvmPackages.libcxxStdenv;
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);

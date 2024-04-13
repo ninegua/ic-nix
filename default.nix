@@ -12,7 +12,7 @@ let
       rustPlatform = (super.makeRustPlatform {
         rustc = self.rust-stable;
         cargo = self.rust-stable;
-        stdenv = self.llvmPackages_11.libcxxStdenv;
+        stdenv = self.llvmPackages.libcxxStdenv;
       }) // {
         importCargoLock = pkgs.callPackage ./nix/import-cargo-lock.nix {
           cargo = self.rust-stable;

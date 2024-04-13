@@ -11,7 +11,7 @@ let
       patch -p1 < ${./nix/sdk.patch}
     '';
   };
-  stdenv = llvmPackages_11.libcxxStdenv;
+  stdenv = llvmPackages.libcxxStdenv;
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk_11_0.frameworks; [
