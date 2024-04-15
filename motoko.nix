@@ -133,7 +133,7 @@ in rec {
       name = "cargo-vendor-tools";
       src = "${sources.motoko}/rts/${name}/";
       cargoSha256 =
-        "sha256-E6GTFvmZMjGsVlec7aH3QaizqIET6Dz8Csh0N1jeX+M="; # cargoSha256
+        "sha256-E6GTFvmZMjGsVlec7aH3QaizqIET6Dz8Csh0N1jeX+M=";
     };
 
     # Path to vendor-rust-std-deps, provided by cargo-vendor-tools
