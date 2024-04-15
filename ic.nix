@@ -138,10 +138,8 @@ let
         outputHashes = {
           "derive_more-0.99.8-alpha.0" =
             "sha256-tEsfYC9oCAsDjinCsUDgRg3q6ruvayuA1lRmsEP9cys=";
-          "ic-btc-interface-0.1.0" =
-            "sha256-BbFLvf9TKWxqVnzjFPEQZ6Vl45/Vbq7592B3ywqeyI0=";
           "ic-btc-test-utils-0.1.0" =
-            "sha256-VecEMFjoeiRi0VgJ9CeDoOzdyJbJNiZ5MBmiV1+b7As=";
+            "sha256-5tXrN56F5EyXQR8FzTV44ZKNxqgBOVAXD8pEKDdnBzw=";
           "ic-btc-validation-0.1.0" =
             "sha256-DRrZ0MX6Qykh+IbEpmWPYvT5XxsiED0jPp6l0Ci+Leo=";
           "icrc1-test-env-0.1.1" =
