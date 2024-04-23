@@ -1,0 +1,25 @@
+diff --git a/rs/nns/sns-wasm/Cargo.toml b/rs/nns/sns-wasm/Cargo.toml
+index 6ba446b2e3..dab72dc64f 100644
+--- a/rs/nns/sns-wasm/Cargo.toml
++++ b/rs/nns/sns-wasm/Cargo.toml
+@@ -33,7 +33,6 @@ ic-sns-governance = { path = "../../sns/governance" }
+ ic-sns-init = { path = "../../sns/init" }
+ ic-sns-root = { path = "../../sns/root" }
+ ic-types = { path = "../../types/types" }
+-ic-wasm = "^0.7.1"
+ icrc-ledger-types = { path = "../../../packages/icrc-ledger-types" }
+ libflate = "1.1.2"
+ maplit = "1.0.2"
+@@ -41,6 +40,12 @@ serde = { workspace = true }
+ serde_json = { workspace = true }
+ prost = { workspace = true }
+ 
++[target.'cfg(target_arch = "wasm32")'.dependencies]
++ic-wasm = { version = "^0.7.1", default_features = false, features = [] }
++
++[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
++ic-wasm = { version = "^0.7.1" }
++
+ [target.'cfg(not(target_arch = "wasm32"))'.dev-dependencies]
+ ic-protobuf = { path = "../../protobuf" }
+ registry-canister = { path = "../../registry/canister" }

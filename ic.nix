@@ -74,7 +74,7 @@ let
       name = "ic";
       targetNames = lib.strings.concatStringsSep " " targets;
       src = sources.ic;
-      cargoPatches = [ ];
+      cargoPatches = [ ./nix/ic.patch ];
       unpackPhase = ''
         cp -r $src ${name}
         echo source root is ${sourceRoot}
@@ -106,6 +106,11 @@ let
       LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
       CFLAGS = lib.optionals (!stdenv.isDarwin)
         [ "-I${libunwind-static.dev}/include" ];
+      # Somehow clang includes gcc's libc++, we use -nostdinc++ to prevent it.
+      CXXFLAGS = lib.optionals customLinker [
+        "-nostdinc++"
+        "-I${libcxx.dev}/include/c++/v1"
+      ];
       RUSTFLAGS = lib.optionals customLinker [ "-Clinker=${linker}" ] ++ [
         "-Lnative=${libcxxabi}/lib"
         "-Lnative=${zlib-static}/lib"
@@ -122,6 +127,7 @@ let
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
 
       buildPhase = ''
+        echo cargo build --frozen --profile ${profile} --target ${hostTriple} $cargoBuildFlags
         cargo build --frozen --profile ${profile} --target ${hostTriple} $cargoBuildFlags
       '';
       installPhase = ''
