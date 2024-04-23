@@ -107,7 +107,10 @@ let
       CFLAGS = lib.optionals (!stdenv.isDarwin)
         [ "-I${libunwind-static.dev}/include" ];
       # Somehow clang includes gcc's libc++, we use -nostdinc++ to prevent it.
-      CXXFLAGS = [ "-nostdinc++" "-I${libcxx.dev}/include/c++/v1" ];
+      CXXFLAGS = lib.optionals custom_linker [
+        "-nostdinc++"
+        "-I${libcxx.dev}/include/c++/v1"
+      ];
       RUSTFLAGS = lib.optionals customLinker [ "-Clinker=${linker}" ] ++ [
         "-Lnative=${libcxxabi}/lib"
         "-Lnative=${zlib-static}/lib"
