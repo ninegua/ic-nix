@@ -74,7 +74,7 @@ let
       name = "ic";
       targetNames = lib.strings.concatStringsSep " " targets;
       src = sources.ic;
-      cargoPatches = [ ];
+      cargoPatches = [ ./nix/ic.patch ];
       unpackPhase = ''
         cp -r $src ${name}
         echo source root is ${sourceRoot}
@@ -127,6 +127,7 @@ let
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
 
       buildPhase = ''
+        echo cargo build --frozen --profile ${profile} --target ${hostTriple} $cargoBuildFlags
         cargo build --frozen --profile ${profile} --target ${hostTriple} $cargoBuildFlags
       '';
       installPhase = ''
