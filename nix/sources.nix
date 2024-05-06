@@ -1,8 +1,8 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = "02dcaf3ccdfe46bd959d683d43c5513d37a1420d"; # pin
-    sha256 = "0a2nr0zcp9jslpl7m52rlqi5jych7bd7qxyw1x3b3b7c6hn4p342";
+    rev = "5e285dcaf77db014ac85d6f96ff392fe461945f5"; # pin
+    sha256 = "11pmkjkb3vcf83kfgsggyk8ky9a7mkr3zlghmna8nl71spi5m4xa";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # master
@@ -11,8 +11,8 @@
   };
   idl2json = fetchgit {
     url = "https://github.com/dfinity/idl2json"; # master
-    rev = "080e1599560cfc3c95e8aa82e76ba35360d5e28d";
-    sha256 = "0q3l0qyvyj6xk1v2iw40mdnx7b8yynf4x9bqmjn6hwfqvq1jhizq";
+    rev = "0b9e75f3b2ff9faa41829de919e663476f936478";
+    sha256 = "1l5hhd6mjkcja993w5dnllxlpmk9nvldbwc5gyx8vbcl0wc2qrx6";
   };
   libtommath = fetchgit {
     url = "https://github.com/libtom/libtommath"; # master
@@ -21,8 +21,8 @@
   };
   motoko = fetchgit {
     url = "https://github.com/dfinity/motoko"; # master
-    rev = "760676a0f5ec396f49cb92dc4b6c5c19a512f4c2";
-    sha256 = "0vai7av8dkvdwk19qbxr2kkpx1q5x3985am80bm85l1mi923lazv";
+    rev = "3bebf964c0081cc4b115e09904af25cbe7eb5019";
+    sha256 = "1ygib4rwf65xzfn1iq01ca2cbkzx5k8mx6hx1d80rvlidrqwxd71";
   };
   motoko-base = fetchgit {
     url = "https://github.com/dfinity/motoko-base"; # next-moc
@@ -36,8 +36,8 @@
   };
   sdk = fetchgit {
     url = "https://github.com/dfinity/sdk"; # master
-    rev = "e6851226d34e0ba41d02a00194b00dc6a6479f9b";
-    sha256 = "0cszxs3swqx14p4xw2hlgkd35z615m3dxn9yv718qq3v99qc1bmh";
+    rev = "f80b7ee0f806d9c586c4421ab2c1b9b5c0f41dfe";
+    sha256 = "071gjbvflq6plglvw4f8ck03vzbb1hasqlplk2gzcl1bf7mixizx";
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git"; # mdb.master
@@ -51,8 +51,8 @@
   };
   ic-repl = fetchgit {
     url = "https://github.com/chenyan2002/ic-repl"; # master
-    rev = "a62c7afbd489edd1bcd4d0669d7ee574840c3036";
-    sha256 = "0vc0h8s98r2f3yn9pslanxlihgrhj9k8a781wgvrbjrck12dgsrc";
+    rev = "43bff5dc2c40eb0d55b2e0169444dce1d5f89ba6";
+    sha256 = "0sv8jr1km4113acw8xmjvlgrdkynrr1hzfrgsk4vqqyi6p8k0wic";
   };
   ic-wasm = fetchgit {
     url = "https://github.com/dfinity/ic-wasm"; # master
@@ -61,18 +61,18 @@
   };
   candid = fetchgit {
     url = "https://github.com/dfinity/candid"; # master
-    rev = "ae4d0f794a808b88f8b83da7eb96ca87b3d751d4";
-    sha256 = "1xr9yxypy5kd0cxvap029z82m4vn3y4clvjjsdl251bc8kwdc5qi";
+    rev = "b0622bbbd3cc5c54f9b3ba6faf95de0385066df7";
+    sha256 = "0rnr8y6sd57zvw23zv8f17pqwqy357dfvn8f48ciih10a58rg8h7";
   };
   cdk-rs = fetchgit {
     url = "https://github.com/dfinity/cdk-rs"; # main
-    rev = "70ddb3aa63d68b9f529df0e31c729cec621835e7";
-    sha256 = "0jwc291rwiagr0b6mvzkzjgn6j5r13bm14m6zdh9zffa6npsppzr";
+    rev = "8620c0e92802451ca5616d5e822a7712feb0ff21";
+    sha256 = "0pnzqbd4sb2wnpqhkqpxx4b5dwmkz5qyr2hy3i18mqh53zllyrkm";
   };
   agent-rs = fetchgit {
     url = "https://github.com/dfinity/agent-rs"; # main
-    rev = "b9e49377a8120d9c2a4465b58a312ffe86e5519d";
-    sha256 = "16qfl0w7sm5a6xyaxvz9lr4y03zyz738yvrsrxhzxivns6hw3nvp";
+    rev = "ed2d34f96439b05c8a88964d6d6c09606220c1b4";
+    sha256 = "1vfnn39mfl33y87qz1z4mvq5ahi2ghcrr1a08sbwhbymrvk35ffs";
   };
   dfx-extensions = fetchgit {
     url = "https://github.com/dfinity/dfx-extensions"; # main
