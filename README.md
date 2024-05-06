@@ -15,13 +15,10 @@ Unofficial build of common binaries used by developers of the [Internet Computer
 
 Depending on your objective, you can do any the following:
 
-- To build a project, run `nix-build -A <project>`.
-- To enter a development environment for a project, run `nix-shell -A <project>.shell`.
+- To build a project, run `nix-build -A <project>`
+- To enter a development environment for a project, run `nix-shell -A <project>.shell`
 - To download the latest pre-built binaries, go to [release page](https://github.com/ninegua/ic-nix/releases/latest).
-- To start canister SDK development with latest build, run:
-```
-nix-shell https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar.gz
-```
+- To start canister SDK development with latest build, run `nix-shell https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar.gz`
 
 All you need is a working [nix] installation on your computer.
 
@@ -47,7 +44,7 @@ If using VSCode, you should also install the [direnv vscode extension](https://m
 
 **WARNING**
 
-Releases are built against the latest main branches of each project on a weekly update schedule. They may not always work. Please understand the risks before proceed.
+Releases are built against the latest main branches of each project at the time. They may not always work. Please understand the risks before proceed.
 
 **Supported projects**
 
