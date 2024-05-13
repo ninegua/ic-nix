@@ -881,3 +881,14 @@ index f1450fd7..d719eb8d 100644
  [[package]]
  name = "zbus"
  version = "1.9.3"
+diff --git a/src/canisters/frontend/ic-certified-assets/Cargo.toml b/src/canisters/frontend/ic-certified-assets/Cargo.toml
+index 7f502820..b18bf11e 100644
+--- a/src/canisters/frontend/ic-certified-assets/Cargo.toml
++++ b/src/canisters/frontend/ic-certified-assets/Cargo.toml
+@@ -30,6 +30,4 @@ sha2.workspace = true
+ ic-http-certification = "2.3.0"
+ candid_parser.workspace = true
+ anyhow.workspace = true
+-ic-response-verification-test-utils = { git = "https://github.com/dfinity/response-verification.git", rev = "a65009624b61736df6d2dc17756bdbd02a84f599" }
+-ic-certification-testing = { git = "https://github.com/dfinity/response-verification.git", rev = "a65009624b61736df6d2dc17756bdbd02a84f599" }
+ ic-crypto-tree-hash = { git = "https://github.com/dfinity/ic.git", rev = "1290256484f59c3d950c5e9a098e97383b248ad6" }
