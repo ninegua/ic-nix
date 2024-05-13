@@ -74,6 +74,7 @@ in rec {
       "ic-btc-interface-0.2.0" =
         "sha256-5tXrN56F5EyXQR8FzTV44ZKNxqgBOVAXD8pEKDdnBzw=";
       "dfx-core-0.0.1" = "sha256-SdqxP5skgt15cz9j6Yf1HMB7uU8zBnEKJV4nsDbe4zY=";
+      "ic-agent-0.35.0" = "sha256-m2zJPZ2BwQXJwmyp+lUeT+m1CBTogedI4Pw4u5VkMtY=";
     };
   } "dfx-extensions").overrideAttrs (_: {
     IC_ICRC1_ARCHIVE_WASM_PATH =
