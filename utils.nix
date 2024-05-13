@@ -73,7 +73,7 @@ in rec {
         "sha256-tEsfYC9oCAsDjinCsUDgRg3q6ruvayuA1lRmsEP9cys=";
       "ic-btc-interface-0.2.0" =
         "sha256-5tXrN56F5EyXQR8FzTV44ZKNxqgBOVAXD8pEKDdnBzw=";
-      "dfx-core-0.0.1" = "sha256-SdqxP5skgt15cz9j6Yf1HMB7uU8zBnEKJV4nsDbe4zY=";
+      "dfx-core-0.0.1" = "sha256-oFTHR6QOfrXSUZj7xO1WmOLIaPHym24RHaRJMxKtS6U=";
       "ic-agent-0.35.0" = "sha256-m2zJPZ2BwQXJwmyp+lUeT+m1CBTogedI4Pw4u5VkMtY=";
     };
   } "dfx-extensions").overrideAttrs (_: {
