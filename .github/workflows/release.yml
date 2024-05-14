@@ -12,12 +12,12 @@ jobs:
       fail-fast: false
       matrix:
         channel: [ '23.05' ]
-        os: [ ubuntu-latest, macos-latest, macos-14 ]
+        os: [ ubuntu-latest, macos-12, macos-14 ]
         include:
           - os: ubuntu-latest
             name: linux
             prefix: nixos
-          - os: macos-latest
+          - os: macos-12
             name: darwin
             prefix: nixpkgs
           - os: macos-14
