@@ -1,9 +1,9 @@
-{ writeShellScript, stdenv, libiconv-static, libcxx, libcxxabi ? null }:
+{ writeShellScript, stdenv, libiconv-static, libcxx, libcxxabi }:
 let
-  libcxxabi-link = if builtins.isNull libcxxabi then
-    "${libcxx}/lib/libc++abi.a"
+  libcxxabi-link = if (builtins.tryEval libcxxabi).success then
+    "${libcxxabi}/lib/libc++abi.a"
   else
-    "${libcxxabi}/lib/libc++abi.a";
+    "${libcxx}/lib/libc++abi.a";
 in writeShellScript "linker.sh" ''
   lzma=$(echo "$*"|sed -e 's/ /\n/g'|grep '^-llzma$')
   lz=$(echo "$*"|sed -e 's/ /\n/g'|grep '^-lz$')
