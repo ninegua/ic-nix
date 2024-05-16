@@ -62,7 +62,7 @@ let
          done
       */
     };
-  prebuilt-drv = makeDrv { inherit binaries canisters extensions; };
+  prebuilt-drv = makeDrv { inherit binaries canisters extensions motoko-base; };
   build-drv = let
     release = import
       (if version == null then ./release.nix else "${ic-nix}/release.nix") {
