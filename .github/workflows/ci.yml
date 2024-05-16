@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        channel: [ '23.05' ]
+        channel: [ '23.05', '23.11', 'unstable' ]
         os: [ ubuntu-latest, macos-12, macos-14 ]
         include:
           - os: ubuntu-latest
@@ -23,6 +23,18 @@ jobs:
             prefix: nixpkgs
           - channel: '23.05'
             channel-darwin: '23.05-darwin'
+          - channel: '23.11'
+            channel-darwin: '23.11-darwin'
+          - channel: 'unstable'
+            channel-darwin: 'unstable'
+        exclude:
+          - os: [ unbuntu-latest, macos-14 ]
+            channel: '23.05'
+          - os: macos-12
+            channel: '23.11'
+          - os: macos-12
+            channel: 'unstable'
+
 
     steps:
     - uses: actions/checkout@v3
@@ -51,7 +63,7 @@ jobs:
       fail-fast: false
       matrix:
         project: [ 'motoko', 'ic-no-shell', 'sdk', 'utils' ]
-        channel: [ '23.05' ]
+        channel: [ 'unstable' ]
         os: [ ubuntu-latest, macos-12, macos-14 ]
         include:
           - os: ubuntu-latest
@@ -65,6 +77,17 @@ jobs:
             name: darwin
           - channel: '23.05'
             channel-darwin: '23.05-darwin'
+          - channel: '23.11'
+            channel-darwin: '23.11-darwin'
+          - channel: 'unstable'
+            channel-darwin: 'unstable'
+        exclude:
+          - os: [ unbuntu-latest, macos-14 ]
+            channel: '23.05'
+          - os: macos-12
+            channel: '23.11'
+          - os: macos-12
+            channel: 'unstable'
 
     steps:
     - name: Maximize build space

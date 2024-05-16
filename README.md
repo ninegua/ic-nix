@@ -73,7 +73,8 @@ Supported platforms:
 Supported nixpkgs:
 
 - [x] 23.05
-- [ ] unstable
+- [x] 23.11 (not for `darwin x86_64`)
+- [x] unstable (not for `darwin x86_64`)
 
 Feature:
 
