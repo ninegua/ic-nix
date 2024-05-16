@@ -28,7 +28,9 @@ jobs:
           - channel: 'unstable'
             channel-darwin: 'unstable'
         exclude:
-          - os: [ unbuntu-latest, macos-14 ]
+          - os: ubuntu-latest
+            channel: '23.05'
+          - os: macos-14
             channel: '23.05'
           - os: macos-12
             channel: '23.11'
@@ -82,7 +84,9 @@ jobs:
           - channel: 'unstable'
             channel-darwin: 'unstable'
         exclude:
-          - os: [ unbuntu-latest, macos-14 ]
+          - os: ubuntu-latest
+            channel: '23.05'
+          - os: macos-14
             channel: '23.05'
           - os: macos-12
             channel: '23.11'
