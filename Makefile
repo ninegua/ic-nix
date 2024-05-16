@@ -17,7 +17,7 @@ dfx-env:
 	mkdir dfx-env
 
 dfx-env.tar.gz: | dfx-env
-	sed -e "s/\"20220520\"/\"$(VERSION)\"/" dfx-env.nix > dfx-env/default.nix
+	sed -e "s/version ? null/version ? \"$(VERSION)\"/" dfx-env.nix > dfx-env/default.nix
 	tar -zcvf dfx-env.tar.gz dfx-env
 
 ic-binaries-$(VERSION)-$(SYSTEM).tar.gz:

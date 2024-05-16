@@ -1,7 +1,5 @@
-{ pkgs ? import <nixpkgs> { }, force ? false, version ? "20220520"
-, system ? pkgs.stdenv.buildPlatform.system, ic-nix ? fetchTarball {
-  url = "https://github.com/ninegua/ic-nix/archive/refs/tags/${version}.tar.gz";
-} }:
+{ pkgs ? import <nixpkgs> { }, version ? null, force ? version == null
+, system ? pkgs.stdenv.buildPlatform.system }:
 with pkgs;
 let
   ostypes = [ "linux" "darwin" ];
@@ -20,12 +18,17 @@ let
     url =
       "https://github.com/ninegua/ic-nix/releases/download/${version}/dfx-extensions-${version}.tar.gz";
   };
+  ic-nix = fetchTarball {
+    url =
+      "https://github.com/ninegua/ic-nix/archive/refs/tags/${version}.tar.gz";
+  };
   sources = import "${ic-nix}/nix/sources.nix" { inherit (pkgs) fetchgit; };
+  motoko-base = sources.motoko-base;
   # Fix for NixOS 23.05
   autoPatchelfHook = pkgs.autoPatchelfHook.overrideAttrs (_: {
     propagatedBuildInputs = [ bintools (stdenv.cc.cc.libgcc or null) ];
   });
-  makeDrv = { binaries, canisters, extensions }:
+  makeDrv = { binaries, canisters, extensions, motoko-base }:
     stdenv.mkDerivation {
       name = "dfx-env";
       phases = [ "installPhase" ]
@@ -46,7 +49,7 @@ let
         mkdir -p $cache
         ln -s $out/bin/* $cache/
         ln -s ${canisters}/share/wasms $cache/wasms
-        ln -s ${sources.motoko-base}/src $cache/base
+        ln -s ${motoko-base}/src $cache/base
         cp -r ${extensions}/share/extensions $cache/
         chmod +w $cache/extensions/{nns,sns}
         ln -s $out/bin/{ic-admin,nns,ic-nns-init,sns-cli} $cache/extensions/nns/
@@ -60,8 +63,12 @@ let
       */
     };
   prebuilt-drv = makeDrv { inherit binaries canisters extensions; };
-  build-drv = let release = import "${ic-nix}/release.nix" { inherit pkgs; };
-  in makeDrv { inherit (release) binaries canisters extensions; };
+  build-drv = let
+    release = import
+      (if version == null then ./release.nix else "${ic-nix}/release.nix") {
+        inherit pkgs;
+      };
+  in makeDrv { inherit (release) binaries canisters extensions motoko-base; };
 
   dfxBins = [
     "canister_sandbox"
