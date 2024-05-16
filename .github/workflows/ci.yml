@@ -25,6 +25,9 @@ jobs:
             channel-darwin: '23.05-darwin'
           - channel: '23.11'
             channel-darwin: '23.11-darwin'
+        exclude:
+          - os: macos-12
+            channel: '23.11'
 
     steps:
     - uses: actions/checkout@v3
@@ -69,7 +72,9 @@ jobs:
             channel-darwin: '23.05-darwin'
           - channel: '23.11'
             channel-darwin: '23.11-darwin'
-
+        exclude:
+          - os: macos-12
+            channel: '23.11'
 
     steps:
     - name: Maximize build space
