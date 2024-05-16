@@ -72,9 +72,9 @@ Supported platforms:
 
 Supported nixpkgs:
 
-- [x] 23.05
-- [x] 23.11 (not for `darwin x86_64`)
-- [x] unstable (not for `darwin x86_64`)
+- [x] 23.05 (CI runs it for `darwin x86_64` build)
+- [x] 23.11 (CI runs it for `linux x86_64` build)
+- [x] unstable (CI runs it for `darwin aarch64` build)
 
 Feature:
 

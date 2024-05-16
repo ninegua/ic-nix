@@ -30,13 +30,16 @@ jobs:
         exclude:
           - os: ubuntu-latest
             channel: '23.05'
+          - os: ubuntu-latest
+            channel: 'unstable'
           - os: macos-14
             channel: '23.05'
+          - os: macos-14
+            channel: '23.11'
           - os: macos-12
             channel: '23.11'
           - os: macos-12
             channel: 'unstable'
-
 
     steps:
     - uses: actions/checkout@v3
@@ -86,8 +89,12 @@ jobs:
         exclude:
           - os: ubuntu-latest
             channel: '23.05'
+          - os: ubuntu-latest
+            channel: 'unstable'
           - os: macos-14
             channel: '23.05'
+          - os: macos-14
+            channel: '23.11'
           - os: macos-12
             channel: '23.11'
           - os: macos-12
