@@ -61,19 +61,17 @@ Releases are built against the latest main branches of each project at the time.
  - [idl2json]
  - [vessel]
 
-Supported platforms:
+Supported platforms and nixpkgs:
 
-- [x] Linux x86-64
-- [x] Linux aarch-64 (*)
-- [x] OS X x86-64
-- [x] OS X aarch-64
+|                  | 23.05  | 23.11  | unstable |
+| -------------    | ------ | ------ | -------- |
+| darwin x86_64    |    ⍻    |   ❌    |   ❌    |
+| linux  x86_64    |   ✅︎    |   ✅︎    |   ✅︎    |
+| darwin aarch64   |   ⍻    |   ⍻    |   ✅︎    |
 
-(*) No pre-built binaries because GitHub Actions has yet to offer this runner type.
-
-Supported nixpkgs:
-
-- [x] 23.05
-- [ ] unstable
+✅︎: builds with no issue
+❌: does not build
+ ⍻: builds but binaries have extra dynamic lib dependency to Nix store
 
 Feature:
 

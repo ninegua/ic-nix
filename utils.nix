@@ -25,7 +25,7 @@ let
           null)
       else
         cargoLock;
-      RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ];
+      RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxx}/lib" ];
     };
 in rec {
   icx-proxy =

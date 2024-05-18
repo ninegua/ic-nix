@@ -74,7 +74,7 @@ let
       name = "ic";
       targetNames = lib.strings.concatStringsSep " " targets;
       src = sources.ic;
-      cargoPatches = [ ./nix/ic.patch ];
+      cargoPatches = [ ];
       unpackPhase = ''
         cp -r $src ${name}
         echo source root is ${sourceRoot}
@@ -112,7 +112,7 @@ let
         "-I${libcxx.dev}/include/c++/v1"
       ];
       RUSTFLAGS = lib.optionals customLinker [ "-Clinker=${linker}" ] ++ [
-        "-Lnative=${libcxxabi}/lib"
+        "-Lnative=${libcxx}/lib"
         "-Lnative=${zlib-static}/lib"
         "-Lnative=${lmdb.out}/lib"
         "-lstatic=lmdb"

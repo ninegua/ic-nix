@@ -36,20 +36,20 @@ in rec {
     nativeBuildInputs = [ pkgs.patchelf ];
     phases = [ "installPhase" ];
     installPhase = ''
-        mkdir -p $out/bin $out/share
-        cp ${moc}/bin/mo* $out/bin/
-        cp ${ic.binaries}/bin/{replica,ic-admin,ic-prep,ic-starter,ic-btc-adapter,ic-https-outcalls-adapter,ic-nns-init,ic-state-machine-tests,canister_sandbox,sandbox_launcher} $out/bin/
-        cp ${dfx-extensions}/bin/{nns,sns} $out/bin/
-        cp ${ic.binaries}/bin/sns $out/bin/sns-cli
-        cp ${dfx}/bin/* $out/bin/
-        cp ${icx-proxy}/bin/* $out/bin/
-        cp ${idl2json}/bin/* $out/bin/
-        cp ${vessel}/bin/* $out/bin/
-        cp ${ic-repl}/bin/* $out/bin/
-        cp ${ic-wasm}/bin/* $out/bin/
-        cp ${candid}/bin/* $out/bin/
-        cp ${cdk-rs}/bin/candid-extractor $out/bin/
-        cp ${agent-rs}/bin/* $out/bin/
+      mkdir -p $out/bin $out/share
+      cp ${moc}/bin/mo* $out/bin/
+      cp ${ic.binaries}/bin/{replica,ic-admin,ic-prep,ic-starter,ic-btc-adapter,ic-https-outcalls-adapter,ic-nns-init,ic-state-machine-tests,canister_sandbox,sandbox_launcher} $out/bin/
+      cp ${dfx-extensions}/bin/{nns,sns} $out/bin/
+      cp ${ic.binaries}/bin/sns $out/bin/sns-cli
+      cp ${dfx}/bin/* $out/bin/
+      cp ${icx-proxy}/bin/* $out/bin/
+      cp ${idl2json}/bin/* $out/bin/
+      cp ${vessel}/bin/* $out/bin/
+      cp ${ic-repl}/bin/* $out/bin/
+      cp ${ic-wasm}/bin/* $out/bin/
+      cp ${candid}/bin/* $out/bin/
+      cp ${cdk-rs}/bin/candid-extractor $out/bin/
+      cp ${agent-rs}/bin/* $out/bin/
     '' + pkgs.lib.optionalString pkgs.stdenv.isLinux (''
       for exe in $out/bin/*; do
         chmod 755 $exe
@@ -87,5 +87,5 @@ in rec {
       cp ${dfx-extensions.src}/extensions/sns/extension.json $out/share/extensions/sns/
     '';
   };
-
+  motoko-base = sources.motoko-base;
 }

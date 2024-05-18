@@ -43,7 +43,7 @@ let
       mkdir -p $out/share/dfx-canisters/
       cp $src/src/distributed/*.{wasm,did} $out/share/dfx-canisters/
     '';
-    RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxxabi}/lib" ]
+    RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxx}/lib" ]
       ++ lib.optionals stdenv.isDarwin [
         "-Lnative=${libiconv-static.out}/lib"
         "-lstatic=iconv"
