@@ -21,8 +21,8 @@
   };
   motoko = fetchgit {
     url = "https://github.com/dfinity/motoko"; # master
-    rev = "43d229ff0cf7814ebb51cae89f7032c03c64de4a";
-    sha256 = "03hwf9my2yivq1cx8vk8qkjalxjls4g5kx158ixcfjlmfwxavb4b";
+    rev = "780519775b73e42ff35aedfcbd36e0957dbd3814";
+    sha256 = "0vv31qjkdhfdpcxazjlbi7ay57456b9x9mrp1n46hr8mk4qfgrs6";
   };
   motoko-base = fetchgit {
     url = "https://github.com/dfinity/motoko-base"; # next-moc
@@ -36,8 +36,8 @@
   };
   sdk = fetchgit {
     url = "https://github.com/dfinity/sdk"; # master
-    rev = "cb67f24b7acb9aaa4609f38a34527a9436fb6b72";
-    sha256 = "19abml936jd43l8nx6zjy5lciqlqavnw9ywqa79bazhfli3wfm50";
+    rev = "dae62bd959a3893693241ed324890a667cbf74be";
+    sha256 = "01lbapxvyamr4aj1i34xykkyrnspwzc46ffd92gfj134c0cx84sb";
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git"; # mdb.master
@@ -51,8 +51,8 @@
   };
   ic-repl = fetchgit {
     url = "https://github.com/chenyan2002/ic-repl"; # master
-    rev = "43bff5dc2c40eb0d55b2e0169444dce1d5f89ba6";
-    sha256 = "0sv8jr1km4113acw8xmjvlgrdkynrr1hzfrgsk4vqqyi6p8k0wic";
+    rev = "c96369a5183c26d87ad16d38277c786c2a55b52d";
+    sha256 = "0p26a1fbb38inkvmlmim84adm8cm9pbzb5rn0m1igzlh7mjsrn2k";
   };
   ic-wasm = fetchgit {
     url = "https://github.com/dfinity/ic-wasm"; # master
@@ -61,18 +61,18 @@
   };
   candid = fetchgit {
     url = "https://github.com/dfinity/candid"; # master
-    rev = "b0622bbbd3cc5c54f9b3ba6faf95de0385066df7";
-    sha256 = "0rnr8y6sd57zvw23zv8f17pqwqy357dfvn8f48ciih10a58rg8h7";
+    rev = "a21d1b8ff255964caa63e61858fc600db544563d";
+    sha256 = "096fkl9lx08r75s5am3szvr2jwv40mlf5678fblm09zrbkc5pdws";
   };
   cdk-rs = fetchgit {
     url = "https://github.com/dfinity/cdk-rs"; # main
-    rev = "05ca5719c3baf7fb4c4982e31097ff8b07fd8a25";
-    sha256 = "0yr2x34wfi40cccgdp0h3y8c6cizanmi46204a0m9gr4nwxr9wq9";
+    rev = "223c28283aca1d4c321e560d5a1818df21469a77";
+    sha256 = "0sq9m7g066xi7150s200d8r32pllp11k86qclzlxb9hjqm46cgvf";
   };
   agent-rs = fetchgit {
     url = "https://github.com/dfinity/agent-rs"; # main
-    rev = "8273d321e9a09fd8373bd4e38b0676ec6ad9c260";
-    sha256 = "1mijcjavnf7ww14fg0g82h4bbsag3razmabcqb4hbhc1klywjv4v";
+    rev = "d3db617c3698e7ee1a4a3074c495ff063b91bab1";
+    sha256 = "05giqrswbwhnk1vvc2rqi4vl3fx0m687q5ff6d6vqq289b3x7yw7";
   };
   dfx-extensions = fetchgit {
     url = "https://github.com/dfinity/dfx-extensions"; # main

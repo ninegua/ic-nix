@@ -69,8 +69,8 @@ Supported platforms and nixpkgs:
 | linux  x86_64    |   ✅︎    |   ✅︎    |   ✅︎    |
 | darwin aarch64   |   ⍻    |   ⍻    |   ✅︎    |
 
-✅︎: builds with no issue
-❌: does not build
+✅︎: builds with no issue\
+❌: does not build\
  ⍻: builds but binaries have extra dynamic lib dependency to Nix store
 
 Feature:

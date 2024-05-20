@@ -35,11 +35,7 @@ in rec {
 
   vessel = mkDrv { } "vessel";
 
-  ic-repl = mkDrv {
-    outputHashes = {
-      "candid-0.10.8" = "sha256-rB5171+orVo90izOmY91YcP0uMf7T9eA8sbG8jRDpQA=";
-    };
-  } "ic-repl";
+  ic-repl = mkDrv { } "ic-repl";
 
   ic-wasm = mkDrv {
     buildFeatures = [ "exe" ];
