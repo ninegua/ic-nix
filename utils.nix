@@ -64,9 +64,7 @@ in rec {
       "build-info-0.0.27" =
         "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
       "cycles-minting-canister-0.9.0" =
-        "sha256-AGgV8gEFk62aE8WPLDqthjpthhLM1Md/+P+VsCk/Mcc=";
-      "derive_more-0.99.8-alpha.0" =
-        "sha256-tEsfYC9oCAsDjinCsUDgRg3q6ruvayuA1lRmsEP9cys=";
+        "sha256-wZWyWxW3KEDZz/1/KwIT6XOJu7B1djB6YMLG/HV/RDc=";
       "ic-btc-interface-0.2.0" =
         "sha256-5tXrN56F5EyXQR8FzTV44ZKNxqgBOVAXD8pEKDdnBzw=";
       "dfx-core-0.0.1" = "sha256-oFTHR6QOfrXSUZj7xO1WmOLIaPHym24RHaRJMxKtS6U=";
