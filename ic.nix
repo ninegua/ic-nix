@@ -142,6 +142,8 @@ let
       cargoDeps = rustPlatform.importCargoLock {
         lockFile = "${sources.ic}/Cargo.lock";
         outputHashes = {
+          "cloudflare-0.11.0" =
+            "sha256-bJYiypmDI4KEy/VWt/7UcOv+g2CZLb9qUA9c1xlLxhM=";
           "ic-btc-test-utils-0.1.0" =
             "sha256-5tXrN56F5EyXQR8FzTV44ZKNxqgBOVAXD8pEKDdnBzw=";
           "ic-btc-validation-0.1.0" =
