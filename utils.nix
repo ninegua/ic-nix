@@ -64,7 +64,7 @@ in rec {
       "build-info-0.0.27" =
         "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
       "cycles-minting-canister-0.9.0" =
-        "sha256-39W2UX1Y3reu78YK/cJdA7MX1eyMltlQZb53Tc4m8xA=";
+        "sha256-4x16y2E3KyOKqYRE/z6P5O+WfepaZ9R96wWd5Jr1jsU=";
       "dfx-core-0.0.1" = "sha256-oFTHR6QOfrXSUZj7xO1WmOLIaPHym24RHaRJMxKtS6U=";
       "ic-agent-0.35.0" = "sha256-m2zJPZ2BwQXJwmyp+lUeT+m1CBTogedI4Pw4u5VkMtY=";
     };

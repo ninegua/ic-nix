@@ -144,10 +144,6 @@ let
         outputHashes = {
           "cloudflare-0.11.0" =
             "sha256-bJYiypmDI4KEy/VWt/7UcOv+g2CZLb9qUA9c1xlLxhM=";
-          "ic-btc-test-utils-0.1.0" =
-            "sha256-5tXrN56F5EyXQR8FzTV44ZKNxqgBOVAXD8pEKDdnBzw=";
-          "ic-btc-validation-0.1.0" =
-            "sha256-DRrZ0MX6Qykh+IbEpmWPYvT5XxsiED0jPp6l0Ci+Leo=";
           "icrc1-test-env-0.1.1" =
             "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
           "jsonrpc-0.12.1" =
