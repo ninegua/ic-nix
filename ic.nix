@@ -152,10 +152,6 @@ let
             "sha256-5WcUzapkrc/s3wCBNCuUDhtbp17n67rTbm2rx0qtITg=";
           "build-info-0.0.27" =
             "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
-          "ic-agent-0.36.0" =
-            "sha256-vDONIVjz0cwVgiszVRIjTKcqRUMHdVwTURflAMqmzHM=";
-          "quinn-0.11.2" =
-            "sha256-t+KrQTmH0jFlnhE3uz6t2lG7K9dLPJTup4tLgVSnmyA=";
         };
       };
     });
