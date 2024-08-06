@@ -24,6 +24,7 @@ let
     "ic-nns-init"
     "ic-state-machine-tests"
     "sns"
+    "pocket-ic-server"
   ];
 
   wasms = [
