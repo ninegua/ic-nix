@@ -64,9 +64,9 @@ in rec {
       "build-info-0.0.27" =
         "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
       "cycles-minting-canister-0.9.0" =
-        "sha256-4x16y2E3KyOKqYRE/z6P5O+WfepaZ9R96wWd5Jr1jsU=";
-      "dfx-core-0.0.1" = "sha256-oFTHR6QOfrXSUZj7xO1WmOLIaPHym24RHaRJMxKtS6U=";
-      "ic-agent-0.35.0" = "sha256-m2zJPZ2BwQXJwmyp+lUeT+m1CBTogedI4Pw4u5VkMtY=";
+        "sha256-NlMf9Ok7jEZuhLv7W7UxbRM/tK8YG4UWUm9qqfXJXOw=";
+      "dfx-core-0.0.1" = "sha256-34k78kmdjL9k52W2Fw0CYyd2j3uFzO1g+PsNug4jlUU=";
+      "ic-agent-0.36.0" = "sha256-/0znCHkzjINM8uHXSJgmw0Hk+ltbB1VVlBmrjJc5364=";
     };
   } "dfx-extensions").overrideAttrs (_: {
     IC_ICRC1_ARCHIVE_WASM_PATH =
