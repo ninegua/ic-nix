@@ -88,7 +88,7 @@ let
     "replica"
     "sandbox_launcher"
     "sns"
-    "pocket-ic-server"
+    "pocket-ic"
   ];
   dfxPaths = drv: list:
     builtins.listToAttrs (builtins.map (name: {
