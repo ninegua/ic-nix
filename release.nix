@@ -38,7 +38,7 @@ in rec {
     installPhase = ''
       mkdir -p $out/bin $out/share
       cp ${moc}/bin/mo* $out/bin/
-      cp ${ic.binaries}/bin/{replica,ic-admin,ic-prep,ic-starter,ic-btc-adapter,ic-https-outcalls-adapter,ic-nns-init,ic-state-machine-tests,canister_sandbox,sandbox_launcher} $out/bin/
+      cp ${ic.binaries}/bin/{replica,ic-admin,ic-prep,ic-starter,ic-btc-adapter,ic-https-outcalls-adapter,ic-nns-init,ic-state-machine-tests,canister_sandbox,compiler_sandbox,sandbox_launcher} $out/bin/
       cp ${dfx-extensions}/bin/{nns,sns} $out/bin/
       cp ${ic.binaries}/bin/sns $out/bin/sns-cli
       cp ${ic.binaries}/bin/pocket-ic-server $out/bin/pocket-ic

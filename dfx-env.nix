@@ -72,6 +72,7 @@ let
 
   dfxBins = [
     "canister_sandbox"
+    "compiler_sandbox"
     "dfx"
     "ic-admin"
     "ic-starter"

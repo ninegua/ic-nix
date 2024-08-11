@@ -20,6 +20,7 @@ let
     "ic-btc-adapter"
     "ic-https-outcalls-adapter"
     "canister_sandbox"
+    "compiler_sandbox"
     "sandbox_launcher"
     "ic-nns-init"
     "ic-state-machine-tests"
