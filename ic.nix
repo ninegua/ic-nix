@@ -66,7 +66,7 @@ let
     });
 
   buildIC = { customLinker, targets, hostTriple ? stdenv.hostPlatform.config
-    , profile ? "release" }:
+    , profile ? "release", isDev ? false }:
     let
       linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
       cargoBuildFlags =
@@ -85,8 +85,16 @@ let
       '';
 
       sourceRoot = "${name}";
-      nativeBuildInputs =
-        [ moc cmake llvmPackages.clang pkg-config python3 rustfmt protobuf ];
+      nativeBuildInputs = [
+        moc
+        cmake
+        llvmPackages.clang
+        pkg-config
+        python3
+        rustfmt
+        protobuf
+        glibc_multi
+      ];
       buildInputs = [
         libusb
         llvmPackages.libclang.lib
@@ -98,6 +106,8 @@ let
         zlib-static
       ] ++ (if stdenv.isDarwin then
         with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
+      else if isDev then
+        [ libunwind ]
       else
         [ libunwind-static ]);
 
@@ -106,8 +116,10 @@ let
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
       ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
       LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
-      CFLAGS = lib.optionals (!stdenv.isDarwin)
-        [ "-I${libunwind-static.dev}/include" ];
+      CC = "";
+      CFLAGS = [ "-fno-stack-protector" ] ++ lib.optionals (!stdenv.isDarwin)
+        [ "-I${libunwind-static.dev}/include" ]
+        ++ lib.optionals isDev [ "-Wno-int-conversion" ];
       # Somehow clang includes gcc's libc++, we use -nostdinc++ to prevent it.
       CXXFLAGS = lib.optionals customLinker [
         "-nostdinc++"
@@ -122,10 +134,11 @@ let
       ] ++ (if stdenv.isDarwin then [
         "-Lall=${libiconv-static.out}/lib"
         "-lstatic=iconv"
-      ] else [
-        "-Lnative=${lzma-static.out}/lib"
-        "-lstatic=lzma"
-      ]);
+      ] else
+        lib.optionals (!isDev) [
+          "-Lnative=${lzma-static.out}/lib"
+          "-lstatic=lzma"
+        ]);
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
 
       buildPhase = ''
@@ -158,10 +171,10 @@ let
       };
     });
 
-  mkBinaries = { customLinker }:
+  mkBinaries = { customLinker, isDev ? false }:
     buildIC {
       targets = bins ++ wasms;
-      inherit customLinker;
+      inherit customLinker isDev;
     };
 
   binaries = mkBinaries { customLinker = true; };
@@ -206,5 +219,8 @@ let
   };
 in {
   inherit binaries wasm-binaries canisters;
-  shell = mkBinaries { customLinker = true; };
+  shell = mkBinaries {
+    customLinker = false;
+    isDev = true;
+  };
 }
