@@ -150,8 +150,12 @@ let
       cargoDeps = rustPlatform.importCargoLock {
         lockFile = "${sources.ic}/Cargo.lock";
         outputHashes = {
-          "cloudflare-0.11.0" =
-            "sha256-bJYiypmDI4KEy/VWt/7UcOv+g2CZLb9qUA9c1xlLxhM=";
+          "cloudflare-0.12.0" =
+            "sha256-FxCAK7gUKp/63fdvzI5Ufsy4aur74fO4R/K3YFiUw0Y=";
+          "ic-cbor-2.6.0" =
+            "sha256-WvOZ/Q0QQZ7EA+5+g83fikxpWb2OqRaKqJ4iaKqHy6E=";
+          "ic-http-gateway-0.0.0" =
+            "sha256-5H+WFF5gzTIWP1AxjNrDAtX6VvPp0mt07NEeWlyqewQ=";
           "icrc1-test-env-0.1.1" =
             "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
           "jsonrpc-0.12.1" =
