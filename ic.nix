@@ -152,10 +152,8 @@ let
         outputHashes = {
           "cloudflare-0.12.0" =
             "sha256-FxCAK7gUKp/63fdvzI5Ufsy4aur74fO4R/K3YFiUw0Y=";
-          "ic-cbor-2.6.0" =
-            "sha256-WvOZ/Q0QQZ7EA+5+g83fikxpWb2OqRaKqJ4iaKqHy6E=";
           "ic-http-gateway-0.0.0" =
-            "sha256-5H+WFF5gzTIWP1AxjNrDAtX6VvPp0mt07NEeWlyqewQ=";
+            "sha256-IBaP+qJE6SPi9cXdYOh5Afkvp+1kd3INuDbaM0bLBUA=";
           "icrc1-test-env-0.1.1" =
             "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
           "jsonrpc-0.12.1" =

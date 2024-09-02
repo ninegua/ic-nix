@@ -1,8 +1,8 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = "3d6a76efba59d6f03026d6b7c1c9a1dfce96ee93"; # pin
-    sha256 = "08y7vsb39mf9750nrbn4avsa3nhjnkl1h670dj6rqwz8acjwqrld";
+    rev = "fd48b03c5ba9455ba489aa4c128426f2c296b3dd"; # pin
+    sha256 = "sha256-efHknAc8EzwTAd9cgSE0C5DUcWwYk/aiRG2oLx/+8uI=";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # master
