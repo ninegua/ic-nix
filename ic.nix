@@ -85,16 +85,9 @@ let
       '';
 
       sourceRoot = "${name}";
-      nativeBuildInputs = [
-        moc
-        cmake
-        llvmPackages.clang
-        pkg-config
-        python3
-        rustfmt
-        protobuf
-        glibc_multi
-      ];
+      nativeBuildInputs =
+        [ moc cmake llvmPackages.clang pkg-config python3 rustfmt protobuf ]
+        ++ lib.optionals (!stdenv.isDarwin) [ glibc_multi ];
       buildInputs = [
         libusb
         llvmPackages.libclang.lib
