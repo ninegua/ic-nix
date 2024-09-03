@@ -23,6 +23,9 @@ jobs:
             channel-darwin: '24.05-darwin'
           - channel: 'unstable'
             channel-darwin: 'unstable'
+        exclude:
+          - os: ubuntu-latest
+            channel: 'unstable'
 
     steps:
     - uses: actions/checkout@v3
