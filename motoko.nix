@@ -25,6 +25,7 @@ let
       rust-nightly
       rust-bindgen
       python3
+      emscripten
     ] ++ pkgs.lib.optional pkgs.stdenv.isDarwin [ libiconv ];
 
   llvmEnv = ''
@@ -132,8 +133,7 @@ in rec {
     cargoVendorTools = pkgs.rustPlatform.buildRustPackage rec {
       name = "cargo-vendor-tools";
       src = "${sources.motoko}/rts/${name}/";
-      cargoSha256 =
-        "sha256-E6GTFvmZMjGsVlec7aH3QaizqIET6Dz8Csh0N1jeX+M=";
+      cargoSha256 = "sha256-E6GTFvmZMjGsVlec7aH3QaizqIET6Dz8Csh0N1jeX+M=";
     };
 
     # Path to vendor-rust-std-deps, provided by cargo-vendor-tools
@@ -165,7 +165,7 @@ in rec {
       name = "motoko-rts-deps";
       src = "${sources.motoko}/rts";
       sourceRoot = "rts/motoko-rts-tests";
-      sha256 = "sha256-jN5nx5UNBHlYKnC0kk90h6mWPUNrqPS7Wln2TixbGgA=";
+      sha256 = "sha256-prLZVOWV3BFb8/nKHyqZw8neJyBu1gs5d0D56DsDV2o=";
       copyLockfile = true;
     };
 
@@ -195,6 +195,7 @@ in rec {
     buildInputs = rtsBuildInputs ++ lib.optional doCheck [ wasmtime ];
 
     preBuild = ''
+      export HOME=$PWD
       export CARGO_HOME=$PWD/cargo-home
 
       # This replicates logic from nixpkgs’ pkgs/build-support/rust/default.nix
@@ -221,10 +222,12 @@ in rec {
 
     installPhase = ''
       mkdir -p $out/rts
-      cp mo-rts.wasm $out/rts
-      cp mo-rts-debug.wasm $out/rts
+      cp mo-rts-non-incremental.wasm $out/rts
+      cp mo-rts-non-incremental-debug.wasm $out/rts
       cp mo-rts-incremental.wasm $out/rts
       cp mo-rts-incremental-debug.wasm $out/rts
+      cp mo-rts-eop.wasm $out/rts
+      cp mo-rts-eop-debug.wasm $out/rts
     '';
 
     # This needs to be self-contained. Remove mention of nix path in debug
@@ -234,12 +237,17 @@ in rec {
         -t ${rust-nightly} \
         -t ${rtsDeps} \
         -t ${rustStdDeps} \
-        $out/rts/mo-rts.wasm $out/rts/mo-rts-debug.wasm
+        $out/rts/mo-rts-non-incremental.wasm $out/rts/mo-rts-non-incremental-debug.wasm
       remove-references-to \
         -t ${rust-nightly} \
         -t ${rtsDeps} \
         -t ${rustStdDeps} \
         $out/rts/mo-rts-incremental.wasm $out/rts/mo-rts-incremental-debug.wasm
+      remove-references-to \
+        -t ${rust-nightly} \
+        -t ${rtsDeps} \
+        -t ${rustStdDeps} \
+        $out/rts/mo-rts-eop.wasm $out/rts/mo-rts-eop-debug.wasm
     '';
 
     allowedRequisites = [ ];

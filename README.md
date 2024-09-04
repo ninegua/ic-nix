@@ -6,7 +6,7 @@
 Unofficial build of common binaries used by developers of the [Internet Computer blockchain](https://wiki.internetcomputer.org).
 
 - Directly built from source.
-- Cross-platform (Linux and Mac OS X, both `x86_64` and `aarch64`).
+- Cross-platform (Linux and Mac OS X, `x86_64` and `aarch64`).
 - Mostly statically linked with no extra runtime dependency other than libc.
 - Weekly release of latest versions at build time.
 - Optionally, a standalone SDK environment for nix-shell.
@@ -63,15 +63,13 @@ Releases are built against the latest main branches of each project at the time.
 
 Supported platforms and nixpkgs:
 
-|                  | 23.05  | 23.11  | unstable |
-| -------------    | ------ | ------ | -------- |
-| darwin x86_64    |    ⍻    |   ❌    |   ❌    |
-| linux  x86_64    |   ✅︎    |   ✅︎    |   ✅︎    |
-| darwin aarch64   |   ⍻    |   ⍻    |   ✅︎    |
+|                  | 24.05  | unstable |
+| -------------    | ------ | -------- |
+| darwin x86_64    |   ❌   |    ❌    |
+| linux  x86_64    |   ✅︎   |    ✅︎    |
+| darwin aarch64   |   ✅︎   |    ✅︎    |
 
-✅︎: builds with no issue\
-❌: does not build\
- ⍻: builds but binaries have extra dynamic lib dependency to Nix store
+Only the outdated nixpkgs 23.05 supports darwin `x86_64`, and it does not provide the required empscripten version to compile motoko.
 
 Feature:
 

@@ -85,16 +85,9 @@ let
       '';
 
       sourceRoot = "${name}";
-      nativeBuildInputs = [
-        moc
-        cmake
-        llvmPackages.clang
-        pkg-config
-        python3
-        rustfmt
-        protobuf
-        glibc_multi
-      ];
+      nativeBuildInputs =
+        [ moc cmake llvmPackages.clang pkg-config python3 rustfmt protobuf ]
+        ++ lib.optionals (!stdenv.isDarwin) [ glibc_multi ];
       buildInputs = [
         libusb
         llvmPackages.libclang.lib
@@ -157,8 +150,10 @@ let
       cargoDeps = rustPlatform.importCargoLock {
         lockFile = "${sources.ic}/Cargo.lock";
         outputHashes = {
-          "cloudflare-0.11.0" =
-            "sha256-bJYiypmDI4KEy/VWt/7UcOv+g2CZLb9qUA9c1xlLxhM=";
+          "cloudflare-0.12.0" =
+            "sha256-FxCAK7gUKp/63fdvzI5Ufsy4aur74fO4R/K3YFiUw0Y=";
+          "ic-http-gateway-0.0.0" =
+            "sha256-IBaP+qJE6SPi9cXdYOh5Afkvp+1kd3INuDbaM0bLBUA=";
           "icrc1-test-env-0.1.1" =
             "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
           "jsonrpc-0.12.1" =
