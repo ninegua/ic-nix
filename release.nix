@@ -22,6 +22,8 @@ let
     "ic-icrc1-ledger.wasm"
     "ic-icrc1-archive.wasm"
     "ic-icrc1-index.wasm"
+    "ic-icrc1-index-ng.wasm"
+    "ic-icp-index-canister.wasm"
   ];
   urls = map (wasm_name:
     "https://download.dfinity.systems/ic/${ic_commit}/canisters/${wasm_name}.gz")
