@@ -76,7 +76,7 @@
   };
   dfx-extensions = fetchgit {
     url = "https://github.com/dfinity/dfx-extensions"; # main
-    rev = "5471d0353f8395c33daf7a6ba9a0778f8b6fc7a8";
-    sha256 = "0cr7m8g7gjv7a371jy70v0sh918rvkxdrk2aasq59lillkpayay3";
+    rev = "af69209b8f2f659abbb05ec47b7e81c310b83b43";
+    sha256 = "1dj9bgxsq6j1dna475s6vvin46miywkmc22g7jhb66a9ygqx8mdr";
   };
 }
