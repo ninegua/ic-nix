@@ -65,7 +65,7 @@ in rec {
         "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
       "cycles-minting-canister-0.9.0" =
         "sha256-NlMf9Ok7jEZuhLv7W7UxbRM/tK8YG4UWUm9qqfXJXOw=";
-      "dfx-core-0.0.1" = "sha256-34k78kmdjL9k52W2Fw0CYyd2j3uFzO1g+PsNug4jlUU=";
+      "dfx-core-0.0.1" = "sha256-5o3X/1tkX/lQ7ipJ+eEj+wh9kApDvvYfHQAEuQvd23U=";
       "ic-agent-0.37.1" = "sha256-/207YjxlYZm7tAxq9H5ddNR+CaNKvLrBXxIy6Zn24KI=";
     };
   } "dfx-extensions").overrideAttrs (_: {
