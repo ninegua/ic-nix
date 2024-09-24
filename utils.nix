@@ -66,7 +66,7 @@ in rec {
       "cycles-minting-canister-0.9.0" =
         "sha256-NlMf9Ok7jEZuhLv7W7UxbRM/tK8YG4UWUm9qqfXJXOw=";
       "dfx-core-0.0.1" = "sha256-34k78kmdjL9k52W2Fw0CYyd2j3uFzO1g+PsNug4jlUU=";
-      "ic-agent-0.36.0" = "sha256-/0znCHkzjINM8uHXSJgmw0Hk+ltbB1VVlBmrjJc5364=";
+      "ic-agent-0.37.1" = "sha256-/207YjxlYZm7tAxq9H5ddNR+CaNKvLrBXxIy6Zn24KI=";
     };
   } "dfx-extensions").overrideAttrs (_: {
     IC_ICRC1_ARCHIVE_WASM_PATH =
