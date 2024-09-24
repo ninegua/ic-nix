@@ -31,6 +31,8 @@ let
   downloads = map builtins.fetchurl (urls ++ [
     "https://github.com/dfinity/internet-identity/releases/download/release-2022-07-11/internet_identity_dev.wasm"
     "https://github.com/dfinity/nns-dapp/releases/download/tip/nns-dapp_t2.wasm"
+    "https://github.com/dfinity/nns-dapp/releases/download/proposal-129748/nns-dapp_test.wasm.gz"
+    "https://github.com/dfinity/nns-dapp/releases/download/proposal-129748/sns_aggregator.wasm.gz"
   ]);
 in rec {
   binaries = pkgs.stdenv.mkDerivation {
