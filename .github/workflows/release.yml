@@ -17,9 +17,6 @@ jobs:
           - os: ubuntu-latest
             name: linux
             prefix: nixos
-          - os: macos-12
-            name: darwin
-            prefix: nixpkgs
           - os: macos-14
             name: darwin
             prefix: nixpkgs
