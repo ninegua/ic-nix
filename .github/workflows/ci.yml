@@ -140,8 +140,8 @@ jobs:
       with:
         name: ninegua
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-    - run: |
-      nix-shell dfx-env.nix --run "dfx new --type motoko --no-frontend hello"
-      nix-shell dfx-env.nix --run "cd hello && dfx start --background"
-      nix-shell dfx-env.nix --run "cd hello && dfx nns install && dfx deploy"
-      nix-shell dfx-env.nix --run "cd hello && dfx stop"
+      run: |
+        nix-shell dfx-env.nix --run "dfx new --type motoko --no-frontend hello"
+        nix-shell dfx-env.nix --run "cd hello && dfx start --background"
+        nix-shell dfx-env.nix --run "cd hello && dfx nns install && dfx deploy"
+        nix-shell dfx-env.nix --run "cd hello && dfx stop"
