@@ -35,7 +35,11 @@ in rec {
 
   vessel = mkDrv { } "vessel";
 
-  ic-repl = mkDrv { } "ic-repl";
+  ic-repl = mkDrv {
+    outputHashes = {
+      "ic-agent-0.38.2" = "sha256-eR6bWPsKZgjzY71WRbunuf8uaJmFn41ygzEpkQqsrgs=";
+    };
+  } "ic-repl";
 
   ic-wasm = mkDrv {
     buildFeatures = [ "exe" ];
