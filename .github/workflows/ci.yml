@@ -89,10 +89,8 @@ jobs:
         sudo rm -rf /opt/hostedtoolcache/node
         sudo docker image prune --all --force
         sudo apt purge -y firefox google-chrome-stable microsoft-edge-stable
-        echo "mount /dev/sda1 as /nix"
-        sudo mkdir /nix || echo "/nix already exists?"
-        sudo umount /mnt || echo "/mnt cannot be umounted"
-        sudo mount /dev/sda1 /nix
+        echo "ln /mnt as /nix"
+        sudo ln -s /mnt /nix
         echo "Available storage after:"
         df -h
       if: contains(matrix.os, 'ubuntu')
