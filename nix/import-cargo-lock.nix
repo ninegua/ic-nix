@@ -247,7 +247,7 @@ EOF
 
     for crate in ${toString depCrates}; do
       # Link the crate directory, removing the output path hash from the destination.
-      ln -s "$crate" $out/$(basename "$crate" | cut -c 34-)
+      ln -s "$crate" $out/$(basename "$crate" | cut -c 34-) || echo "Duplicate $crate found"
 
       if [ -e "$crate/.cargo-config" ]; then
         key=$(sed 's/\[source\."\(.*\)"\]/\1/; t; d' < "$crate/.cargo-config")
