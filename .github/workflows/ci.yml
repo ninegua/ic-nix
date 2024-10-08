@@ -117,3 +117,51 @@ jobs:
         name: ninegua
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: nix-build --pure --keep-going -A ${{ matrix.project }}
+
+  test:
+    needs: build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: [ '24.05', 'unstable' ]
+        os: [ ubuntu-latest, macos-14 ]
+        include:
+          - os: ubuntu-latest
+            prefix: nixos
+          - os: macos-14
+            prefix: nixpkgs
+          - channel: '24.05'
+            channel-darwin: '24.05-darwin'
+          - channel: 'unstable'
+            channel-darwin: 'unstable'
+        exclude:
+          - os: ubuntu-latest
+            channel: 'unstable'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: cachix/install-nix-action@v23
+      with:
+        nix_path: nixpkgs=channel:${{ matrix.prefix }}-${{ matrix.channel }}
+      if: contains(matrix.os, 'ubuntu')
+
+    - uses: cachix/install-nix-action@v23
+      with:
+        nix_path: nixpkgs=channel:${{ matrix.prefix }}-${{ matrix.channel-darwin }}
+      if: contains(matrix.os, 'macos')
+
+    - name: run test
+      uses: cachix/cachix-action@v12
+      with:
+        name: ninegua
+        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
+    - run: |
+        mkdir -p ~/.config/dfx/
+        echo '{"local":{"bind":"127.0.0.1:8080","type":"ephemeral","replica":{"subnet_type":"system"}}}' > ~/.config/dfx/networks.json
+        nix-shell dfx-env.nix --run "dfx new --type motoko --no-frontend hello"
+        nix-shell dfx-env.nix --run "cd hello && dfx start --background"
+        nix-shell dfx-env.nix --run "cd hello && dfx nns install && dfx deploy"
+        nix-shell dfx-env.nix --run "cd hello && dfx stop"
