@@ -157,7 +157,7 @@ jobs:
 
     - run: |
         mkdir -p ~/.config/dfx/
-        echo '{"local":{"bind":"127.0.0.1:8080","type":"ephemeral","replica":{"subnet_type":"system"}}' > ~/.config/dfx/networks.json
+        echo '{"local":{"bind":"127.0.0.1:8080","type":"ephemeral","replica":{"subnet_type":"system"}}}' > ~/.config/dfx/networks.json
         nix-shell dfx-env.nix --run "dfx new --type motoko --no-frontend hello"
         nix-shell dfx-env.nix --run "cd hello && dfx start --background"
         nix-shell dfx-env.nix --run "cd hello && dfx nns install && dfx deploy"
