@@ -89,8 +89,8 @@ jobs:
         sudo rm -rf /opt/hostedtoolcache/node
         sudo docker image prune --all --force
         sudo apt purge -y firefox google-chrome-stable microsoft-edge-stable
-        echo "ln /mnt as /nix"
-        sudo ln -s /mnt /nix
+        echo "mount /mnt as /nix"
+        sudo mount --bind /mnt /nix
         echo "Available storage after:"
         df -h
       if: contains(matrix.os, 'ubuntu')
