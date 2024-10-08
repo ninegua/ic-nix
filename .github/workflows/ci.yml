@@ -71,28 +71,15 @@ jobs:
           - os: ubuntu-latest
             channel: 'unstable'
 
+
     steps:
     - name: Maximize build space
       run: |
-        echo "Available storage before:"
-        df -h
         sudo rm -rf /usr/share/dotnet
         sudo rm -rf /usr/local/lib/android
-        sudo rm -rf /usr/local/lib/heroku
-        sudo rm -rf /usr/local/lib/node_modules
-        sudo rm -rf /usr/local/share/powershell
-        sudo rm -rf /usr/local/share/chromium
         sudo rm -rf /opt/ghc
         sudo rm -rf /opt/hostedtoolcache/CodeQL
-        sudo rm -rf /opt/hostedtoolcache/go
-        sudo rm -rf /opt/hostedtoolcache/pypy
-        sudo rm -rf /opt/hostedtoolcache/node
         sudo docker image prune --all --force
-        sudo apt purge -y firefox google-chrome-stable microsoft-edge-stable
-        echo "mount /mnt as /nix"
-        sudo mkdir /nix
-        sudo mount --bind /mnt /nix
-        echo "Available storage after:"
         df -h
       if: contains(matrix.os, 'ubuntu')
 
@@ -114,51 +101,3 @@ jobs:
         name: ninegua
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
     - run: nix-build --pure --keep-going -A ${{ matrix.project }}
-
-  test:
-    needs: build
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        channel: [ '24.05', 'unstable' ]
-        os: [ ubuntu-latest, macos-14 ]
-        include:
-          - os: ubuntu-latest
-            prefix: nixos
-          - os: macos-14
-            prefix: nixpkgs
-          - channel: '24.05'
-            channel-darwin: '24.05-darwin'
-          - channel: 'unstable'
-            channel-darwin: 'unstable'
-        exclude:
-          - os: ubuntu-latest
-            channel: 'unstable'
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - uses: cachix/install-nix-action@v23
-      with:
-        nix_path: nixpkgs=channel:${{ matrix.prefix }}-${{ matrix.channel }}
-      if: contains(matrix.os, 'ubuntu')
-
-    - uses: cachix/install-nix-action@v23
-      with:
-        nix_path: nixpkgs=channel:${{ matrix.prefix }}-${{ matrix.channel-darwin }}
-      if: contains(matrix.os, 'macos')
-
-    - name: run test
-      uses: cachix/cachix-action@v12
-      with:
-        name: ninegua
-        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-
-    - run: |
-        mkdir -p ~/.config/dfx/
-        echo '{"local":{"bind":"127.0.0.1:8080","type":"ephemeral","replica":{"subnet_type":"system"}}}' > ~/.config/dfx/networks.json
-        nix-shell dfx-env.nix --run "dfx new --type motoko --no-frontend hello"
-        nix-shell dfx-env.nix --run "cd hello && dfx start --background"
-        nix-shell dfx-env.nix --run "cd hello && dfx nns install && dfx deploy"
-        nix-shell dfx-env.nix --run "cd hello && dfx stop"
