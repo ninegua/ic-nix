@@ -1,4 +1,4 @@
-{ pkgs, sources }:
+{ pkgs, sources, customRustPlatform }:
 with pkgs;
 let
   stdenv = llvmPackages.libcxxStdenv;
@@ -10,7 +10,7 @@ let
     , cargoBuildFlags ? "", postUnpack ? "", cargoLock ? null
     , cargoSha256 ? null, outputHashes ? { } }:
     name:
-    rustPlatform.buildRustPackage {
+    customRustPlatform.buildRustPackage {
       inherit name buildFeatures cargoPatches doCheck dontUseCargoParallelTests
         cargoBuildFlags postUnpack cargoSha256;
       src = sources."${name}";

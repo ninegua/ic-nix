@@ -57,10 +57,14 @@ in let
     customRustPlatform = pkgsRust.rustPlatform;
     moc = motoko.moc;
   };
-  utils = import ./utils.nix { inherit pkgs sources; };
+  utils = import ./utils.nix {
+    inherit pkgs sources;
+    customRustPlatform = pkgsRust.rustPlatform;
+  };
   sdk = import ./sdk.nix {
     inherit pkgs;
     src = sources.sdk;
+    customRustPlatform = pkgsRust.rustPlatform;
   };
   depsOf = drvs:
     pkgs.mkShell {
