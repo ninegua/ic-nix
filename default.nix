@@ -4,25 +4,10 @@ let
     (import (builtins.fetchTarball
       "https://github.com/oxalica/rust-overlay/archive/master.tar.gz"))
     (self: super: {
-      rust-bindgen = super.rust-bindgen.overrideAttrs (_: { doCheck = false; });
-      rust-stable = super.rust-bin.stable.latest.default.override {
+      rust-stable = self.rust-bin.stable.latest.default.override {
         targets = [ "wasm32-unknown-unknown" ];
         extensions = [ "rust-src" ];
       };
-      rustPlatform = (super.makeRustPlatform {
-        rustc = self.rust-stable;
-        cargo = self.rust-stable;
-        stdenv = self.llvmPackages.libcxxStdenv;
-      }) // {
-        importCargoLock = pkgs.callPackage ./nix/import-cargo-lock.nix {
-          cargo = self.rust-stable;
-        };
-      };
-      # workaround for nixpkgs 23.11 for HOST_CC when invoking cargo.
-      rust = if super.rust ? envVars then
-        super.rust // { envVars = super.rust.envVars // { setEnv = ""; }; }
-      else
-        super.rust;
       rust-nightly = self.rust-bin.nightly."2023-04-21".default.override {
         targets = [ "wasm32-unknown-emscripten" "wasm32-wasi" ];
         extensions = [ "rust-src" ];
@@ -41,6 +26,27 @@ let
   ]);
 in let
   pkgs = pkgs_with_overlay;
+  pkgsRust = pkgs.appendOverlays ([
+    (self: super: {
+      rust-stable = pkgs.rust-stable;
+      rust-bindgen = super.rust-bindgen.overrideAttrs (_: { doCheck = false; });
+      rustPlatform = (super.makeRustPlatform {
+        rustc = self.rust-stable;
+        cargo = self.rust-stable;
+        stdenv = self.llvmPackages.libcxxStdenv;
+      }) // {
+        importCargoLock = super.callPackage ./nix/import-cargo-lock.nix {
+          cargo = self.rust-stable;
+        };
+      };
+      # workaround for nixpkgs 23.11 for HOST_CC when invoking cargo.
+      rust = if super.rust ? envVars then
+        super.rust // { envVars = super.rust.envVars // { setEnv = ""; }; }
+      else
+        super.rust;
+    })
+  ]);
+
   sources = import ./nix/sources.nix { inherit (pkgs) fetchgit; };
   motoko = import ./motoko.nix {
     inherit pkgs;
@@ -48,6 +54,7 @@ in let
   };
   ic = import ./ic.nix {
     inherit pkgs sources;
+    customRustPlatform = pkgsRust.rustPlatform;
     moc = motoko.moc;
   };
   utils = import ./utils.nix { inherit pkgs sources; };

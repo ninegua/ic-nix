@@ -1,4 +1,4 @@
-{ pkgs, sources, moc }:
+{ pkgs, customRustPlatform, sources, moc }:
 let
   pkgs-with-overlays = pkgs.appendOverlays ([ ]
     ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
@@ -9,6 +9,7 @@ let
 in let pkgs = pkgs-with-overlays;
 in with pkgs;
 let
+  rustPlatform = customRustPlatform;
   bins = [
     "replica"
     "ic-starter"
