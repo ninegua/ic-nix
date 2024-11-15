@@ -205,7 +205,7 @@ let
       install -m 644 ${wasm-binaries}/bin/* $out/share/ic-canisters/
       for name in ${wasm-names}; do
         if [ $name = "ledger-canister" ]; then
-          cp ${sources.ic}/rs/rosetta-api/icp_ledger/*.did $out/share/ic-canisters/
+          cp ${sources.ic}/rs/ledger_suite/icp/ledger/*.did $out/share/ic-canisters/
         elif [ $name = "lifeline" ]; then
           true
         elif [ $name = "root-canister" ]; then
