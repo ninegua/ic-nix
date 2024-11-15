@@ -90,7 +90,7 @@ let
         [ moc cmake llvmPackages.clang pkg-config python3 rustfmt protobuf ]
         ++ lib.optionals (!stdenv.isDarwin) [ glibc_multi ];
       buildInputs = [
-        libusb
+        libusb1
         llvmPackages.libclang.lib
         llvmPackages.llvm.lib
         rocksdb
