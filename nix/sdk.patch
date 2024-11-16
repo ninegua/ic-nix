@@ -947,3 +947,17 @@ index 8ba4baadf..5daa24157 100644
 -ic-response-verification-test-utils = { git = "https://github.com/dfinity/response-verification.git", rev = "a65009624b61736df6d2dc17756bdbd02a84f599" }
 -ic-certification-testing = { git = "https://github.com/dfinity/response-verification.git", rev = "a65009624b61736df6d2dc17756bdbd02a84f599" }
  ic-crypto-tree-hash = { git = "https://github.com/dfinity/ic.git", rev = "1290256484f59c3d950c5e9a098e97383b248ad6" }
+diff --git a/src/dfx/src/commands/start.rs b/src/dfx/src/commands/start.rs
+index 4e556cbec..c0e54621e 100644
+--- a/src/dfx/src/commands/start.rs
++++ b/src/dfx/src/commands/start.rs
+@@ -234,8 +234,7 @@ pub fn exec(
+         empty_writable_path(local_server_descriptor.canister_http_adapter_config_path())?;
+     let pocketic_proxy_pid_file_path =
+         empty_writable_path(local_server_descriptor.pocketic_proxy_pid_path())?;
+-    let pocketic_proxy_port_file_path =
+-        empty_writable_path(local_server_descriptor.pocketic_proxy_port_path())?;
++    let pocketic_proxy_port_file_path = local_server_descriptor.pocketic_proxy_port_path();
+     let webserver_port_path = empty_writable_path(local_server_descriptor.webserver_port_path())?;
+ 
+     let previous_config_path = local_server_descriptor.effective_config_path();
