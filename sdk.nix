@@ -1,4 +1,4 @@
-{ pkgs, src }:
+{ pkgs, src, customRustPlatform }:
 with pkgs;
 let
   patchedSrc = pkgs.stdenv.mkDerivation {
@@ -21,7 +21,7 @@ let
     ]);
   ic_btc_canister = builtins.fetchurl
     "https://github.com/dfinity/bitcoin-canister/releases/latest/download/ic-btc-canister.wasm.gz";
-  dfx = (rustPlatform.buildRustPackage {
+  dfx = (customRustPlatform.buildRustPackage {
     name = "dfx";
     src = patchedSrc;
     inherit buildInputs;

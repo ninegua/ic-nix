@@ -1,4 +1,4 @@
-{ pkgs, sources, moc }:
+{ pkgs, customRustPlatform, sources, moc }:
 let
   pkgs-with-overlays = pkgs.appendOverlays ([ ]
     ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
@@ -9,6 +9,7 @@ let
 in let pkgs = pkgs-with-overlays;
 in with pkgs;
 let
+  rustPlatform = customRustPlatform;
   bins = [
     "replica"
     "ic-starter"
@@ -89,7 +90,7 @@ let
         [ moc cmake llvmPackages.clang pkg-config python3 rustfmt protobuf ]
         ++ lib.optionals (!stdenv.isDarwin) [ glibc_multi ];
       buildInputs = [
-        libusb
+        libusb1
         llvmPackages.libclang.lib
         llvmPackages.llvm.lib
         rocksdb
@@ -204,7 +205,7 @@ let
       install -m 644 ${wasm-binaries}/bin/* $out/share/ic-canisters/
       for name in ${wasm-names}; do
         if [ $name = "ledger-canister" ]; then
-          cp ${sources.ic}/rs/rosetta-api/icp_ledger/*.did $out/share/ic-canisters/
+          cp ${sources.ic}/rs/ledger_suite/icp/ledger/*.did $out/share/ic-canisters/
         elif [ $name = "lifeline" ]; then
           true
         elif [ $name = "root-canister" ]; then
