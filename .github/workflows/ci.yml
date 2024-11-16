@@ -70,6 +70,9 @@ jobs:
         exclude:
           - os: ubuntu-latest
             channel: 'unstable'
+          - project: 'ic-no-shell'
+            channel: 'unstable'
+
 
     steps:
     - name: Maximize build space
