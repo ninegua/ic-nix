@@ -1,8 +1,8 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = "51f6f4e4ab7fa2a8ad4cf573e04fc2686e14fa57"; # pin
-    sha256 = "17vdr8z3hygzxlzrbqn43y9fn6kbsbfgh34j2rbampf6nwwxai1z";
+    rev = "a62848817cec7ae50618a87a526c85d020283fd9"; # pin
+    sha256 = "00nca08if5xsyf4jb2aqf2fl7dwklhvrw41ih3dn3jqklm5rd5qv";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # master
@@ -21,13 +21,13 @@
   };
   motoko = fetchgit {
     url = "https://github.com/dfinity/motoko"; # master
-    rev = "e2204181fc95a4647002db09a72a9dd4ad3c2542";
-    sha256 = "0j7s7a1bhwhqxavy2m7cr0352m5qd7khpy1jn8x56mkrql4f9lmz";
+    rev = "45ec759eb4f8ff35af75a64815c3e1163b774475";
+    sha256 = "05w146853n2m33d6g5kdy5gnpawy5s5d0yjc1sil70mba102z5z9";
   };
   motoko-base = fetchgit {
     url = "https://github.com/dfinity/motoko-base"; # next-moc
-    rev = "7b5d31e70cd9a2c765d1b9402eaa7c8d13913963";
-    sha256 = "15k597zqkyvml2m89q64iny7gp5x0vxycrbacm6n0xxx2bp8lgsm";
+    rev = "ec1a9c6e7e3ae2854fd4f4bedf75bc7c200e04ed";
+    sha256 = "11y0nql11w9x1crg6szy0w1pa42nixld91gvn2sbiqxgpbrw02r8";
   };
   musl-wasi = fetchgit {
     url = "https://github.com/WebAssembly/wasi-libc"; # main
@@ -36,8 +36,8 @@
   };
   sdk = fetchgit {
     url = "https://github.com/dfinity/sdk"; # master
-    rev = "985bd839e4a86664a82e6747a7757daec794d10a";
-    sha256 = "0p0linbk73667drap01gc093amhndni0pbwhjc8mix0n6qf6h6sp";
+    rev = "c97f64191e2a86f2c8b7d218f78319672278dd5a";
+    sha256 = "03vl41apg7lm5ympfh7yf58y717yrb9jpg0rlkvp8hfq34fpajsr";
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git"; # mdb.master
@@ -76,7 +76,7 @@
   };
   dfx-extensions = fetchgit {
     url = "https://github.com/dfinity/dfx-extensions"; # main
-    rev = "dfa765a9ab8f73330e9106980de2ee0e8502665d";
-    sha256 = "0nz8sp35019vy64gsbgha4h8q45y90lw9gi2ydx5wq9j8lxma02s";
+    rev = "bc34481eff52c2b2f13703c5bd7a0f45322162a7";
+    sha256 = "1jxqff3b5h77ndsnc8qgzpsr3qh697i3ylv1gfzs4dlzw2a68qsb";
   };
 }
