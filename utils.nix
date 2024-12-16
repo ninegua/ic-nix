@@ -35,10 +35,7 @@ in rec {
 
   vessel = mkDrv { } "vessel";
 
-  ic-repl = mkDrv {
-    outputHashes = {
-    };
-  } "ic-repl";
+  ic-repl = mkDrv { outputHashes = { }; } "ic-repl";
 
   ic-wasm = mkDrv {
     buildFeatures = [ "exe" ];
@@ -50,7 +47,13 @@ in rec {
     dontUseCargoParallelTests = true;
   } "candid";
 
-  cdk-rs = mkDrv { doCheck = false; } "cdk-rs";
+  cdk-rs = mkDrv {
+    doCheck = false;
+    outputHashes = {
+      "pocket-ic-6.0.0" = "sha256-LynAIPeMAxkc2O/M0mfdW0z2OuKJPlbOXXhksIodqYQ=";
+    };
+
+  } "cdk-rs";
 
   agent-rs = mkDrv { doCheck = false; } "agent-rs";
 
