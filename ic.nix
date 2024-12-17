@@ -155,7 +155,7 @@ let
           "cloudflare-0.12.0" =
             "sha256-FxCAK7gUKp/63fdvzI5Ufsy4aur74fO4R/K3YFiUw0Y=";
           "ic-bn-lib-0.1.0" =
-            "sha256-SNNXORajtGGGAdUklAZQO0EROozyRbd2qL/FQtBaVE8=";
+            "sha256-voIaW+DDpmGJCrVy+dRM9pjtjWBvugj+J0Hsd9dhpQI=";
           "ic-http-gateway-0.0.0" =
             "sha256-IBaP+qJE6SPi9cXdYOh5Afkvp+1kd3INuDbaM0bLBUA=";
           "icrc1-test-env-0.1.1" =
