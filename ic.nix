@@ -10,34 +10,34 @@ in let pkgs = pkgs-with-overlays;
 in with pkgs;
 let
   rustPlatform = customRustPlatform;
-  bins = [
-    "replica"
-    "ic-starter"
-    "ic-admin"
-    "ic-prep"
-    "ic-replay"
-    "ic-consensus-pool-util"
-    "state-tool"
-    "ic-btc-adapter"
-    "ic-https-outcalls-adapter"
-    "canister_sandbox"
-    "compiler_sandbox"
-    "sandbox_launcher"
-    "ic-nns-init"
-    "ic-state-machine-tests"
-    "sns"
-    "pocket-ic-server"
-  ];
+  bins = {
+    "replica" = "rs/replica/";
+    "ic-starter" = "rs/starter/";
+    "ic-admin" = "rs/registry/admin/";
+    "ic-prep" = "rs/prep/";
+    "ic-replay" = "rs/replay/";
+    "ic-consensus-pool-util" = "rs/artifact_pool/";
+    "state-tool" = "rs/state_tool/";
+    "ic-btc-adapter" = "rs/bitcoin/adapter/";
+    "ic-https-outcalls-adapter" = "rs/https_outcalls/adapter/";
+    "canister_sandbox" = "rs/canister_sandbox/";
+    "compiler_sandbox" = "rs/canister_sandbox/";
+    "sandbox_launcher" = "rs/canister_sandbox/";
+    "ic-nns-init" = "rs/nns/init/";
+    "sns" = "rs/sns/";
+    "pocket-ic-server" = "rs/pocket_ic_server/";
+  };
 
-  wasms = [
-    "registry-canister"
-    "ledger-canister"
-    "genesis-token-canister"
-    "governance-canister"
-    "root-canister"
-    "sns-governance-canister"
-    "lifeline"
-  ];
+  wasms = {
+    "registry-canister" = "rs/registry/canister/";
+    "ledger-canister" = "rs/ledger_suite/icp/ledger/";
+    "genesis-token-canister" = "rs/nns/gtc/";
+    "governance-canister" = "rs/nns/governance/";
+    "sns-governance-canister" = "rs/sns/governance/";
+    "root-canister" = "rs/nns/handlers/root/impl/";
+    "sns-root-canister" = "rs/sns/root/";
+    "lifeline" = "rs/nns/handlers/lifeline/impl/";
+  };
 
   stdenv = llvmPackages.libcxxStdenv;
 
@@ -68,14 +68,12 @@ let
 
   buildIC = { customLinker, targets, hostTriple ? stdenv.hostPlatform.config
     , profile ? "release", isDev ? false }:
-    let
-      linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
-      cargoBuildFlags =
-        lib.strings.concatMapStringsSep " " (t: "--bin " + t) targets;
+    let linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
     in (rustPlatform.buildRustPackage rec {
-      inherit profile hostTriple cargoBuildFlags;
+      inherit profile hostTriple;
       name = "ic";
-      targetNames = lib.strings.concatStringsSep " " targets;
+      targetNames =
+        lib.strings.concatStringsSep " " (builtins.attrNames targets);
       src = sources.ic;
       cargoPatches = [ ];
       unpackPhase = ''
@@ -135,10 +133,11 @@ let
         ]);
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
 
-      buildPhase = ''
-        echo cargo build --frozen --profile ${profile} --target ${hostTriple} $cargoBuildFlags
-        cargo build --frozen --profile ${profile} --target ${hostTriple} $cargoBuildFlags
-      '';
+      buildPhase = lib.attrsets.foldlAttrs (acc: name: subdir:
+        acc + ''
+          echo pushd "${subdir}" \&\& cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${name} \&\& popd
+          pushd "${subdir}" && cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${name} && popd
+        '') "" targets;
       installPhase = ''
         mkdir -p $out/bin
         for name in ${targetNames}; do
@@ -172,13 +171,13 @@ let
 
   mkBinaries = { customLinker, isDev ? false }:
     buildIC {
-      targets = bins ++ wasms;
+      targets = bins // wasms;
       inherit customLinker isDev;
     };
 
   binaries = mkBinaries { customLinker = true; };
 
-  wasm-names = lib.strings.concatStringsSep " " wasms;
+  wasm-names = lib.strings.concatStringsSep " " (builtins.attrNames wasms);
 
   wasm-binaries = (buildIC {
     targets = wasms;
