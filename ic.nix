@@ -70,9 +70,10 @@ let
     , profile ? "release", isDev ? false, combined ? true }:
     let
       linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
-      bins = lib.attrsets.foldAttrs (acc: name: _: acc + " " + name) "" targets;
+      names =
+        lib.attrsets.foldlAttrs (acc: name: _: acc + " " + name) "" targets;
       buildCombined =
-        "cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${bins}";
+        "cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${names}";
       buildSeparate = lib.attrsets.foldlAttrs (acc: name: subdir:
         acc + ''
           echo pushd "${subdir}" \&\& cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${name} \&\& popd
