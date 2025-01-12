@@ -67,8 +67,17 @@ let
     });
 
   buildIC = { customLinker, targets, hostTriple ? stdenv.hostPlatform.config
-    , profile ? "release", isDev ? false }:
-    let linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
+    , profile ? "release", isDev ? false, combined ? true }:
+    let
+      linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
+      bins = lib.attrsets.foldAttrs (acc: name: _: acc + " " + name) "" targets;
+      buildCombined =
+        "cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${bins}";
+      buildSeparate = lib.attrsets.foldlAttrs (acc: name: subdir:
+        acc + ''
+          echo pushd "${subdir}" \&\& cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${name} \&\& popd
+          pushd "${subdir}" && cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${name} && popd
+        '') "" targets;
     in (rustPlatform.buildRustPackage rec {
       inherit profile hostTriple;
       name = "ic";
@@ -132,12 +141,7 @@ let
           "-lstatic=lzma"
         ]);
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
-
-      buildPhase = lib.attrsets.foldlAttrs (acc: name: subdir:
-        acc + ''
-          echo pushd "${subdir}" \&\& cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${name} \&\& popd
-          pushd "${subdir}" && cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${name} && popd
-        '') "" targets;
+      buildPhase = if combined then buildCombined else buildSeparate;
       installPhase = ''
         mkdir -p $out/bin
         for name in ${targetNames}; do
@@ -184,6 +188,7 @@ let
     hostTriple = "wasm32-unknown-unknown";
     profile = "canister-release";
     customLinker = false;
+    combined = false;
   }).overrideAttrs (self: rec {
     name = "ic-wasms";
     RUSTFLAGS = [ ];
