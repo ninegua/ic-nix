@@ -65,26 +65,13 @@ let
       CFLAGS =
         [ "-Wno-error=deprecated-copy" "-Wno-error=unused-private-field" ];
     });
-
-  buildIC = { customLinker, targets, hostTriple ? stdenv.hostPlatform.config
-    , profile ? "release", isDev ? false, combined ? true }:
-    let
-      linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
-      bin-names =
-        lib.attrsets.foldlAttrs (acc: name: _: acc + " --bin " + name) ""
-        targets;
-      buildCombined =
-        "cargo build --frozen --profile ${profile} --target ${hostTriple} ${bin-names}";
-      buildSeparate = lib.attrsets.foldlAttrs (acc: name: subdir:
-        acc + ''
-          echo pushd "${subdir}" \&\& cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${name} \&\& popd
-          pushd "${subdir}" && cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${name} && popd
-        '') "" targets;
+  buildIC = { customLinker, binname, subdir
+    , hostTriple ? stdenv.hostPlatform.config, profile ? "release"
+    , isDev ? false }:
+    let linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
     in (rustPlatform.buildRustPackage rec {
       inherit profile hostTriple;
-      name = "ic";
-      targetNames =
-        lib.strings.concatStringsSep " " (builtins.attrNames targets);
+      name = "ic-" + binname;
       src = sources.ic;
       cargoPatches = [ ];
       unpackPhase = ''
@@ -143,12 +130,11 @@ let
           "-lstatic=lzma"
         ]);
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
-      buildPhase = if combined then buildCombined else buildSeparate;
+      buildPhase = ''
+        pushd "${subdir}" && cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${binname} && popd
+      '';
       installPhase = ''
-        mkdir -p $out/bin
-        for name in ${targetNames}; do
-          install -m 755 target/${hostTriple}/release/$name $out/bin
-        done
+        install -m 755 -D target/${hostTriple}/release/${binname} $out/bin
       '';
       # Placeholder, to allow a custom importCargoLock below
       cargoSha256 = lib.fakeHash;
@@ -175,56 +161,64 @@ let
       hardeningDisable = [ "zerocallusedregs" ];
     });
 
-  mkBinaries = { customLinker, isDev ? false }:
-    buildIC {
-      targets = bins // wasms;
-      inherit customLinker isDev;
-    };
+  mkBinaries = targets:
+    let
+      deps = lib.attrsets.mapAttrs (binname: subdir:
+        buildIC {
+          inherit binname subdir;
+          customLinker = true;
+        }) targets;
+    in stdenv.mkDerivation (rec {
+      name = "ic-binaries";
+      phases = [ "installPhase" ];
+      installPhase = ''
+        mkdir -p $out/bin
+      '' + lib.attrsets.foldlAttrs (acc: _: deriv:
+        ''
+          install -m 755 ${deriv}/bin/* $out/bin/
+        '' + acc) "" deps;
+    });
 
-  binaries = mkBinaries { customLinker = true; };
+  binaries = mkBinaries bins;
+  wasm-binaries = mkBinaries wasms;
 
-  wasm-names = lib.strings.concatStringsSep " " (builtins.attrNames wasms);
-
-  wasm-binaries = (buildIC {
-    targets = wasms;
-    hostTriple = "wasm32-unknown-unknown";
+  canisters = let
     profile = "canister-release";
-    customLinker = false;
-    combined = false;
-  }).overrideAttrs (self: rec {
-    name = "ic-wasms";
-    RUSTFLAGS = [ ];
-    installPhase = ''
-      mkdir -p $out/bin
-      for name in ${wasm-names}; do
-        ${binaryen}/bin/wasm-opt -O2 -o $out/bin/$name.wasm \
-          target/${self.hostTriple}/${self.profile}/$name.wasm
-      done
-    '';
-  });
-
-  canisters = stdenv.mkDerivation {
+    hostTriple = "wasm32-unknown-unknown";
+    deps = lib.attrsets.mapAttrs (binname: subdir:
+      (buildIC {
+        inherit binname subdir hostTriple;
+        customLinker = false;
+      }).overrideAttrs (self: {
+        installPhase = ''
+          ${binaryen}/bin/wasm-opt -O2 -o $out/bin/${binname}.wasm \
+            ${deriv}/${hostTriple}/${profile}/${binname}.wasm
+        '';
+      })) wasms;
+  in stdenv.mkDerivation (rec {
     name = "ic-canisters";
     phases = [ "installPhase" ];
     installPhase = ''
       mkdir -p $out/share/ic-canisters/
-      install -m 644 ${wasm-binaries}/bin/* $out/share/ic-canisters/
-      for name in ${wasm-names}; do
-        if [ $name = "ledger-canister" ]; then
+    '' + lib.attrsets.foldlAttrs (acc: binname: deriv:
+      ''
+        install -m 755 ${deriv}/bin/* $out/share/ic-canisters/
+        if [ "${binname}" = "ledger-canister" ]; then
           cp ${sources.ic}/rs/ledger_suite/icp/ledger/*.did $out/share/ic-canisters/
-        elif [ $name = "lifeline" ]; then
+        elif [ "${binname}" = "lifeline" ]; then
           true
-        elif [ $name = "root-canister" ]; then
+        elif [ "${binname}" = "root-canister" ]; then
           true
         else
-          ${binaries}/bin/$name > $out/share/ic-canisters/$name.did
+          ${wasm-binaries}/bin/${binname} > $out/share/ic-canisters/${binname}.did
         fi
-      done
-    '';
-  };
+      '' + acc) "" deps;
+  });
 in {
-  inherit binaries wasm-binaries canisters;
-  shell = mkBinaries {
+  inherit binaries canisters;
+  shell = buildIC {
+    binname = "";
+    subdir = "";
     customLinker = false;
     isDev = true;
   };
