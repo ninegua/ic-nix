@@ -187,7 +187,7 @@ let
     hostTriple = "wasm32-unknown-unknown";
     deps = lib.attrsets.mapAttrs (binname: subdir:
       (buildIC {
-        inherit binname subdir hostTriple;
+        inherit binname subdir hostTriple profile;
         customLinker = false;
       }).overrideAttrs (self: {
         installPhase = ''
@@ -216,7 +216,7 @@ let
       '' + acc) "" deps;
   });
 in {
-  inherit binaries canisters;
+  inherit binaries wasm-binaries canisters;
   shell = buildIC {
     binname = "";
     subdir = "";
