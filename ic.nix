@@ -134,7 +134,7 @@ let
         pushd "${subdir}" && cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${binname} && popd
       '';
       installPhase = ''
-        install -m 755 -D target/${hostTriple}/release/${binname} $out/bin
+        install -m 755 -D target/${hostTriple}/${profile}/${binname} $out/bin/${binname}
       '';
       # Placeholder, to allow a custom importCargoLock below
       cargoSha256 = lib.fakeHash;
@@ -191,8 +191,9 @@ let
         customLinker = false;
       }).overrideAttrs (self: {
         installPhase = ''
+          mkdir -p $out/bin/
           ${binaryen}/bin/wasm-opt -O2 -o $out/bin/${binname}.wasm \
-            ${deriv}/${hostTriple}/${profile}/${binname}.wasm
+            target/${hostTriple}/${profile}/${binname}.wasm
         '';
       })) wasms;
   in stdenv.mkDerivation (rec {
