@@ -15,7 +15,7 @@ let
       v8 = self.v8_8_x;
       zlib-static =
         (super.pkgsStatic.zlib.override ({ splitStaticOutput = true; })).static;
-      lzma-static = super.pkgsStatic.lzma;
+      lzma-static = super.pkgsStatic.xz;
       libunwind-static = super.pkgsStatic.libunwind;
       openssl-static = super.pkgsStatic.openssl.override ({ static = true; });
       libiconv-static = super.pkgsStatic.libiconvReal.override {
