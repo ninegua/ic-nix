@@ -70,7 +70,7 @@ in rec {
       "build-info-0.0.27" =
         "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
       "cycles-minting-canister-0.9.0" =
-        "sha256-4JDOqUgK74qXC9EbRRHUICBUsJHW+eD3fRy00NmQS/M=";
+        "sha256-BmE2/2WSgNfeIT/ZkFv7Pk8WU2n5FEelAVWVHbHcYtQ=";
     };
   } "dfx-extensions").overrideAttrs (_: {
     IC_ICRC1_ARCHIVE_WASM_PATH =
