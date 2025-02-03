@@ -6,23 +6,24 @@ let
   buildInputs = [ ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
   mkDrv = { doCheck ? true, buildFeatures ? [ ]
-    , dontUseCargoParallelTests ? false, cargoPatches ? [ ]
+    , dontUseCargoParallelTests ? false, cargoPatches ? null
     , cargoBuildFlags ? "", postUnpack ? "", outputHashes ? { } }:
     name:
     let
-      patchedSrc = if cargoPatches != [ ] then
+      patchedSrc = if builtins.isNull cargoPatches then
+        sources."${name}"
+      else
         stdenv.mkDerivation {
           inherit name;
           src = sources."${name}";
+          phases = [ "installPhase" ];
           installPhase = ''
             cp -r $src $out
             chmod -R +rw $out
             cd $out
           '' + lib.strings.concatLines
             (builtins.map (file: "patch -p1 < ${file}") cargoPatches);
-        }
-      else
-        sources."${name}";
+        };
     in (customRustPlatform.buildRustPackage {
       inherit name buildFeatures doCheck dontUseCargoParallelTests
         cargoBuildFlags postUnpack;
@@ -47,7 +48,7 @@ in rec {
 
   vessel = mkDrv { } "vessel";
 
-  ic-repl = mkDrv { outputHashes = { }; } "ic-repl";
+  ic-repl = mkDrv { } "ic-repl";
 
   ic-wasm = mkDrv {
     buildFeatures = [ "exe" ];
