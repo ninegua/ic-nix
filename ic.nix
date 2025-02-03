@@ -168,6 +168,8 @@ let
             "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
         };
       };
+      # not available for wasm32 targets
+      hardeningDisable = [ "zerocallusedregs" ];
     });
 
   mkBinaries = { customLinker, isDev ? false }:
