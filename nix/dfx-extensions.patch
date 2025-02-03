@@ -1,0 +1,260 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index 1a99490..b290a96 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -2407,8 +2407,8 @@ dependencies = [
+  "hex",
+  "http 1.2.0",
+  "http-body 1.0.1",
+- "ic-certification 3.0.2",
+- "ic-transport-types 0.39.2",
++ "ic-certification",
++ "ic-transport-types",
+  "ic-verify-bls-signature",
+  "k256 0.13.4",
+  "leb128",
+@@ -2600,18 +2600,6 @@ dependencies = [
+  "slotmap",
+ ]
+ 
+-[[package]]
+-name = "ic-certification"
+-version = "2.6.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e64ee3d8b6e81b51f245716d3e0badb63c283c00f3c9fb5d5219afc30b5bf821"
+-dependencies = [
+- "hex",
+- "serde",
+- "serde_bytes",
+- "sha2 0.10.8",
+-]
+-
+ [[package]]
+ name = "ic-certification"
+ version = "3.0.2"
+@@ -2857,7 +2845,7 @@ dependencies = [
+  "ic-cdk 0.16.0",
+  "ic-cdk-macros 0.9.0",
+  "ic-cdk-timers",
+- "ic-certification 3.0.2",
++ "ic-certification",
+  "ic-crypto-tree-hash",
+  "ic-icrc1",
+  "ic-icrc1-tokens-u64",
+@@ -3007,7 +2995,7 @@ dependencies = [
+  "ic-sns-root",
+  "ic-sns-swap",
+  "ic-sns-wasm",
+- "pocket-ic 6.0.0 (git+https://github.com/dfinity/ic?rev=760e1f764b56f4f655a09789c245da487eccc5cb)",
++ "pocket-ic",
+  "serde",
+  "tempfile",
+  "thiserror 2.0.10",
+@@ -3712,23 +3700,6 @@ dependencies = [
+  "wsl",
+ ]
+ 
+-[[package]]
+-name = "ic-transport-types"
+-version = "0.37.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "875dc4704780383112e8e8b5063a1b98de114321d0c7d3e7f635dcf360a57fba"
+-dependencies = [
+- "candid",
+- "hex",
+- "ic-certification 2.6.0",
+- "leb128",
+- "serde",
+- "serde_bytes",
+- "serde_repr",
+- "sha2 0.10.8",
+- "thiserror 1.0.69",
+-]
+-
+ [[package]]
+ name = "ic-transport-types"
+ version = "0.39.2"
+@@ -3737,7 +3708,7 @@ checksum = "21e2418868dd5857d2a5bac3f1cb6de1aecf2316d380997ef842aec3d8a79d4e"
+ dependencies = [
+  "candid",
+  "hex",
+- "ic-certification 3.0.2",
++ "ic-certification",
+  "leb128",
+  "serde",
+  "serde_bytes",
+@@ -4679,7 +4650,7 @@ dependencies = [
+  "ic-icrc1-ledger",
+  "ic-sns-cli",
+  "ic-utils 0.39.2",
+- "pocket-ic 6.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
++ "pocket-ic",
+  "reqwest 0.11.27",
+  "rust_decimal",
+  "serde",
+@@ -5110,35 +5081,6 @@ version = "0.3.31"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "953ec861398dccce10c670dfeaf3ec4911ca479e9c02154b3a215178c5f566f2"
+ 
+-[[package]]
+-name = "pocket-ic"
+-version = "6.0.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "124a2380ca6f557adf8b02517cbfd2f564113230e14cda6f6aadd3dfe156293c"
+-dependencies = [
+- "base64 0.13.1",
+- "candid",
+- "hex",
+- "ic-certification 2.6.0",
+- "ic-transport-types 0.37.1",
+- "reqwest 0.12.12",
+- "schemars",
+- "serde",
+- "serde_bytes",
+- "serde_cbor",
+- "serde_json",
+- "sha2 0.10.8",
+- "slog",
+- "strum",
+- "strum_macros",
+- "thiserror 1.0.69",
+- "tokio",
+- "tracing",
+- "tracing-appender",
+- "tracing-subscriber",
+- "wslpath",
+-]
+-
+ [[package]]
+ name = "pocket-ic"
+ version = "6.0.0"
+@@ -5148,8 +5090,8 @@ dependencies = [
+  "base64 0.13.1",
+  "candid",
+  "hex",
+- "ic-certification 3.0.2",
+- "ic-transport-types 0.39.2",
++ "ic-certification",
++ "ic-transport-types",
+  "reqwest 0.12.12",
+  "schemars",
+  "serde",
+diff --git a/Cargo.toml b/Cargo.toml
+index 5192454..dc902f8 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -70,3 +70,6 @@ pr-run-mode = "skip"
+ [profile.dist]
+ inherits = "release"
+ lto = "thin"
++
++[patch.crates-io]
++pocket-ic = { git = "https://github.com/dfinity/ic", rev = "760e1f764b56f4f655a09789c245da487eccc5cb" }
+diff --git a/extensions/nns/Cargo.toml b/extensions/nns/Cargo.toml
+index 0cc3407..cbb1e13 100644
+--- a/extensions/nns/Cargo.toml
++++ b/extensions/nns/Cargo.toml
+@@ -6,7 +6,7 @@ edition.workspace = true
+ license.workspace = true
+ repository.workspace = true
+ publish.workspace = true
+-build = "build.rs"
++
+ 
+ [build-dependencies]
+ dfx-extensions-utils.workspace = true
+diff --git a/extensions/nns/build.rs b/extensions/nns/build.rs
+deleted file mode 100644
+index 0c0a988..0000000
+--- a/extensions/nns/build.rs
++++ /dev/null
+@@ -1,36 +0,0 @@
+-use std::env;
+-use std::path::PathBuf;
+-
+-const REPLICA_REV: &str = "760e1f764b56f4f655a09789c245da487eccc5cb";
+-
+-const BINARY_DEPENDENCIES: &[(&str, &str)] = &[
+-    // (downloaded binary name, renamed binary name)
+-    ("ic-nns-init", "ic-nns-init"),
+-    ("ic-admin", "ic-admin"),
+-    ("sns", "sns-cli"),
+-];
+-
+-fn main() {
+-    // keep copy of the dependency in the root of the project, so that cargo-dist will be able to package it into a tarball
+-    let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
+-    // and also in `target/debug` or `target/release` for development purposes (e.g. cargo run), this is a bit hacky: https://github.com/rust-lang/cargo/issues/9661
+-    let target_dir = PathBuf::from(std::env::var("OUT_DIR").unwrap())
+-        .parent()
+-        .unwrap()
+-        .parent()
+-        .unwrap()
+-        .parent()
+-        .unwrap()
+-        .to_path_buf();
+-    for (binary_name, renamed_binary_name) in BINARY_DEPENDENCIES {
+-        let bin_in_manifest_dir = manifest_dir.join(renamed_binary_name);
+-        let bin_in_target_dir = target_dir.join(renamed_binary_name);
+-        dbg!(&bin_in_manifest_dir, &bin_in_target_dir);
+-        dfx_extensions_utils::download_ic_binary(REPLICA_REV, binary_name, &bin_in_manifest_dir);
+-        if bin_in_target_dir.exists() {
+-            std::fs::remove_file(&bin_in_target_dir).unwrap();
+-        }
+-        std::fs::create_dir_all(&target_dir).unwrap();
+-        std::fs::copy(&bin_in_manifest_dir, &bin_in_target_dir).unwrap();
+-    }
+-}
+diff --git a/extensions/sns/Cargo.toml b/extensions/sns/Cargo.toml
+index 3e7262e..3898ab5 100644
+--- a/extensions/sns/Cargo.toml
++++ b/extensions/sns/Cargo.toml
+@@ -6,7 +6,7 @@ edition.workspace = true
+ license.workspace = true
+ repository.workspace = true
+ publish.workspace = true
+-build = "build.rs"
++
+ 
+ [build-dependencies]
+ dfx-extensions-utils.workspace = true
+diff --git a/extensions/sns/build.rs b/extensions/sns/build.rs
+deleted file mode 100644
+index de3217c..0000000
+--- a/extensions/sns/build.rs
++++ /dev/null
+@@ -1,34 +0,0 @@
+-use std::env;
+-use std::path::PathBuf;
+-
+-const REPLICA_REV: &str = "760e1f764b56f4f655a09789c245da487eccc5cb";
+-
+-const BINARY_DEPENDENCIES: &[(&str, &str)] = &[
+-    // (downloaded binary name, renamed binary name)
+-    ("sns", "sns-cli"),
+-];
+-
+-fn main() {
+-    // keep copy of the dependency in the root of the project, so that cargo-dist will be able to package it into a tarball
+-    let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
+-    // and also in `target/debug` or `target/release` for development purposes (e.g. cargo run), this is a bit hacky: https://github.com/rust-lang/cargo/issues/9661
+-    let target_dir = PathBuf::from(std::env::var("OUT_DIR").unwrap())
+-        .parent()
+-        .unwrap()
+-        .parent()
+-        .unwrap()
+-        .parent()
+-        .unwrap()
+-        .to_path_buf();
+-    for (binary_name, renamed_binary_name) in BINARY_DEPENDENCIES {
+-        let bin_in_manifest_dir = manifest_dir.join(renamed_binary_name);
+-        let bin_in_target_dir = target_dir.join(renamed_binary_name);
+-        dbg!(&bin_in_manifest_dir, &bin_in_target_dir);
+-        dfx_extensions_utils::download_ic_binary(REPLICA_REV, binary_name, &bin_in_manifest_dir);
+-        if bin_in_target_dir.exists() {
+-            std::fs::remove_file(&bin_in_target_dir).unwrap();
+-        }
+-        std::fs::create_dir_all(&target_dir).unwrap();
+-        std::fs::copy(&bin_in_manifest_dir, &bin_in_target_dir).unwrap();
+-    }
+-}
