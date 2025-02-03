@@ -10,16 +10,19 @@ let
     , cargoBuildFlags ? "", postUnpack ? "", outputHashes ? { } }:
     name:
     let
-      patchedSrc = pkgs.stdenv.mkDerivation {
-        inherit name;
-        src = sources."${name}";
-        installPhase = ''
-          cp -r $src $out
-          chmod -R +rw $out
-          cd $out
-        '' + pkgs.lib.strings.concatLines
-          (builtins.map (file: "patch -p1 < ${file}") cargoPatches);
-      };
+      patchedSrc = if cargoPatches != [ ] then
+        stdenv.mkDerivation {
+          inherit name;
+          src = sources."${name}";
+          installPhase = ''
+            cp -r $src $out
+            chmod -R +rw $out
+            cd $out
+          '' + lib.strings.concatLines
+            (builtins.map (file: "patch -p1 < ${file}") cargoPatches);
+        }
+      else
+        sources."${name}";
     in (customRustPlatform.buildRustPackage {
       inherit name buildFeatures doCheck dontUseCargoParallelTests
         cargoBuildFlags postUnpack;
