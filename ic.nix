@@ -65,7 +65,7 @@ let
       CFLAGS =
         [ "-Wno-error=deprecated-copy" "-Wno-error=unused-private-field" ];
     });
-  buildIC = { customLinker, binname, subdir
+  buildIC = { customLinker ? false, binname ? "", subdir ? ""
     , hostTriple ? stdenv.hostPlatform.config, profile ? "release"
     , isDev ? false }:
     let linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
@@ -186,10 +186,8 @@ let
     profile = "canister-release";
     hostTriple = "wasm32-unknown-unknown";
     deps = lib.attrsets.mapAttrs (binname: subdir:
-      (buildIC {
-        inherit binname subdir hostTriple profile;
-        customLinker = false;
-      }).overrideAttrs (self: {
+      (buildIC { inherit binname subdir hostTriple profile; }).overrideAttrs
+      (self: {
         installPhase = ''
           mkdir -p $out/bin/
           ${binaryen}/bin/wasm-opt -O2 -o $out/bin/${binname}.wasm \
@@ -217,10 +215,5 @@ let
   });
 in {
   inherit binaries wasm-binaries canisters;
-  shell = buildIC {
-    binname = "";
-    subdir = "";
-    customLinker = false;
-    isDev = true;
-  };
+  shell = buildIC { isDev = true; };
 }
