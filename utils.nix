@@ -6,27 +6,40 @@ let
   buildInputs = [ ] ++ lib.optionals stdenv.isDarwin
     (with darwin.apple_sdk.frameworks; [ DiskArbitration Foundation ]);
   mkDrv = { doCheck ? true, buildFeatures ? [ ]
-    , dontUseCargoParallelTests ? false, cargoPatches ? [ ]
-    , cargoBuildFlags ? "", postUnpack ? "", cargoLock ? null
-    , cargoSha256 ? null, outputHashes ? { } }:
+    , dontUseCargoParallelTests ? false, cargoPatches ? null
+    , cargoBuildFlags ? "", postUnpack ? "", outputHashes ? { } }:
     name:
-    customRustPlatform.buildRustPackage {
-      inherit name buildFeatures cargoPatches doCheck dontUseCargoParallelTests
-        cargoBuildFlags postUnpack cargoSha256;
-      src = sources."${name}";
+    let
+      patchedSrc = if builtins.isNull cargoPatches then
+        sources."${name}"
+      else
+        stdenv.mkDerivation {
+          inherit name;
+          src = sources."${name}";
+          phases = [ "installPhase" ];
+          installPhase = ''
+            cp -r $src $out
+            chmod -R +rw $out
+            cd $out
+          '' + lib.strings.concatLines
+            (builtins.map (file: "patch -p1 < ${file}") cargoPatches);
+        };
+    in (customRustPlatform.buildRustPackage {
+      inherit name buildFeatures doCheck dontUseCargoParallelTests
+        cargoBuildFlags postUnpack;
+      src = patchedSrc;
       buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
         (with darwin.apple_sdk.frameworks; [ SystemConfiguration Security ]);
       nativeBuildInputs = [ pkg-config cmake perl ];
-      cargoLock = if builtins.isNull cargoLock then
-        (if builtins.isNull cargoSha256 then {
-          lockFile = "${sources."${name}"}/Cargo.lock";
-          inherit outputHashes;
-        } else
-          null)
-      else
-        cargoLock;
+      cargoSha256 = lib.fakeHash;
       RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxx}/lib" ];
-    };
+    }).overrideAttrs (_: {
+      cargoDeps = customRustPlatform.importCargoLock {
+        lockFile = "${patchedSrc}/Cargo.lock";
+        allowBuiltinFetchGit = true;
+        inherit outputHashes;
+      };
+    });
 in rec {
   icx-proxy =
     mkDrv { buildFeatures = [ "skip_body_verification" ]; } "icx-proxy";
@@ -35,7 +48,7 @@ in rec {
 
   vessel = mkDrv { } "vessel";
 
-  ic-repl = mkDrv { outputHashes = { }; } "ic-repl";
+  ic-repl = mkDrv { } "ic-repl";
 
   ic-wasm = mkDrv {
     buildFeatures = [ "exe" ];
@@ -58,19 +71,21 @@ in rec {
   agent-rs = mkDrv { doCheck = false; } "agent-rs";
 
   dfx-extensions = (mkDrv {
+    cargoPatches = [ ./nix/dfx-extensions.patch ];
     doCheck = false;
-    postUnpack = ''
-      pushd $sourceRoot
-      rm extensions/{nns,sns}/build.rs
-      sed -i 's/^build =.*$//' extensions/{nns,sns}/Cargo.toml*
-      popd
-    '';
+    /* postUnpack = ''
+         pushd $sourceRoot
+         rm extensions/{nns,sns}/build.rs
+         sed -i 's/^build =.*$//' extensions/{nns,sns}/Cargo.toml*
+         popd
+       '';
+    */
     cargoBuildFlags = "--bin nns --bin sns";
     outputHashes = {
       "build-info-0.0.27" =
         "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
       "cycles-minting-canister-0.9.0" =
-        "sha256-4JDOqUgK74qXC9EbRRHUICBUsJHW+eD3fRy00NmQS/M=";
+        "sha256-BmE2/2WSgNfeIT/ZkFv7Pk8WU2n5FEelAVWVHbHcYtQ=";
     };
   } "dfx-extensions").overrideAttrs (_: {
     IC_ICRC1_ARCHIVE_WASM_PATH =
