@@ -145,7 +145,9 @@ let
           install -m 755 target/${hostTriple}/release/$name $out/bin
         done
       '';
-      useFetchCargoVendor = true;
+      # Placeholder, to allow a custom importCargoLock below
+      cargoSha256 = lib.fakeHash;
+    }).overrideAttrs (_: {
       cargoDeps = rustPlatform.importCargoLock {
         lockFile = "${sources.ic}/Cargo.lock";
         allowBuiltinFetchGit = true;
@@ -166,7 +168,6 @@ let
             "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
         };
       };
-    }).overrideAttrs (_: {
       # not available for wasm32 targets
       hardeningDisable = [ "zerocallusedregs" ];
     });
