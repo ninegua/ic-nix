@@ -10,34 +10,34 @@ in let pkgs = pkgs-with-overlays;
 in with pkgs;
 let
   rustPlatform = customRustPlatform;
-  bins = [
-    "replica"
-    "ic-starter"
-    "ic-admin"
-    "ic-prep"
-    "ic-replay"
-    "ic-consensus-pool-util"
-    "state-tool"
-    "ic-btc-adapter"
-    "ic-https-outcalls-adapter"
-    "canister_sandbox"
-    "compiler_sandbox"
-    "sandbox_launcher"
-    "ic-nns-init"
-    "ic-state-machine-tests"
-    "sns"
-    "pocket-ic-server"
-  ];
+  bins = {
+    "replica" = "rs/replica/";
+    "ic-starter" = "rs/starter/";
+    "ic-admin" = "rs/registry/admin/";
+    "ic-prep" = "rs/prep/";
+    "ic-replay" = "rs/replay/";
+    "ic-consensus-pool-util" = "rs/artifact_pool/";
+    "state-tool" = "rs/state_tool/";
+    "ic-btc-adapter" = "rs/bitcoin/adapter/";
+    "ic-https-outcalls-adapter" = "rs/https_outcalls/adapter/";
+    "canister_sandbox" = "rs/canister_sandbox/";
+    "compiler_sandbox" = "rs/canister_sandbox/";
+    "sandbox_launcher" = "rs/canister_sandbox/";
+    "ic-nns-init" = "rs/nns/init/";
+    "sns" = "rs/sns/";
+    "pocket-ic-server" = "rs/pocket_ic_server/";
+  };
 
-  wasms = [
-    "registry-canister"
-    "ledger-canister"
-    "genesis-token-canister"
-    "governance-canister"
-    "root-canister"
-    "sns-governance-canister"
-    "lifeline"
-  ];
+  wasms = {
+    "registry-canister" = "rs/registry/canister/";
+    "ledger-canister" = "rs/ledger_suite/icp/ledger/";
+    "genesis-token-canister" = "rs/nns/gtc/";
+    "governance-canister" = "rs/nns/governance/";
+    "sns-governance-canister" = "rs/sns/governance/";
+    "root-canister" = "rs/nns/handlers/root/impl/";
+    "sns-root-canister" = "rs/sns/root/";
+    "lifeline" = "rs/nns/handlers/lifeline/impl/";
+  };
 
   stdenv = llvmPackages.libcxxStdenv;
 
@@ -65,17 +65,13 @@ let
       CFLAGS =
         [ "-Wno-error=deprecated-copy" "-Wno-error=unused-private-field" ];
     });
-
-  buildIC = { customLinker, targets, hostTriple ? stdenv.hostPlatform.config
-    , profile ? "release", isDev ? false }:
-    let
-      linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
-      cargoBuildFlags =
-        lib.strings.concatMapStringsSep " " (t: "--bin " + t) targets;
+  buildIC = { customLinker ? false, binname ? "", subdir ? ""
+    , hostTriple ? stdenv.hostPlatform.config, profile ? "release"
+    , isDev ? false }:
+    let linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
     in (rustPlatform.buildRustPackage rec {
-      inherit profile hostTriple cargoBuildFlags;
-      name = "ic";
-      targetNames = lib.strings.concatStringsSep " " targets;
+      inherit profile hostTriple;
+      name = "ic-" + binname;
       src = sources.ic;
       cargoPatches = [ ];
       unpackPhase = ''
@@ -134,16 +130,11 @@ let
           "-lstatic=lzma"
         ]);
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
-
       buildPhase = ''
-        echo cargo build --frozen --profile ${profile} --target ${hostTriple} $cargoBuildFlags
-        cargo build --frozen --profile ${profile} --target ${hostTriple} $cargoBuildFlags
+        pushd "${subdir}" && cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${binname} && popd
       '';
       installPhase = ''
-        mkdir -p $out/bin
-        for name in ${targetNames}; do
-          install -m 755 target/${hostTriple}/release/$name $out/bin
-        done
+        install -m 755 -D target/${hostTriple}/${profile}/${binname} $out/bin/${binname}
       '';
       # Placeholder, to allow a custom importCargoLock below
       cargoSha256 = lib.fakeHash;
@@ -170,56 +161,59 @@ let
       hardeningDisable = [ "zerocallusedregs" ];
     });
 
-  mkBinaries = { customLinker, isDev ? false }:
-    buildIC {
-      targets = bins ++ wasms;
-      inherit customLinker isDev;
-    };
+  mkBinaries = targets:
+    let
+      deps = lib.attrsets.mapAttrs (binname: subdir:
+        buildIC {
+          inherit binname subdir;
+          customLinker = true;
+        }) targets;
+    in stdenv.mkDerivation (rec {
+      name = "ic-binaries";
+      phases = [ "installPhase" ];
+      installPhase = ''
+        mkdir -p $out/bin
+      '' + lib.attrsets.foldlAttrs (acc: _: deriv:
+        ''
+          install -m 755 ${deriv}/bin/* $out/bin/
+        '' + acc) "" deps;
+    });
 
-  binaries = mkBinaries { customLinker = true; };
+  binaries = mkBinaries bins;
+  wasm-binaries = mkBinaries wasms;
 
-  wasm-names = lib.strings.concatStringsSep " " wasms;
-
-  wasm-binaries = (buildIC {
-    targets = wasms;
-    hostTriple = "wasm32-unknown-unknown";
+  canisters = let
     profile = "canister-release";
-    customLinker = false;
-  }).overrideAttrs (self: rec {
-    name = "ic-wasms";
-    RUSTFLAGS = [ ];
-    installPhase = ''
-      mkdir -p $out/bin
-      for name in ${wasm-names}; do
-        ${binaryen}/bin/wasm-opt -O2 -o $out/bin/$name.wasm \
-          target/${self.hostTriple}/${self.profile}/$name.wasm
-      done
-    '';
-  });
-
-  canisters = stdenv.mkDerivation {
+    hostTriple = "wasm32-unknown-unknown";
+    deps = lib.attrsets.mapAttrs (binname: subdir:
+      (buildIC { inherit binname subdir hostTriple profile; }).overrideAttrs
+      (self: {
+        installPhase = ''
+          mkdir -p $out/bin/
+          ${binaryen}/bin/wasm-opt -O2 -o $out/bin/${binname}.wasm \
+            target/${hostTriple}/${profile}/${binname}.wasm
+        '';
+      })) wasms;
+  in stdenv.mkDerivation (rec {
     name = "ic-canisters";
     phases = [ "installPhase" ];
     installPhase = ''
       mkdir -p $out/share/ic-canisters/
-      install -m 644 ${wasm-binaries}/bin/* $out/share/ic-canisters/
-      for name in ${wasm-names}; do
-        if [ $name = "ledger-canister" ]; then
+    '' + lib.attrsets.foldlAttrs (acc: binname: deriv:
+      ''
+        install -m 755 ${deriv}/bin/* $out/share/ic-canisters/
+        if [ "${binname}" = "ledger-canister" ]; then
           cp ${sources.ic}/rs/ledger_suite/icp/ledger/*.did $out/share/ic-canisters/
-        elif [ $name = "lifeline" ]; then
+        elif [ "${binname}" = "lifeline" ]; then
           true
-        elif [ $name = "root-canister" ]; then
+        elif [ "${binname}" = "root-canister" ]; then
           true
         else
-          ${binaries}/bin/$name > $out/share/ic-canisters/$name.did
+          ${wasm-binaries}/bin/${binname} > $out/share/ic-canisters/${binname}.did
         fi
-      done
-    '';
-  };
+      '' + acc) "" deps;
+  });
 in {
   inherit binaries wasm-binaries canisters;
-  shell = mkBinaries {
-    customLinker = false;
-    isDev = true;
-  };
+  shell = buildIC { isDev = true; };
 }
