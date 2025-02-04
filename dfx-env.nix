@@ -26,7 +26,9 @@ let
   motoko-base = sources.motoko-base;
   # Fix for NixOS 23.05
   autoPatchelfHook = pkgs.autoPatchelfHook.overrideAttrs (_: {
-    propagatedBuildInputs = [ auto-patchelf bintools (stdenv.cc.cc.libgcc or null) ];
+    propagatedBuildInputs =
+      (if pkgs ? auto-patchelf then [ auto-patchelf ] else [ ])
+      ++ [ bintools (stdenv.cc.cc.libgcc or null) ];
   });
   makeDrv = { binaries, canisters, extensions, motoko-base }:
     stdenv.mkDerivation {
