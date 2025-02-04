@@ -63,7 +63,7 @@ Releases are built against the latest main branches of each project at the time.
 
 Supported platforms and nixpkgs:
 
-|                  | 24.05  | unstable |
+|                  | 24.05  | 24.11    |
 | -------------    | ------ | -------- |
 | darwin x86_64    |   ❌   |    ❌    |
 | linux  x86_64    |   ✅︎   |    ✅︎    |
