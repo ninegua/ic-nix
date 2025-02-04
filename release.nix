@@ -21,7 +21,6 @@ let
     "sns-swap-canister.wasm"
     "ic-icrc1-ledger.wasm"
     "ic-icrc1-archive.wasm"
-    "ic-icrc1-index.wasm"
     "ic-icrc1-index-ng.wasm"
     "ic-icp-index-canister.wasm"
   ];
