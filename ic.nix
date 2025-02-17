@@ -149,8 +149,6 @@ let
             "sha256-f9f31CgOJV+XE1MyFJmdHvSGBhvQJLdH7NmKc8J74uE=";
           "icrc1-test-env-0.1.1" =
             "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
-          "jsonrpc-0.12.1" =
-            "sha256-3FtdZlt2PqVDkE5iKWYIp1eiIELsaYlUPRSP2Xp8ejM=";
           "lmdb-rkv-0.14.99" =
             "sha256-5WcUzapkrc/s3wCBNCuUDhtbp17n67rTbm2rx0qtITg=";
           "build-info-0.0.27" =
