@@ -1,10 +1,10 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index 7fe7f60a4..87eaa74a3 100644
+index c01ed8066..75a6bb59e 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
-@@ -711,18 +711,6 @@ version = "1.9.0"
+@@ -727,18 +727,6 @@ version = "1.10.0"
  source = "registry+https://github.com/rust-lang/crates.io-index"
- checksum = "325918d6fe32f23b19878fe4b34794ae41fc19ddbe53b10571a4874d44ffd39b"
+ checksum = "f61dac84819c6588b558454b194026eb1f09c293b9036ae9b159e74e73ab6cf9"
  
 -[[package]]
 -name = "cached"
@@ -21,7 +21,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "cached"
  version = "0.47.0"
-@@ -757,7 +745,7 @@ version = "0.18.1"
+@@ -773,7 +761,7 @@ version = "0.18.1"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "c878c71c2821aa2058722038a59a67583a4240524687c6028571c9b395ded61f"
  dependencies = [
@@ -30,7 +30,7 @@ index 7fe7f60a4..87eaa74a3 100644
   "proc-macro2",
   "quote",
   "syn 1.0.109",
-@@ -824,7 +812,7 @@ dependencies = [
+@@ -840,7 +828,7 @@ dependencies = [
   "candid",
   "codespan-reporting",
   "console",
@@ -39,23 +39,23 @@ index 7fe7f60a4..87eaa74a3 100644
   "ctrlc",
   "dialoguer",
   "fake",
-@@ -897,7 +885,6 @@ dependencies = [
+@@ -913,7 +901,6 @@ dependencies = [
   "iana-time-zone",
   "js-sys",
   "num-traits",
 - "serde",
   "wasm-bindgen",
-  "windows-targets 0.52.6",
+  "windows-targets",
  ]
-@@ -1006,42 +993,6 @@ dependencies = [
-  "windows-sys 0.48.0",
+@@ -1022,42 +1009,6 @@ dependencies = [
+  "windows-sys 0.59.0",
  ]
  
 -[[package]]
 -name = "comparable"
--version = "0.5.4"
+-version = "0.5.5"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
--checksum = "eb513ee8037bf08c5270ecefa48da249f4c58e57a71ccfce0a5b0877d2a20eb2"
+-checksum = "8606f9aa5b5a2df738584b139c79413d0c1545ed0ffd16e76e0944d1de7388c0"
 -dependencies = [
 - "comparable_derive",
 - "comparable_helper",
@@ -65,9 +65,9 @@ index 7fe7f60a4..87eaa74a3 100644
 -
 -[[package]]
 -name = "comparable_derive"
--version = "0.5.4"
+-version = "0.5.5"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
--checksum = "a54b9c40054eb8999c5d1d36fdc90e4e5f7ff0d1d9621706f360b3cbc8beb828"
+-checksum = "41f36ea7383b9a2a9ae0a4e225d8a9c1c3aeadde78c59cdc35bad5c02b4dad01"
 -dependencies = [
 - "convert_case 0.4.0",
 - "proc-macro2",
@@ -77,9 +77,9 @@ index 7fe7f60a4..87eaa74a3 100644
 -
 -[[package]]
 -name = "comparable_helper"
--version = "0.5.4"
+-version = "0.5.5"
 -source = "registry+https://github.com/rust-lang/crates.io-index"
--checksum = "fb5437e327e861081c91270becff184859f706e3e50f5301a9d4dc8eb50752c3"
+-checksum = "71c9b60259084f32c14d32476f3a299b4997e3c186e1473bd972ff8a8c83d1b4"
 -dependencies = [
 - "convert_case 0.6.0",
 - "proc-macro2",
@@ -90,8 +90,8 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "concurrent-queue"
  version = "2.5.0"
-@@ -1064,28 +1015,12 @@ dependencies = [
-  "windows-sys 0.52.0",
+@@ -1080,28 +1031,12 @@ dependencies = [
+  "windows-sys 0.59.0",
  ]
  
 -[[package]]
@@ -119,7 +119,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "convert_case"
  version = "0.6.0"
-@@ -1260,7 +1195,7 @@ version = "3.4.5"
+@@ -1276,7 +1211,7 @@ version = "3.4.5"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "90eeab0aa92f3f9b4e87f258c72b139c207d251f9cbc1080a0086b86a8870dd3"
  dependencies = [
@@ -128,7 +128,7 @@ index 7fe7f60a4..87eaa74a3 100644
   "windows-sys 0.59.0",
  ]
  
-@@ -1277,15 +1212,6 @@ dependencies = [
+@@ -1293,15 +1228,6 @@ dependencies = [
   "zeroize",
  ]
  
@@ -143,9 +143,9 @@ index 7fe7f60a4..87eaa74a3 100644
 -
  [[package]]
  name = "cxx"
- version = "1.0.133"
-@@ -1345,38 +1271,14 @@ dependencies = [
-  "syn 2.0.90",
+ version = "1.0.137"
+@@ -1361,38 +1287,14 @@ dependencies = [
+  "syn 2.0.98",
  ]
  
 -[[package]]
@@ -185,7 +185,7 @@ index 7fe7f60a4..87eaa74a3 100644
  ]
  
  [[package]]
-@@ -1393,24 +1295,13 @@ dependencies = [
+@@ -1409,24 +1311,13 @@ dependencies = [
   "syn 1.0.109",
  ]
  
@@ -211,7 +211,7 @@ index 7fe7f60a4..87eaa74a3 100644
   "quote",
   "syn 1.0.109",
  ]
-@@ -1501,16 +1392,6 @@ dependencies = [
+@@ -1517,16 +1408,6 @@ dependencies = [
   "syn 1.0.109",
  ]
  
@@ -228,7 +228,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "deunicode"
  version = "1.6.0"
-@@ -1557,7 +1438,7 @@ dependencies = [
+@@ -1573,7 +1454,7 @@ dependencies = [
   "ic-asset",
   "ic-cdk",
   "ic-identity-hsm",
@@ -237,7 +237,7 @@ index 7fe7f60a4..87eaa74a3 100644
   "ic-wasm",
   "icrc-ledger-types",
   "idl2json",
-@@ -1632,7 +1513,7 @@ dependencies = [
+@@ -1648,7 +1529,7 @@ dependencies = [
   "humantime-serde",
   "ic-agent",
   "ic-identity-hsm",
@@ -246,7 +246,7 @@ index 7fe7f60a4..87eaa74a3 100644
   "itertools 0.10.5",
   "k256 0.11.6",
   "keyring",
-@@ -1706,12 +1587,6 @@ dependencies = [
+@@ -1722,12 +1603,6 @@ dependencies = [
   "zeroize",
  ]
  
@@ -259,7 +259,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "digest"
  version = "0.9.0"
-@@ -2671,7 +2546,7 @@ dependencies = [
+@@ -2699,7 +2574,7 @@ dependencies = [
   "http 1.2.0",
   "http-body 1.0.1",
   "ic-certification 3.0.2",
@@ -268,7 +268,7 @@ index 7fe7f60a4..87eaa74a3 100644
   "ic-verify-bls-signature",
   "k256 0.13.4",
   "leb128",
-@@ -2711,7 +2586,7 @@ dependencies = [
+@@ -2739,7 +2614,7 @@ dependencies = [
   "globset",
   "hex",
   "ic-agent",
@@ -277,7 +277,7 @@ index 7fe7f60a4..87eaa74a3 100644
   "itertools 0.10.5",
   "json5",
   "mime",
-@@ -2729,50 +2604,6 @@ dependencies = [
+@@ -2757,50 +2632,6 @@ dependencies = [
   "walkdir",
  ]
  
@@ -294,7 +294,7 @@ index 7fe7f60a4..87eaa74a3 100644
 - "crc32fast",
 - "ic-crypto-sha2",
 - "ic-protobuf",
-- "ic-stable-structures",
+- "ic-stable-structures 0.5.6",
 - "phantom_newtype",
 - "prost",
 - "serde",
@@ -328,7 +328,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "ic-cbor"
  version = "2.6.0"
-@@ -2832,17 +2663,6 @@ dependencies = [
+@@ -2860,17 +2691,6 @@ dependencies = [
   "thiserror 1.0.69",
  ]
  
@@ -346,7 +346,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "ic-certification"
  version = "2.6.0"
-@@ -2867,30 +2687,6 @@ dependencies = [
+@@ -2895,30 +2715,6 @@ dependencies = [
   "sha2 0.10.8",
  ]
  
@@ -356,7 +356,7 @@ index 7fe7f60a4..87eaa74a3 100644
 -source = "git+https://github.com/dfinity/response-verification.git?rev=a65009624b61736df6d2dc17756bdbd02a84f599#a65009624b61736df6d2dc17756bdbd02a84f599"
 -dependencies = [
 - "console_error_panic_hook",
-- "getrandom",
+- "getrandom 0.2.15",
 - "ic-crypto-internal-seed",
 - "ic-crypto-internal-threshold-sig-bls12381",
 - "ic-crypto-internal-types",
@@ -377,7 +377,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "ic-certified-assets"
  version = "0.2.5"
-@@ -2902,12 +2698,10 @@ dependencies = [
+@@ -2930,12 +2726,10 @@ dependencies = [
   "hex",
   "ic-cdk",
   "ic-certification 2.6.0",
@@ -390,7 +390,7 @@ index 7fe7f60a4..87eaa74a3 100644
   "itertools 0.10.5",
   "num-traits",
   "percent-encoding",
-@@ -2917,52 +2711,6 @@ dependencies = [
+@@ -2945,52 +2739,6 @@ dependencies = [
   "sha2 0.10.8",
  ]
  
@@ -404,7 +404,7 @@ index 7fe7f60a4..87eaa74a3 100644
 -version = "0.9.0"
 -source = "git+https://github.com/dfinity/ic.git?rev=1290256484f59c3d950c5e9a098e97383b248ad6#1290256484f59c3d950c5e9a098e97383b248ad6"
 -dependencies = [
-- "getrandom",
+- "getrandom 0.2.15",
 -]
 -
 -[[package]]
@@ -443,7 +443,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "ic-crypto-internal-sha2"
  version = "0.9.0"
-@@ -2971,41 +2719,6 @@ dependencies = [
+@@ -2999,41 +2747,6 @@ dependencies = [
   "sha2 0.10.8",
  ]
  
@@ -485,7 +485,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "ic-crypto-internal-types"
  version = "0.9.0"
-@@ -3023,15 +2736,6 @@ dependencies = [
+@@ -3051,15 +2764,6 @@ dependencies = [
   "zeroize",
  ]
  
@@ -501,7 +501,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "ic-crypto-sha2"
  version = "0.9.0"
-@@ -3054,17 +2758,6 @@ dependencies = [
+@@ -3082,17 +2786,6 @@ dependencies = [
   "thiserror 1.0.69",
  ]
  
@@ -519,7 +519,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "ic-frontend-canister"
  version = "0.2.5"
-@@ -3089,25 +2782,6 @@ dependencies = [
+@@ -3117,25 +2810,6 @@ dependencies = [
   "urlencoding",
  ]
  
@@ -545,7 +545,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "ic-identity-hsm"
  version = "0.39.3"
-@@ -3170,62 +2844,6 @@ dependencies = [
+@@ -3198,29 +2872,6 @@ dependencies = [
   "urlencoding",
  ]
  
@@ -572,6 +572,13 @@ index 7fe7f60a4..87eaa74a3 100644
 -source = "registry+https://github.com/rust-lang/crates.io-index"
 -checksum = "95dce29e3ceb0e6da3e78b305d95365530f2efd2146ca18590c0ef3aa6038568"
 -
+ [[package]]
+ name = "ic-stable-structures"
+ version = "0.6.7"
+@@ -3230,39 +2881,6 @@ dependencies = [
+  "ic_principal",
+ ]
+ 
 -[[package]]
 -name = "ic-sys"
 -version = "0.9.0"
@@ -602,14 +609,14 @@ index 7fe7f60a4..87eaa74a3 100644
 - "serde_cbor",
 - "serde_repr",
 - "sha2 0.10.8",
-- "thiserror 2.0.6",
+- "thiserror 2.0.11",
 -]
 -
  [[package]]
  name = "ic-transport-types"
  version = "0.39.3"
-@@ -3243,59 +2861,6 @@ dependencies = [
-  "thiserror 2.0.6",
+@@ -3280,59 +2898,6 @@ dependencies = [
+  "thiserror 2.0.11",
  ]
  
 -[[package]]
@@ -668,7 +675,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "ic-utils"
  version = "0.39.3"
-@@ -3324,9 +2889,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -3361,9 +2926,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "d420b25c0091059f6c3c23a21427a81915e6e0aca3b79e0d403ed767f286a3b9"
  dependencies = [
   "hex",
@@ -680,7 +687,7 @@ index 7fe7f60a4..87eaa74a3 100644
   "rand",
   "sha2 0.10.8",
  ]
-@@ -3356,21 +2921,6 @@ version = "0.21.1"
+@@ -3393,21 +2958,6 @@ version = "0.21.1"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "a54b5297861c651551676e8c43df805dad175cc33bc97dbd992edbbb85dcbcdf"
  
@@ -702,7 +709,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "ic_bls12_381"
  version = "0.10.0"
-@@ -3380,7 +2930,7 @@ dependencies = [
+@@ -3417,7 +2967,7 @@ dependencies = [
   "digest 0.10.7",
   "ff 0.13.0",
   "group 0.13.0",
@@ -711,7 +718,16 @@ index 7fe7f60a4..87eaa74a3 100644
   "rand_core",
   "subtle",
  ]
-@@ -3549,7 +3099,7 @@ dependencies = [
+@@ -3458,7 +3008,7 @@ dependencies = [
+  "candid",
+  "crc32fast",
+  "hex",
+- "ic-stable-structures 0.6.7",
++ "ic-stable-structures",
+  "icrc-cbor",
+  "itertools 0.12.1",
+  "minicbor",
+@@ -3602,7 +3152,7 @@ dependencies = [
   "humantime",
   "ic-agent",
   "ic-asset",
@@ -720,7 +736,7 @@ index 7fe7f60a4..87eaa74a3 100644
   "libflate 1.4.0",
   "num-traits",
   "pem 1.1.1",
-@@ -4076,15 +3626,6 @@ version = "2.7.4"
+@@ -4129,15 +3679,6 @@ version = "2.7.4"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
  
@@ -736,7 +752,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "mime"
  version = "0.3.17"
-@@ -4157,18 +3698,6 @@ version = "1.0.6"
+@@ -4230,18 +3771,6 @@ version = "1.0.6"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "650eef8c711430f1a879fdd01d4745a7deea475becfb90269c06775983bbf086"
  
@@ -755,7 +771,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "nix"
  version = "0.29.0"
-@@ -4430,15 +3959,6 @@ dependencies = [
+@@ -4503,15 +4032,6 @@ dependencies = [
   "sha2 0.10.8",
  ]
  
@@ -771,7 +787,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "pairing"
  version = "0.23.0"
-@@ -4742,7 +4262,7 @@ dependencies = [
+@@ -4815,7 +4335,7 @@ dependencies = [
   "candid",
   "hex",
   "ic-certification 3.0.2",
@@ -780,7 +796,7 @@ index 7fe7f60a4..87eaa74a3 100644
   "reqwest",
   "schemars",
   "serde",
-@@ -4823,16 +4343,6 @@ dependencies = [
+@@ -4896,16 +4416,6 @@ dependencies = [
   "unicode-width 0.1.14",
  ]
  
@@ -797,8 +813,8 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "primeorder"
  version = "0.13.6"
-@@ -5485,12 +4995,6 @@ dependencies = [
-  "syn 2.0.90",
+@@ -5559,12 +5069,6 @@ dependencies = [
+  "syn 2.0.98",
  ]
  
 -[[package]]
@@ -810,7 +826,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "scopeguard"
  version = "1.2.0"
-@@ -5601,17 +5105,6 @@ dependencies = [
+@@ -5675,17 +5179,6 @@ dependencies = [
   "serde_derive",
  ]
  
@@ -828,7 +844,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "serde_bytes"
  version = "0.11.15"
-@@ -5721,28 +5214,6 @@ dependencies = [
+@@ -5795,28 +5288,6 @@ dependencies = [
   "serde",
  ]
  
@@ -857,8 +873,8 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "sha2"
  version = "0.9.9"
-@@ -6252,12 +5723,6 @@ dependencies = [
-  "syn 2.0.90",
+@@ -6326,12 +5797,6 @@ dependencies = [
+  "syn 2.0.98",
  ]
  
 -[[package]]
@@ -870,7 +886,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "thread_local"
  version = "1.1.8"
-@@ -6816,16 +6281,6 @@ dependencies = [
+@@ -6921,16 +6386,6 @@ dependencies = [
   "wasm-bindgen-shared",
  ]
  
@@ -886,8 +902,8 @@ index 7fe7f60a4..87eaa74a3 100644
 -
  [[package]]
  name = "wasm-bindgen-futures"
- version = "0.4.49"
-@@ -7239,12 +6694,6 @@ version = "0.5.5"
+ version = "0.4.50"
+@@ -7290,12 +6745,6 @@ version = "0.5.5"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "1e9df38ee2d2c3c5948ea468a8406ff0db0b29ae1ffde1bcf20ef305bcc95c51"
  
@@ -900,7 +916,7 @@ index 7fe7f60a4..87eaa74a3 100644
  [[package]]
  name = "wslpath"
  version = "0.0.2"
-@@ -7271,12 +6720,6 @@ dependencies = [
+@@ -7322,12 +6771,6 @@ dependencies = [
   "rustix",
  ]
  
@@ -914,7 +930,7 @@ index 7fe7f60a4..87eaa74a3 100644
  name = "yoke"
  version = "0.7.5"
 diff --git a/Cargo.toml b/Cargo.toml
-index 97044c6b8..b41c9d575 100644
+index b56fdd4b5..664cc1cde 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
 @@ -91,3 +91,6 @@ opt-level = 3
@@ -936,7 +952,7 @@ index 8ba4baadf..5daa24157 100644
 -ic-certification-testing = { git = "https://github.com/dfinity/response-verification.git", rev = "a65009624b61736df6d2dc17756bdbd02a84f599" }
  ic-crypto-tree-hash = { git = "https://github.com/dfinity/ic.git", rev = "1290256484f59c3d950c5e9a098e97383b248ad6" }
 diff --git a/src/dfx/src/commands/start.rs b/src/dfx/src/commands/start.rs
-index 3533d857e..bc135de6d 100644
+index dbe03ec14..73be86e0d 100644
 --- a/src/dfx/src/commands/start.rs
 +++ b/src/dfx/src/commands/start.rs
 @@ -245,8 +245,7 @@ pub fn exec(

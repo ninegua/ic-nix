@@ -1,19 +1,19 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index 1a99490..b290a96 100644
+index a50bd57..6047a0d 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
-@@ -2407,8 +2407,8 @@ dependencies = [
+@@ -2455,8 +2455,8 @@ dependencies = [
   "hex",
   "http 1.2.0",
   "http-body 1.0.1",
 - "ic-certification 3.0.2",
-- "ic-transport-types 0.39.2",
+- "ic-transport-types 0.39.3",
 + "ic-certification",
 + "ic-transport-types",
   "ic-verify-bls-signature",
   "k256 0.13.4",
   "leb128",
-@@ -2600,18 +2600,6 @@ dependencies = [
+@@ -2648,18 +2648,6 @@ dependencies = [
   "slotmap",
  ]
  
@@ -32,7 +32,7 @@ index 1a99490..b290a96 100644
  [[package]]
  name = "ic-certification"
  version = "3.0.2"
-@@ -2857,7 +2845,7 @@ dependencies = [
+@@ -3111,7 +3099,7 @@ dependencies = [
   "ic-cdk 0.16.0",
   "ic-cdk-macros 0.9.0",
   "ic-cdk-timers",
@@ -41,16 +41,7 @@ index 1a99490..b290a96 100644
   "ic-crypto-tree-hash",
   "ic-icrc1",
   "ic-icrc1-tokens-u64",
-@@ -3007,7 +2995,7 @@ dependencies = [
-  "ic-sns-root",
-  "ic-sns-swap",
-  "ic-sns-wasm",
-- "pocket-ic 6.0.0 (git+https://github.com/dfinity/ic?rev=760e1f764b56f4f655a09789c245da487eccc5cb)",
-+ "pocket-ic",
-  "serde",
-  "tempfile",
-  "thiserror 2.0.10",
-@@ -3712,23 +3700,6 @@ dependencies = [
+@@ -4023,23 +4011,6 @@ dependencies = [
   "wsl",
  ]
  
@@ -73,8 +64,8 @@ index 1a99490..b290a96 100644
 -
  [[package]]
  name = "ic-transport-types"
- version = "0.39.2"
-@@ -3737,7 +3708,7 @@ checksum = "21e2418868dd5857d2a5bac3f1cb6de1aecf2316d380997ef842aec3d8a79d4e"
+ version = "0.39.3"
+@@ -4048,7 +4019,7 @@ checksum = "979ee7bee5a67150a4c090fb012c93c294a528b4a867bad9a15cc6d01cb4227f"
  dependencies = [
   "candid",
   "hex",
@@ -83,67 +74,66 @@ index 1a99490..b290a96 100644
   "leb128",
   "serde",
   "serde_bytes",
-@@ -4679,7 +4650,7 @@ dependencies = [
+@@ -5063,7 +5034,7 @@ dependencies = [
   "ic-icrc1-ledger",
   "ic-sns-cli",
-  "ic-utils 0.39.2",
+  "ic-utils 0.39.3",
 - "pocket-ic 6.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
-+ "pocket-ic",
++ "pocket-ic 6.0.0 (git+https://github.com/dfinity/ic?rev=760e1f764b56f4f655a09789c245da487eccc5cb)",
   "reqwest 0.11.27",
   "rust_decimal",
   "serde",
-@@ -5110,35 +5081,6 @@ version = "0.3.31"
- source = "registry+https://github.com/rust-lang/crates.io-index"
- checksum = "953ec861398dccce10c670dfeaf3ec4911ca479e9c02154b3a215178c5f566f2"
- 
--[[package]]
--name = "pocket-ic"
--version = "6.0.0"
--source = "registry+https://github.com/rust-lang/crates.io-index"
--checksum = "124a2380ca6f557adf8b02517cbfd2f564113230e14cda6f6aadd3dfe156293c"
--dependencies = [
-- "base64 0.13.1",
-- "candid",
-- "hex",
-- "ic-certification 2.6.0",
-- "ic-transport-types 0.37.1",
-- "reqwest 0.12.12",
-- "schemars",
-- "serde",
-- "serde_bytes",
-- "serde_cbor",
-- "serde_json",
-- "sha2 0.10.8",
-- "slog",
-- "strum",
-- "strum_macros",
-- "thiserror 1.0.69",
-- "tokio",
-- "tracing",
-- "tracing-appender",
-- "tracing-subscriber",
-- "wslpath",
--]
--
+@@ -5548,14 +5519,14 @@ checksum = "953ec861398dccce10c670dfeaf3ec4911ca479e9c02154b3a215178c5f566f2"
  [[package]]
  name = "pocket-ic"
  version = "6.0.0"
-@@ -5148,8 +5090,8 @@ dependencies = [
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "124a2380ca6f557adf8b02517cbfd2f564113230e14cda6f6aadd3dfe156293c"
++source = "git+https://github.com/dfinity/ic?rev=2dd2ccee9679aaf23cf57daaa703c46f7962c29f#2dd2ccee9679aaf23cf57daaa703c46f7962c29f"
+ dependencies = [
++ "backoff",
+  "base64 0.13.1",
+  "candid",
+  "hex",
+- "ic-certification 2.6.0",
+- "ic-transport-types 0.37.1",
++ "ic-certification",
++ "ic-transport-types",
+  "reqwest 0.12.12",
+  "schemars",
+  "serde",
+@@ -5566,7 +5537,7 @@ dependencies = [
+  "slog",
+  "strum",
+  "strum_macros",
+- "thiserror 1.0.69",
++ "thiserror 2.0.11",
+  "tokio",
+  "tracing",
+  "tracing-appender",
+@@ -5577,14 +5548,14 @@ dependencies = [
+ [[package]]
+ name = "pocket-ic"
+ version = "6.0.0"
+-source = "git+https://github.com/dfinity/ic?rev=2dd2ccee9679aaf23cf57daaa703c46f7962c29f#2dd2ccee9679aaf23cf57daaa703c46f7962c29f"
++source = "git+https://github.com/dfinity/ic?rev=760e1f764b56f4f655a09789c245da487eccc5cb#760e1f764b56f4f655a09789c245da487eccc5cb"
+ dependencies = [
+  "backoff",
   "base64 0.13.1",
   "candid",
   "hex",
 - "ic-certification 3.0.2",
-- "ic-transport-types 0.39.2",
+- "ic-transport-types 0.39.3",
 + "ic-certification",
 + "ic-transport-types",
   "reqwest 0.12.12",
   "schemars",
   "serde",
 diff --git a/Cargo.toml b/Cargo.toml
-index 5192454..dc902f8 100644
+index 426db52..1da5263 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -70,3 +70,6 @@ pr-run-mode = "skip"
+@@ -47,3 +47,6 @@ serde_json = "1.0.79"
  [profile.dist]
  inherits = "release"
  lto = "thin"
@@ -151,7 +141,7 @@ index 5192454..dc902f8 100644
 +[patch.crates-io]
 +pocket-ic = { git = "https://github.com/dfinity/ic", rev = "760e1f764b56f4f655a09789c245da487eccc5cb" }
 diff --git a/extensions/nns/Cargo.toml b/extensions/nns/Cargo.toml
-index 0cc3407..cbb1e13 100644
+index 01bb9d9..798a31e 100644
 --- a/extensions/nns/Cargo.toml
 +++ b/extensions/nns/Cargo.toml
 @@ -6,7 +6,7 @@ edition.workspace = true
@@ -206,7 +196,7 @@ index 0c0a988..0000000
 -    }
 -}
 diff --git a/extensions/sns/Cargo.toml b/extensions/sns/Cargo.toml
-index 3e7262e..3898ab5 100644
+index 511e851..2a529ec 100644
 --- a/extensions/sns/Cargo.toml
 +++ b/extensions/sns/Cargo.toml
 @@ -6,7 +6,7 @@ edition.workspace = true
