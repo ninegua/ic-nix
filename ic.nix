@@ -84,7 +84,7 @@ let
       sourceRoot = "${name}";
       nativeBuildInputs =
         [ moc cmake llvmPackages.clang pkg-config python3 rustfmt protobuf ]
-        ++ lib.optionals (!stdenv.isDarwin) [ glibc_multi ];
+        ++ lib.optionals stdenv.hostPlatform.isx86 [ glibc_multi ];
       buildInputs = [
         libusb1
         llvmPackages.libclang.lib
@@ -146,7 +146,7 @@ let
           "cloudflare-0.12.0" =
             "sha256-FxCAK7gUKp/63fdvzI5Ufsy4aur74fO4R/K3YFiUw0Y=";
           "ic-bn-lib-0.1.0" =
-            "sha256-f9f31CgOJV+XE1MyFJmdHvSGBhvQJLdH7NmKc8J74uE=";
+            "sha256-uPQ3zGnrOZ6rjHfx/nrAgNOc57xL5qvfOskFrEghr+I=";
           "icrc1-test-env-0.1.1" =
             "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
           "lmdb-rkv-0.14.99" =
