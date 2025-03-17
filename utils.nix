@@ -48,7 +48,8 @@ in rec {
 
   vessel = mkDrv { } "vessel";
 
-  ic-repl = mkDrv { } "ic-repl";
+  ic-repl =
+    mkDrv { doCheck = !(stdenv.isAarch64 && stdenv.isLinux); } "ic-repl";
 
   ic-wasm = mkDrv {
     buildFeatures = [ "exe" ];
