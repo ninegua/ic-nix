@@ -46,6 +46,7 @@ let
         echo $phases
       '';
       createCachePhase = ''
+        export DFX_CONFIG_ROOT="$PWD"
         dfx_version=$($out/bin/dfx --version|cut -d' ' -f2)
         cache=$out/share/dfx/.cache/dfinity/versions/$dfx_version/
         mkdir -p $cache
