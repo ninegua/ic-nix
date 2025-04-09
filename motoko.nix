@@ -4,7 +4,7 @@ let
     inherit pkgs;
     officialRelease = false;
   };
-  ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_12;
+  ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_14;
   wasm = ocamlPackages.wasm.overrideAttrs (_: {
     version = "1.1.1";
     src = pkgs.fetchFromGitHub {
@@ -13,7 +13,22 @@ let
       rev = "opam-1.1.1";
       sha256 = "1kp72yv4k176i94np0m09g10cviqp2pnpm7jmiq6ik7fmmbknk7c";
     };
+    patchPhase = ''
+      substituteInPlace ./interpreter/Makefile \
+                          --replace-fail "+a-4-27-42-44-45" "+a-4-27-42-44-45-70"
+    '';
   });
+  ocaml-recovery-parser = ocamlPackages.buildDunePackage {
+    pname = "ocaml-recovery-parser";
+    version = "0.3.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "serokell";
+      repo = "ocaml-recovery-parser";
+      rev = "b8207b0c919b84d5096486e59985d0137c0c4d82";
+      sha256 = "1xp88i26vlwjsvnlzbfvk7zx31s18pfwq9w4g2fb2xq7bbnlhm24";
+    };
+    buildInputs = with ocamlPackages; [ menhirSdk menhirLib fix base ];
+  };
 
   rtsBuildInputs = with pkgs;
     [
@@ -51,18 +66,21 @@ let
     ocamlPackages.findlib
     ocamlPackages.menhir
     ocamlPackages.menhirLib
+    ocamlPackages.menhirSdk
     ocamlPackages.cow
     ocamlPackages.num
     ocamlPackages.stdint
-    wasm
     ocamlPackages.vlq
     ocamlPackages.zarith
     ocamlPackages.yojson
     ocamlPackages.ppxlib
     ocamlPackages.ppx_blob
     ocamlPackages.ppx_inline_test
+    ocamlPackages.ppx_expect
     ocamlPackages.bisect_ppx
     ocamlPackages.uucp
+    wasm
+    ocaml-recovery-parser
     obelisk
     perl
     removeReferencesTo
