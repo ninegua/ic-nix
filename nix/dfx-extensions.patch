@@ -1,5 +1,5 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index a50bd57..6047a0d 100644
+index 1636dc2..b164ba4 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
 @@ -2455,8 +2455,8 @@ dependencies = [
@@ -141,7 +141,7 @@ index 426db52..1da5263 100644
 +[patch.crates-io]
 +pocket-ic = { git = "https://github.com/dfinity/ic", rev = "760e1f764b56f4f655a09789c245da487eccc5cb" }
 diff --git a/extensions/nns/Cargo.toml b/extensions/nns/Cargo.toml
-index 01bb9d9..798a31e 100644
+index aec36d6..3c9eaf2 100644
 --- a/extensions/nns/Cargo.toml
 +++ b/extensions/nns/Cargo.toml
 @@ -6,7 +6,7 @@ edition.workspace = true
@@ -155,14 +155,13 @@ index 01bb9d9..798a31e 100644
  dfx-extensions-utils.workspace = true
 diff --git a/extensions/nns/build.rs b/extensions/nns/build.rs
 deleted file mode 100644
-index 0c0a988..0000000
+index 4b2a73e..0000000
 --- a/extensions/nns/build.rs
 +++ /dev/null
-@@ -1,36 +0,0 @@
+@@ -1,39 +0,0 @@
+-use dfx_extensions_utils::dependencies::dfx::NNS_SNS_REPLICA_REV;
 -use std::env;
 -use std::path::PathBuf;
--
--const REPLICA_REV: &str = "760e1f764b56f4f655a09789c245da487eccc5cb";
 -
 -const BINARY_DEPENDENCIES: &[(&str, &str)] = &[
 -    // (downloaded binary name, renamed binary name)
@@ -187,7 +186,11 @@ index 0c0a988..0000000
 -        let bin_in_manifest_dir = manifest_dir.join(renamed_binary_name);
 -        let bin_in_target_dir = target_dir.join(renamed_binary_name);
 -        dbg!(&bin_in_manifest_dir, &bin_in_target_dir);
--        dfx_extensions_utils::download_ic_binary(REPLICA_REV, binary_name, &bin_in_manifest_dir);
+-        dfx_extensions_utils::download_ic_binary(
+-            NNS_SNS_REPLICA_REV,
+-            binary_name,
+-            &bin_in_manifest_dir,
+-        );
 -        if bin_in_target_dir.exists() {
 -            std::fs::remove_file(&bin_in_target_dir).unwrap();
 -        }
@@ -196,7 +199,7 @@ index 0c0a988..0000000
 -    }
 -}
 diff --git a/extensions/sns/Cargo.toml b/extensions/sns/Cargo.toml
-index 511e851..2a529ec 100644
+index 9c48490..8426e04 100644
 --- a/extensions/sns/Cargo.toml
 +++ b/extensions/sns/Cargo.toml
 @@ -6,7 +6,7 @@ edition.workspace = true
@@ -210,14 +213,13 @@ index 511e851..2a529ec 100644
  dfx-extensions-utils.workspace = true
 diff --git a/extensions/sns/build.rs b/extensions/sns/build.rs
 deleted file mode 100644
-index de3217c..0000000
+index 01870ab..0000000
 --- a/extensions/sns/build.rs
 +++ /dev/null
-@@ -1,34 +0,0 @@
+@@ -1,37 +0,0 @@
+-use dfx_extensions_utils::dependencies::dfx::NNS_SNS_REPLICA_REV;
 -use std::env;
 -use std::path::PathBuf;
--
--const REPLICA_REV: &str = "760e1f764b56f4f655a09789c245da487eccc5cb";
 -
 -const BINARY_DEPENDENCIES: &[(&str, &str)] = &[
 -    // (downloaded binary name, renamed binary name)
@@ -240,7 +242,11 @@ index de3217c..0000000
 -        let bin_in_manifest_dir = manifest_dir.join(renamed_binary_name);
 -        let bin_in_target_dir = target_dir.join(renamed_binary_name);
 -        dbg!(&bin_in_manifest_dir, &bin_in_target_dir);
--        dfx_extensions_utils::download_ic_binary(REPLICA_REV, binary_name, &bin_in_manifest_dir);
+-        dfx_extensions_utils::download_ic_binary(
+-            NNS_SNS_REPLICA_REV,
+-            binary_name,
+-            &bin_in_manifest_dir,
+-        );
 -        if bin_in_target_dir.exists() {
 -            std::fs::remove_file(&bin_in_target_dir).unwrap();
 -        }

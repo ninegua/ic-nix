@@ -2,7 +2,7 @@
 let
   pkgs_with_overlay = pkgs.appendOverlays ([
     (import (builtins.fetchTarball
-      "https://github.com/oxalica/rust-overlay/archive/master.tar.gz"))
+      "https://github.com/oxalica/rust-overlay/archive/refs/tags/snapshot/2025-01-11.tar.gz"))
     (self: super: {
       rust-stable = self.rust-bin.stable.latest.default.override {
         targets = [ "wasm32-unknown-unknown" ];

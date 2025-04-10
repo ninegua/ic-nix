@@ -1,5 +1,5 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index c01ed8066..75a6bb59e 100644
+index 6149e9b5..0eed8723 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
 @@ -727,18 +727,6 @@ version = "1.10.0"
@@ -228,7 +228,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "deunicode"
  version = "1.6.0"
-@@ -1573,7 +1454,7 @@ dependencies = [
+@@ -1575,7 +1456,7 @@ dependencies = [
   "ic-asset",
   "ic-cdk",
   "ic-identity-hsm",
@@ -237,7 +237,7 @@ index c01ed8066..75a6bb59e 100644
   "ic-wasm",
   "icrc-ledger-types",
   "idl2json",
-@@ -1648,7 +1529,7 @@ dependencies = [
+@@ -1652,7 +1533,7 @@ dependencies = [
   "humantime-serde",
   "ic-agent",
   "ic-identity-hsm",
@@ -246,7 +246,7 @@ index c01ed8066..75a6bb59e 100644
   "itertools 0.10.5",
   "k256 0.11.6",
   "keyring",
-@@ -1722,12 +1603,6 @@ dependencies = [
+@@ -1726,12 +1607,6 @@ dependencies = [
   "zeroize",
  ]
  
@@ -259,16 +259,16 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "digest"
  version = "0.9.0"
-@@ -2699,7 +2574,7 @@ dependencies = [
+@@ -2714,7 +2589,7 @@ dependencies = [
   "http 1.2.0",
   "http-body 1.0.1",
   "ic-certification 3.0.2",
-- "ic-transport-types 0.39.3 (git+https://github.com/dfinity/agent-rs?rev=9ebf6314ce2fcb36772c7d81d6d414b4628d6101)",
+- "ic-transport-types 0.39.3 (git+https://github.com/dfinity/agent-rs?rev=7752c33016f708fb84b56ff99d91a7c380a8b550)",
 + "ic-transport-types",
   "ic-verify-bls-signature",
   "k256 0.13.4",
   "leb128",
-@@ -2739,7 +2614,7 @@ dependencies = [
+@@ -2754,7 +2629,7 @@ dependencies = [
   "globset",
   "hex",
   "ic-agent",
@@ -277,7 +277,7 @@ index c01ed8066..75a6bb59e 100644
   "itertools 0.10.5",
   "json5",
   "mime",
-@@ -2757,50 +2632,6 @@ dependencies = [
+@@ -2772,50 +2647,6 @@ dependencies = [
   "walkdir",
  ]
  
@@ -328,7 +328,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "ic-cbor"
  version = "2.6.0"
-@@ -2860,17 +2691,6 @@ dependencies = [
+@@ -2875,17 +2706,6 @@ dependencies = [
   "thiserror 1.0.69",
  ]
  
@@ -346,7 +346,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "ic-certification"
  version = "2.6.0"
-@@ -2895,30 +2715,6 @@ dependencies = [
+@@ -2910,30 +2730,6 @@ dependencies = [
   "sha2 0.10.8",
  ]
  
@@ -377,7 +377,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "ic-certified-assets"
  version = "0.2.5"
-@@ -2930,12 +2726,10 @@ dependencies = [
+@@ -2945,12 +2741,10 @@ dependencies = [
   "hex",
   "ic-cdk",
   "ic-certification 2.6.0",
@@ -390,7 +390,7 @@ index c01ed8066..75a6bb59e 100644
   "itertools 0.10.5",
   "num-traits",
   "percent-encoding",
-@@ -2945,52 +2739,6 @@ dependencies = [
+@@ -2960,52 +2754,6 @@ dependencies = [
   "sha2 0.10.8",
  ]
  
@@ -443,7 +443,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "ic-crypto-internal-sha2"
  version = "0.9.0"
-@@ -2999,41 +2747,6 @@ dependencies = [
+@@ -3014,41 +2762,6 @@ dependencies = [
   "sha2 0.10.8",
  ]
  
@@ -485,7 +485,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "ic-crypto-internal-types"
  version = "0.9.0"
-@@ -3051,15 +2764,6 @@ dependencies = [
+@@ -3066,15 +2779,6 @@ dependencies = [
   "zeroize",
  ]
  
@@ -501,7 +501,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "ic-crypto-sha2"
  version = "0.9.0"
-@@ -3082,17 +2786,6 @@ dependencies = [
+@@ -3097,17 +2801,6 @@ dependencies = [
   "thiserror 1.0.69",
  ]
  
@@ -519,7 +519,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "ic-frontend-canister"
  version = "0.2.5"
-@@ -3117,25 +2810,6 @@ dependencies = [
+@@ -3132,25 +2825,6 @@ dependencies = [
   "urlencoding",
  ]
  
@@ -545,7 +545,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "ic-identity-hsm"
  version = "0.39.3"
-@@ -3198,29 +2872,6 @@ dependencies = [
+@@ -3225,29 +2899,6 @@ dependencies = [
   "urlencoding",
  ]
  
@@ -575,7 +575,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "ic-stable-structures"
  version = "0.6.7"
-@@ -3230,39 +2881,6 @@ dependencies = [
+@@ -3257,39 +2908,6 @@ dependencies = [
   "ic_principal",
  ]
  
@@ -615,7 +615,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "ic-transport-types"
  version = "0.39.3"
-@@ -3280,59 +2898,6 @@ dependencies = [
+@@ -3307,59 +2925,6 @@ dependencies = [
   "thiserror 2.0.11",
  ]
  
@@ -675,7 +675,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "ic-utils"
  version = "0.39.3"
-@@ -3361,9 +2926,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -3388,9 +2953,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "d420b25c0091059f6c3c23a21427a81915e6e0aca3b79e0d403ed767f286a3b9"
  dependencies = [
   "hex",
@@ -687,7 +687,7 @@ index c01ed8066..75a6bb59e 100644
   "rand",
   "sha2 0.10.8",
  ]
-@@ -3393,21 +2958,6 @@ version = "0.21.1"
+@@ -3420,21 +2985,6 @@ version = "0.21.1"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "a54b5297861c651551676e8c43df805dad175cc33bc97dbd992edbbb85dcbcdf"
  
@@ -709,7 +709,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "ic_bls12_381"
  version = "0.10.0"
-@@ -3417,7 +2967,7 @@ dependencies = [
+@@ -3444,7 +2994,7 @@ dependencies = [
   "digest 0.10.7",
   "ff 0.13.0",
   "group 0.13.0",
@@ -718,7 +718,7 @@ index c01ed8066..75a6bb59e 100644
   "rand_core",
   "subtle",
  ]
-@@ -3458,7 +3008,7 @@ dependencies = [
+@@ -3485,7 +3035,7 @@ dependencies = [
   "candid",
   "crc32fast",
   "hex",
@@ -727,7 +727,7 @@ index c01ed8066..75a6bb59e 100644
   "icrc-cbor",
   "itertools 0.12.1",
   "minicbor",
-@@ -3602,7 +3152,7 @@ dependencies = [
+@@ -3629,7 +3179,7 @@ dependencies = [
   "humantime",
   "ic-agent",
   "ic-asset",
@@ -736,7 +736,7 @@ index c01ed8066..75a6bb59e 100644
   "libflate 1.4.0",
   "num-traits",
   "pem 1.1.1",
-@@ -4129,15 +3679,6 @@ version = "2.7.4"
+@@ -4156,15 +3706,6 @@ version = "2.7.4"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
  
@@ -752,7 +752,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "mime"
  version = "0.3.17"
-@@ -4230,18 +3771,6 @@ version = "1.0.6"
+@@ -4257,18 +3798,6 @@ version = "1.0.6"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "650eef8c711430f1a879fdd01d4745a7deea475becfb90269c06775983bbf086"
  
@@ -771,7 +771,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "nix"
  version = "0.29.0"
-@@ -4503,15 +4032,6 @@ dependencies = [
+@@ -4530,15 +4059,6 @@ dependencies = [
   "sha2 0.10.8",
  ]
  
@@ -787,16 +787,16 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "pairing"
  version = "0.23.0"
-@@ -4815,7 +4335,7 @@ dependencies = [
-  "candid",
+@@ -4844,7 +4364,7 @@ dependencies = [
   "hex",
   "ic-certification 3.0.2",
+  "ic-management-canister-types",
 - "ic-transport-types 0.39.3 (registry+https://github.com/rust-lang/crates.io-index)",
 + "ic-transport-types",
   "reqwest",
   "schemars",
   "serde",
-@@ -4896,16 +4416,6 @@ dependencies = [
+@@ -4925,16 +4445,6 @@ dependencies = [
   "unicode-width 0.1.14",
  ]
  
@@ -813,7 +813,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "primeorder"
  version = "0.13.6"
-@@ -5559,12 +5069,6 @@ dependencies = [
+@@ -5572,12 +5082,6 @@ dependencies = [
   "syn 2.0.98",
  ]
  
@@ -826,7 +826,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "scopeguard"
  version = "1.2.0"
-@@ -5675,17 +5179,6 @@ dependencies = [
+@@ -5688,17 +5192,6 @@ dependencies = [
   "serde_derive",
  ]
  
@@ -844,7 +844,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "serde_bytes"
  version = "0.11.15"
-@@ -5795,28 +5288,6 @@ dependencies = [
+@@ -5808,28 +5301,6 @@ dependencies = [
   "serde",
  ]
  
@@ -873,7 +873,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "sha2"
  version = "0.9.9"
-@@ -6326,12 +5797,6 @@ dependencies = [
+@@ -6327,12 +5798,6 @@ dependencies = [
   "syn 2.0.98",
  ]
  
@@ -886,7 +886,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "thread_local"
  version = "1.1.8"
-@@ -6921,16 +6386,6 @@ dependencies = [
+@@ -6919,16 +6384,6 @@ dependencies = [
   "wasm-bindgen-shared",
  ]
  
@@ -903,7 +903,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "wasm-bindgen-futures"
  version = "0.4.50"
-@@ -7290,12 +6745,6 @@ version = "0.5.5"
+@@ -7288,12 +6743,6 @@ version = "0.5.5"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "1e9df38ee2d2c3c5948ea468a8406ff0db0b29ae1ffde1bcf20ef305bcc95c51"
  
@@ -916,7 +916,7 @@ index c01ed8066..75a6bb59e 100644
  [[package]]
  name = "wslpath"
  version = "0.0.2"
-@@ -7322,12 +6771,6 @@ dependencies = [
+@@ -7320,12 +6769,6 @@ dependencies = [
   "rustix",
  ]
  
@@ -930,18 +930,19 @@ index c01ed8066..75a6bb59e 100644
  name = "yoke"
  version = "0.7.5"
 diff --git a/Cargo.toml b/Cargo.toml
-index b56fdd4b5..664cc1cde 100644
+index 01c40298..b4c07460 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -91,3 +91,6 @@ opt-level = 3
+@@ -94,3 +94,7 @@ opt-level = 3
  
  [profile.release.package.ic-frontend-canister]
  opt-level = 'z'
 +
 +[patch.crates-io]
-+ic-transport-types = { git = "https://github.com/dfinity/agent-rs", rev = "9ebf6314ce2fcb36772c7d81d6d414b4628d6101" }
++ic-transport-types = { git = "https://github.com/dfinity/agent-rs", rev = "7752c33016f708fb84b56ff99d91a7c380a8b550" }
++
 diff --git a/src/canisters/frontend/ic-certified-assets/Cargo.toml b/src/canisters/frontend/ic-certified-assets/Cargo.toml
-index 8ba4baadf..5daa24157 100644
+index 8ba4baad..5daa2415 100644
 --- a/src/canisters/frontend/ic-certified-assets/Cargo.toml
 +++ b/src/canisters/frontend/ic-certified-assets/Cargo.toml
 @@ -31,6 +31,4 @@ percent-encoding = "2.3.1"
@@ -952,7 +953,7 @@ index 8ba4baadf..5daa24157 100644
 -ic-certification-testing = { git = "https://github.com/dfinity/response-verification.git", rev = "a65009624b61736df6d2dc17756bdbd02a84f599" }
  ic-crypto-tree-hash = { git = "https://github.com/dfinity/ic.git", rev = "1290256484f59c3d950c5e9a098e97383b248ad6" }
 diff --git a/src/dfx/src/commands/start.rs b/src/dfx/src/commands/start.rs
-index dbe03ec14..73be86e0d 100644
+index d869238c..01a28a2d 100644
 --- a/src/dfx/src/commands/start.rs
 +++ b/src/dfx/src/commands/start.rs
 @@ -245,8 +245,7 @@ pub fn exec(
