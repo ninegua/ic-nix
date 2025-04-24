@@ -179,7 +179,7 @@ in rec {
     };
 
     # Vendor tarball of the RTS
-    rtsDeps = pkgs.rustPlatform.fetchCargoTarball {
+    rtsDeps = pkgs.rustPlatform.fetchCargoVendor {
       name = "motoko-rts-deps";
       src = "${sources.motoko}/rts";
       sourceRoot = "rts/motoko-rts-tests";
