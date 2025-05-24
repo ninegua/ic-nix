@@ -272,7 +272,6 @@ in rec {
   moc = ocaml_exe "moc" [
     "moc"
     "mo-ld"
-    "mo-ide"
     "mo-doc"
     "didc"
     "deser"

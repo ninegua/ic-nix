@@ -144,7 +144,7 @@ let
         allowBuiltinFetchGit = true;
         outputHashes = {
           "cloudflare-0.12.0" =
-            "sha256-FxCAK7gUKp/63fdvzI5Ufsy4aur74fO4R/K3YFiUw0Y=";
+            "sha256-67kQWJFRXZXHx+qwlyLa9NLF09b/4iRWxTLzCniCHZE=";
           "ic-bn-lib-0.1.0" =
             "sha256-QTVRj/6j3g11DEX1NJfuPNu6ck80i7RI8HzCMyVii+M=";
           "icrc1-test-env-0.1.1" =
