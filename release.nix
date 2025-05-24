@@ -52,7 +52,7 @@ in rec {
       cp ${ic-repl}/bin/* $out/bin/
       cp ${ic-wasm}/bin/* $out/bin/
       cp ${candid}/bin/* $out/bin/
-      cp ${cdk-rs}/bin/candid-extractor $out/bin/
+      cp ${candid-extractor}/bin/candid-extractor $out/bin/
       cp ${agent-rs}/bin/* $out/bin/
     '' + pkgs.lib.optionalString pkgs.stdenv.isLinux (''
       for exe in $out/bin/*; do

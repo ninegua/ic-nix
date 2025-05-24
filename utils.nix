@@ -61,13 +61,10 @@ in rec {
     dontUseCargoParallelTests = true;
   } "candid";
 
-  cdk-rs = mkDrv {
+  candid-extractor = mkDrv {
     doCheck = false;
-    outputHashes = {
-      "pocket-ic-6.0.0" = "sha256-LynAIPeMAxkc2O/M0mfdW0z2OuKJPlbOXXhksIodqYQ=";
-    };
-
-  } "cdk-rs";
+    outputHashes = {};
+  } "candid-extractor";
 
   agent-rs = mkDrv { doCheck = false; } "agent-rs";
 

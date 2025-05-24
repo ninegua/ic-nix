@@ -64,10 +64,10 @@
     rev = "f872fba8174cf68879336dbdec583abda869452e";
     sha256 = "0l0wydk3lympp6m8jzhkk57ja4dxl1p8485kzyv9175hxabrlblv";
   };
-  cdk-rs = fetchgit {
-    url = "https://github.com/dfinity/cdk-rs"; # main
-    rev = "65e9c4a966914fd028fe10ff3001fd48971596c4";
-    sha256 = "14v3af7dg7g79p6a452wvxzmgdfp6kmpvz7a7avc0vyc12v95qfz";
+  candid-extractor = fetchgit {
+    url = "https://github.com/dfinity/candid-extractor"; # main
+    rev = "f321226125c6f30a280fe0a5013067de4a1e1847";
+    sha256 = "sha256-dhiV1ks3gdDwognl9KQnJqlkWafxLwULk/GEXsYmrok=";
   };
   agent-rs = fetchgit {
     url = "https://github.com/dfinity/agent-rs"; # main
