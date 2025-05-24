@@ -151,7 +151,7 @@ in rec {
     cargoVendorTools = pkgs.rustPlatform.buildRustPackage rec {
       name = "cargo-vendor-tools";
       src = "${sources.motoko}/rts/${name}/";
-      cargoHash = "sha256-5R4RbX+x+iUBUP5dW7PlN2Qlwn5qf0dRRmnlPh18RRA=";
+      cargoHash = "sha256-E6GTFvmZMjGsVlec7aH3QaizqIET6Dz8Csh0N1jeX+M=";
     };
 
     # Path to vendor-rust-std-deps, provided by cargo-vendor-tools
