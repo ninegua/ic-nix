@@ -32,15 +32,12 @@ let
 
   rtsBuildInputs = with pkgs;
     [
-      # pulls in clang (wrapped) and clang-13 (unwrapped)
       llvmPackages_18.clang
-      # pulls in wasm-ld
-      # llvmPackages_18.lld
       llvmPackages_18.bintools
       rust-nightly
+      wasmtime
       rust-bindgen
       python3
-      emscripten
     ] ++ pkgs.lib.optional pkgs.stdenv.isDarwin [ libiconv ];
 
   llvmEnv = ''
@@ -151,14 +148,15 @@ in rec {
     cargoVendorTools = pkgs.rustPlatform.buildRustPackage rec {
       name = "cargo-vendor-tools";
       src = "${sources.motoko}/rts/${name}/";
-      cargoHash = "sha256-E6GTFvmZMjGsVlec7aH3QaizqIET6Dz8Csh0N1jeX+M=";
+      cargoLock = { lockFile = "${sources.motoko}/rts/${name}/Cargo.lock"; };
+      cargoPatches = [ ./nix/cargo-vendor-tools.patch ];
     };
 
     # Path to vendor-rust-std-deps, provided by cargo-vendor-tools
     vendorRustStdDeps = "${cargoVendorTools}/bin/vendor-rust-std-deps";
 
     # SHA256 of Rust std deps
-    rustStdDepsHash = "sha256-U4BTr1CzFuOMdyLuhw5ry3/u8bkRiPmnMr4pLo3IdOQ=";
+    rustStdDepsHash = "sha256-esKqyfbLrTGdqAmeGMSP0dVVRxfIJql9S3DzdL8TMMg=";
 
     # Vendor directory for Rust std deps
     rustStdDeps = pkgs.stdenvNoCC.mkDerivation {
@@ -179,37 +177,22 @@ in rec {
     };
 
     # Vendor tarball of the RTS
-    rtsDeps = pkgs.rustPlatform.fetchCargoTarball {
-      name = "motoko-rts-deps";
-      src = "${sources.motoko}/rts";
-      sourceRoot = "rts/motoko-rts-tests";
-      sha256 = "sha256-prLZVOWV3BFb8/nKHyqZw8neJyBu1gs5d0D56DsDV2o=";
-      copyLockfile = true;
-    };
-
-    # Unpacked RTS deps
-    rtsDepsUnpacked = pkgs.stdenvNoCC.mkDerivation {
-      name = rtsDeps.name + "-unpacked";
-      buildCommand = ''
-        tar xf ${rtsDeps}
-        mv *.tar.gz $out
-      '';
+    rtsDeps = pkgs.rustPlatform.importCargoLock {
+      lockFile = "${sources.motoko}/rts/motoko-rts-tests/Cargo.lock";
     };
 
     # All dependencies needed to build the RTS, including Rust std deps, to
     # allow `cargo -Zbuild-std`. (rust-lang/wg-cargo-std-aware#23)
     allDeps = pkgs.symlinkJoin {
       name = "merged-rust-deps";
-      paths = [ rtsDepsUnpacked rustStdDeps ];
+      paths = [ rtsDeps rustStdDeps ];
     };
 
   in pkgs.stdenv.mkDerivation (with pkgs; rec {
     name = "moc-rts";
-
     src = "${sources.motoko}/rts";
-
+    patches = [ ./nix/motoko-rts.patch ];
     nativeBuildInputs = [ makeWrapper removeReferencesTo cacert ];
-
     buildInputs = rtsBuildInputs ++ lib.optional doCheck [ wasmtime ];
 
     preBuild = ''
@@ -269,14 +252,8 @@ in rec {
     allowedRequisites = [ ];
   });
 
-  moc = ocaml_exe "moc" [
-    "moc"
-    "mo-ld"
-    "mo-doc"
-    "didc"
-    "deser"
-    "candid-tests"
-  ] (rts.overrideAttrs (_: { dontCheck = true; }));
+  moc = ocaml_exe "moc" [ "moc" "mo-ld" "mo-doc" "didc" "deser" "candid-tests" ]
+    (rts.overrideAttrs (_: { dontCheck = true; }));
 
-  shell = moc;
+  shell = rts;
 }

@@ -8,8 +8,8 @@ let
         targets = [ "wasm32-unknown-unknown" ];
         extensions = [ "rust-src" ];
       };
-      rust-nightly = self.rust-bin.nightly."2024-07-28".default.override {
-        targets = [ "wasm32-unknown-emscripten" "wasm32-wasi" ];
+      rust-nightly = self.rust-bin.nightly."2024-10-17".default.override {
+        targets = [ "wasm32-wasip1" ];
         extensions = [ "rust-src" ];
       };
       v8 = self.v8_8_x;
