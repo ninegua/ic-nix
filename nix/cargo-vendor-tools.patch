@@ -1,0 +1,13 @@
+diff --git a/src/vendor_rust_std_deps.rs b/src/vendor_rust_std_deps.rs
+index 3c3bf7e78..634ccdd31 100644
+--- a/src/vendor_rust_std_deps.rs
++++ b/src/vendor_rust_std_deps.rs
+@@ -34,7 +34,7 @@ fn main() {
+ 
+     let compiler_cargo_lock_path = format!(
+         "{}/{}",
+-        rust_install_path, "lib/rustlib/src/rust/Cargo.lock"
++        rust_install_path, "lib/rustlib/src/rust/library/Cargo.lock"
+     );
+ 
+     println!("Reading compiler Cargo.lock ...");

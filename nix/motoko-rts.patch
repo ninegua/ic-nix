@@ -1,0 +1,12 @@
+diff --git a/motoko-rts/src/lib.rs b/motoko-rts/src/lib.rs
+index 615c9c318..dddeeacb6 100644
+--- a/motoko-rts/src/lib.rs
++++ b/motoko-rts/src/lib.rs
+@@ -2,6 +2,7 @@
+ 
+ #![no_std]
+ #![feature(
++    arbitrary_self_types_pointers,
+     arbitrary_self_types,
+     core_intrinsics,
+     proc_macro_hygiene,
