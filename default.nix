@@ -34,6 +34,7 @@ in let
         rustc = self.rust-stable;
         cargo = self.rust-stable;
         stdenv = self.llvmPackages.libcxxStdenv;
+        nativeBuildInputs = [ pkgs.lld ]; 
       }) // {
         importCargoLock = super.callPackage
           (if pkgs.lib.versionAtLeast pkgs.lib.version "24.11pre" then
