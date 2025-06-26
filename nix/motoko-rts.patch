@@ -6,7 +6,7 @@ index 615c9c318..dddeeacb6 100644
  
  #![no_std]
  #![feature(
-+    arbitrary_self_types_pointers,
++    unsafe_extern_blocks,
      arbitrary_self_types,
      core_intrinsics,
      proc_macro_hygiene,
