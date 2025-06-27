@@ -149,14 +149,13 @@ in rec {
       name = "cargo-vendor-tools";
       src = "${sources.motoko}/rts/${name}/";
       cargoLock = { lockFile = "${sources.motoko}/rts/${name}/Cargo.lock"; };
-      cargoPatches = [ ./nix/cargo-vendor-tools.patch ];
     };
 
     # Path to vendor-rust-std-deps, provided by cargo-vendor-tools
     vendorRustStdDeps = "${cargoVendorTools}/bin/vendor-rust-std-deps";
 
     # SHA256 of Rust std deps
-    rustStdDepsHash = "sha256-esKqyfbLrTGdqAmeGMSP0dVVRxfIJql9S3DzdL8TMMg=";
+    rustStdDepsHash = "sha256-U4BTr1CzFuOMdyLuhw5ry3/u8bkRiPmnMr4pLo3IdOQ=";
 
     # Vendor directory for Rust std deps
     rustStdDeps = pkgs.stdenvNoCC.mkDerivation {
@@ -192,7 +191,7 @@ in rec {
     name = "moc-rts";
     src = "${sources.motoko}/rts";
     patches = [ ./nix/motoko-rts.patch ];
-    nativeBuildInputs = [ makeWrapper removeReferencesTo cacert ];
+    nativeBuildInputs = [ makeWrapper removeReferencesTo cacert wabt ];
     buildInputs = rtsBuildInputs ++ lib.optional doCheck [ wasmtime ];
 
     preBuild = ''

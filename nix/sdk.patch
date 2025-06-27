@@ -1,5 +1,5 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index f24b01fb..2bbd2c38 100644
+index b57f79a5..186f1401 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
 @@ -727,18 +727,6 @@ version = "1.10.0"
@@ -45,7 +45,7 @@ index f24b01fb..2bbd2c38 100644
   "num-traits",
 - "serde",
   "wasm-bindgen",
-  "windows-targets",
+  "windows-targets 0.52.6",
  ]
 @@ -1022,42 +1009,6 @@ dependencies = [
   "windows-sys 0.59.0",
@@ -259,7 +259,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "digest"
  version = "0.9.0"
-@@ -2754,7 +2629,7 @@ dependencies = [
+@@ -2756,7 +2631,7 @@ dependencies = [
   "globset",
   "hex",
   "ic-agent",
@@ -268,7 +268,7 @@ index f24b01fb..2bbd2c38 100644
   "itertools 0.10.5",
   "json5",
   "mime",
-@@ -2772,50 +2647,6 @@ dependencies = [
+@@ -2774,50 +2649,6 @@ dependencies = [
   "walkdir",
  ]
  
@@ -319,7 +319,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "ic-cbor"
  version = "2.6.0"
-@@ -2875,17 +2706,6 @@ dependencies = [
+@@ -2877,17 +2708,6 @@ dependencies = [
   "thiserror 1.0.69",
  ]
  
@@ -331,14 +331,14 @@ index f24b01fb..2bbd2c38 100644
 - "hex",
 - "serde",
 - "serde_bytes",
-- "sha2 0.10.8",
+- "sha2 0.10.9",
 -]
 -
  [[package]]
  name = "ic-certification"
  version = "2.6.0"
-@@ -2910,30 +2730,6 @@ dependencies = [
-  "sha2 0.10.8",
+@@ -2912,30 +2732,6 @@ dependencies = [
+  "sha2 0.10.9",
  ]
  
 -[[package]]
@@ -368,7 +368,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "ic-certified-assets"
  version = "0.2.5"
-@@ -2945,12 +2741,10 @@ dependencies = [
+@@ -2947,12 +2743,10 @@ dependencies = [
   "hex",
   "ic-cdk",
   "ic-certification 2.6.0",
@@ -381,8 +381,8 @@ index f24b01fb..2bbd2c38 100644
   "itertools 0.10.5",
   "num-traits",
   "percent-encoding",
-@@ -2960,52 +2754,6 @@ dependencies = [
-  "sha2 0.10.8",
+@@ -2962,52 +2756,6 @@ dependencies = [
+  "sha2 0.10.9",
  ]
  
 -[[package]]
@@ -434,8 +434,8 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "ic-crypto-internal-sha2"
  version = "0.9.0"
-@@ -3014,41 +2762,6 @@ dependencies = [
-  "sha2 0.10.8",
+@@ -3016,41 +2764,6 @@ dependencies = [
+  "sha2 0.10.9",
  ]
  
 -[[package]]
@@ -476,7 +476,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "ic-crypto-internal-types"
  version = "0.9.0"
-@@ -3066,15 +2779,6 @@ dependencies = [
+@@ -3068,15 +2781,6 @@ dependencies = [
   "zeroize",
  ]
  
@@ -492,7 +492,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "ic-crypto-sha2"
  version = "0.9.0"
-@@ -3097,17 +2801,6 @@ dependencies = [
+@@ -3099,17 +2803,6 @@ dependencies = [
   "thiserror 1.0.69",
  ]
  
@@ -510,7 +510,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "ic-frontend-canister"
  version = "0.2.5"
-@@ -3132,25 +2825,6 @@ dependencies = [
+@@ -3134,25 +2827,6 @@ dependencies = [
   "urlencoding",
  ]
  
@@ -536,7 +536,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "ic-identity-hsm"
  version = "0.40.1"
-@@ -3225,29 +2899,6 @@ dependencies = [
+@@ -3227,29 +2901,6 @@ dependencies = [
   "urlencoding",
  ]
  
@@ -554,7 +554,7 @@ index f24b01fb..2bbd2c38 100644
 - "leb128",
 - "serde",
 - "serde_cbor",
-- "sha2 0.10.8",
+- "sha2 0.10.9",
 -]
 -
 -[[package]]
@@ -566,7 +566,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "ic-stable-structures"
  version = "0.6.7"
-@@ -3257,26 +2908,10 @@ dependencies = [
+@@ -3259,21 +2910,6 @@ dependencies = [
   "ic_principal",
  ]
  
@@ -587,14 +587,8 @@ index f24b01fb..2bbd2c38 100644
 -
  [[package]]
  name = "ic-transport-types"
- version = "0.39.3"
--source = "registry+https://github.com/rust-lang/crates.io-index"
--checksum = "979ee7bee5a67150a4c090fb012c93c294a528b4a867bad9a15cc6d01cb4227f"
-+source = "git+https://github.com/dfinity/agent-rs?rev=9ebf6314ce2fcb36772c7d81d6d414b4628d6101#9ebf6314ce2fcb36772c7d81d6d414b4628d6101"
- dependencies = [
-  "candid",
-  "hex",
-@@ -3308,59 +2943,6 @@ dependencies = [
+ version = "0.40.1"
+@@ -3292,59 +2928,6 @@ dependencies = [
   "thiserror 2.0.11",
  ]
  
@@ -654,7 +648,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "ic-utils"
  version = "0.40.1"
-@@ -3390,9 +2972,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+@@ -3374,9 +2957,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "d420b25c0091059f6c3c23a21427a81915e6e0aca3b79e0d403ed767f286a3b9"
  dependencies = [
   "hex",
@@ -664,9 +658,9 @@ index f24b01fb..2bbd2c38 100644
 - "pairing 0.23.0",
 + "pairing",
   "rand",
-  "sha2 0.10.8",
+  "sha2 0.10.9",
  ]
-@@ -3422,21 +3004,6 @@ version = "0.21.1"
+@@ -3406,21 +2989,6 @@ version = "0.21.1"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "a54b5297861c651551676e8c43df805dad175cc33bc97dbd992edbbb85dcbcdf"
  
@@ -688,7 +682,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "ic_bls12_381"
  version = "0.10.0"
-@@ -3446,7 +3013,7 @@ dependencies = [
+@@ -3430,7 +2998,7 @@ dependencies = [
   "digest 0.10.7",
   "ff 0.13.0",
   "group 0.13.0",
@@ -697,7 +691,7 @@ index f24b01fb..2bbd2c38 100644
   "rand_core",
   "subtle",
  ]
-@@ -3487,7 +3054,7 @@ dependencies = [
+@@ -3471,7 +3039,7 @@ dependencies = [
   "candid",
   "crc32fast",
   "hex",
@@ -706,7 +700,7 @@ index f24b01fb..2bbd2c38 100644
   "icrc-cbor",
   "itertools 0.12.1",
   "minicbor",
-@@ -3631,7 +3198,7 @@ dependencies = [
+@@ -3615,7 +3183,7 @@ dependencies = [
   "humantime",
   "ic-agent",
   "ic-asset",
@@ -715,7 +709,7 @@ index f24b01fb..2bbd2c38 100644
   "libflate 1.4.0",
   "num-traits",
   "pem 1.1.1",
-@@ -4158,15 +3725,6 @@ version = "2.7.4"
+@@ -4142,15 +3710,6 @@ version = "2.7.4"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
  
@@ -731,7 +725,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "mime"
  version = "0.3.17"
-@@ -4259,18 +3817,6 @@ version = "1.0.6"
+@@ -4243,18 +3802,6 @@ version = "1.0.6"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "650eef8c711430f1a879fdd01d4745a7deea475becfb90269c06775983bbf086"
  
@@ -750,8 +744,8 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "nix"
  version = "0.29.0"
-@@ -4532,15 +4078,6 @@ dependencies = [
-  "sha2 0.10.8",
+@@ -4516,15 +4063,6 @@ dependencies = [
+  "sha2 0.10.9",
  ]
  
 -[[package]]
@@ -766,7 +760,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "pairing"
  version = "0.23.0"
-@@ -4928,16 +4465,6 @@ dependencies = [
+@@ -4912,16 +4450,6 @@ dependencies = [
   "unicode-width 0.1.14",
  ]
  
@@ -783,7 +777,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "primeorder"
  version = "0.13.6"
-@@ -5575,12 +5102,6 @@ dependencies = [
+@@ -5559,12 +5087,6 @@ dependencies = [
   "syn 2.0.98",
  ]
  
@@ -796,7 +790,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "scopeguard"
  version = "1.2.0"
-@@ -5691,17 +5212,6 @@ dependencies = [
+@@ -5675,17 +5197,6 @@ dependencies = [
   "serde_derive",
  ]
  
@@ -814,7 +808,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "serde_bytes"
  version = "0.11.15"
-@@ -5802,28 +5312,6 @@ dependencies = [
+@@ -5786,28 +5297,6 @@ dependencies = [
   "serde",
  ]
  
@@ -843,7 +837,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "sha2"
  version = "0.9.9"
-@@ -6321,12 +5809,6 @@ dependencies = [
+@@ -6305,12 +5794,6 @@ dependencies = [
   "syn 2.0.98",
  ]
  
@@ -856,7 +850,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "thread_local"
  version = "1.1.8"
-@@ -6885,16 +6367,6 @@ dependencies = [
+@@ -6869,16 +6352,6 @@ dependencies = [
   "wasm-bindgen-shared",
  ]
  
@@ -873,7 +867,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "wasm-bindgen-futures"
  version = "0.4.50"
-@@ -7245,12 +6717,6 @@ version = "0.5.5"
+@@ -7298,12 +6771,6 @@ version = "0.5.5"
  source = "registry+https://github.com/rust-lang/crates.io-index"
  checksum = "1e9df38ee2d2c3c5948ea468a8406ff0db0b29ae1ffde1bcf20ef305bcc95c51"
  
@@ -886,7 +880,7 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "wslpath"
  version = "0.0.2"
-@@ -7277,12 +6743,6 @@ dependencies = [
+@@ -7330,12 +6797,6 @@ dependencies = [
   "rustix",
  ]
  
@@ -899,17 +893,6 @@ index f24b01fb..2bbd2c38 100644
  [[package]]
  name = "yoke"
  version = "0.7.5"
-diff --git a/Cargo.toml b/Cargo.toml
-index 775b96d6..20fae972 100644
---- a/Cargo.toml
-+++ b/Cargo.toml
-@@ -94,3 +94,6 @@ opt-level = 3
- 
- [profile.release.package.ic-frontend-canister]
- opt-level = 'z'
-+
-+[patch.crates-io]
-+ic-transport-types = { git = "https://github.com/dfinity/agent-rs", rev = "9ebf6314ce2fcb36772c7d81d6d414b4628d6101" }
 diff --git a/src/canisters/frontend/ic-certified-assets/Cargo.toml b/src/canisters/frontend/ic-certified-assets/Cargo.toml
 index 8ba4baad..5daa2415 100644
 --- a/src/canisters/frontend/ic-certified-assets/Cargo.toml
@@ -921,16 +904,3 @@ index 8ba4baad..5daa2415 100644
 -ic-response-verification-test-utils = { git = "https://github.com/dfinity/response-verification.git", rev = "a65009624b61736df6d2dc17756bdbd02a84f599" }
 -ic-certification-testing = { git = "https://github.com/dfinity/response-verification.git", rev = "a65009624b61736df6d2dc17756bdbd02a84f599" }
  ic-crypto-tree-hash = { git = "https://github.com/dfinity/ic.git", rev = "1290256484f59c3d950c5e9a098e97383b248ad6" }
-diff --git a/src/dfx/src/commands/start.rs b/src/dfx/src/commands/start.rs
-index b37e36aa..8c393522 100644
---- a/src/dfx/src/commands/start.rs
-+++ b/src/dfx/src/commands/start.rs
-@@ -230,7 +230,7 @@ https://github.com/dfinity/sdk/blob/0.27.0/docs/migration/dfx-0.27.0-migration-g
-     let pocketic_proxy_pid_file_path =
-         empty_writable_path(local_server_descriptor.pocketic_proxy_pid_path())?;
-     let pocketic_proxy_port_file_path =
--        empty_writable_path(local_server_descriptor.pocketic_proxy_port_path())?;
-+        local_server_descriptor.pocketic_proxy_port_path();
-     let webserver_port_path = empty_writable_path(local_server_descriptor.webserver_port_path())?;
- 
-     let previous_config_path = local_server_descriptor.effective_config_path();
