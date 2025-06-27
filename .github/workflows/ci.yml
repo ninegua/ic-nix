@@ -24,8 +24,8 @@ jobs:
           - channel: '24.11'
             channel-darwin: '24.11-darwin'
         exclude:
-          - os: ubuntu-latest
-            channel: 'unstable'
+          - os: macos-14
+            channel: '25.05'
 
     steps:
     - uses: actions/checkout@v3
@@ -68,10 +68,8 @@ jobs:
           - channel: '24.11'
             channel-darwin: '24.11-darwin'
         exclude:
-          - os: ubuntu-latest
-            channel: 'unstable'
-          - project: 'ic-no-shell'
-            channel: 'unstable'
+          - os: macos-14
+            channel: '25.05'
 
 
     steps:
