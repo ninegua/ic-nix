@@ -12,15 +12,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        channel: [ '24.05', '24.11' ]
+        channel: [ '25.05', '24.11' ]
         os: [ ubuntu-latest, macos-14 ]
         include:
           - os: ubuntu-latest
             prefix: nixos
           - os: macos-14
             prefix: nixpkgs
-          - channel: '24.05'
-            channel-darwin: '24.05-darwin'
+          - channel: '25.05'
+            channel-darwin: '25.05-darwin'
           - channel: '24.11'
             channel-darwin: '24.11-darwin'
         exclude:
@@ -54,7 +54,7 @@ jobs:
       fail-fast: false
       matrix:
         project: [ 'motoko', 'ic-no-shell', 'sdk', 'utils' ]
-        channel: [ '24.05', '24.11' ]
+        channel: [ '25.05', '24.11' ]
         os: [ ubuntu-latest, macos-14 ]
         include:
           - os: ubuntu-latest
@@ -63,8 +63,8 @@ jobs:
           - os: macos-14
             prefix: nixpkgs
             name: darwin
-          - channel: '24.05'
-            channel-darwin: '24.05-darwin'
+          - channel: '25.05'
+            channel-darwin: '25.05-darwin'
           - channel: '24.11'
             channel-darwin: '24.11-darwin'
         exclude:
