@@ -43,7 +43,7 @@ let
     # Placeholder, to allow a custom importCargoLock below
     cargoSha256 = lib.fakeHash;
   }).overrideAttrs (_: {
-    cargoDeps = rustPlatform.importCargoLock {
+    cargoDeps = customRustPlatform.importCargoLock {
       allowBuiltinFetchGit = true;
       lockFile = "${src}/Cargo.lock";
     };
