@@ -12,7 +12,6 @@ let
   rustPlatform = customRustPlatform;
   bins = {
     "replica" = "rs/replica/";
-    "ic-starter" = "rs/starter/";
     "ic-admin" = "rs/registry/admin/";
     "ic-prep" = "rs/prep/";
     "ic-replay" = "rs/replay/";
