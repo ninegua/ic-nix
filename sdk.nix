@@ -45,7 +45,7 @@ let
   }).overrideAttrs (_: {
     cargoDeps = rustPlatform.importCargoLock {
       allowBuiltinFetchGit = true;
-      lockFile = "${patchedSrc}/Cargo.lock";
+      lockFile = "${src}/Cargo.lock";
     };
   });
 in {
