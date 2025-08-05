@@ -79,7 +79,6 @@ let
     "dfx"
     "ic-admin"
     "ic-starter"
-    "ic-btc-adapter"
     "ic-https-outcalls-adapter"
     "ic-nns-init"
     "ic-state-machine-tests"

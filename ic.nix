@@ -18,7 +18,6 @@ let
     "ic-replay" = "rs/replay/";
     "ic-consensus-pool-util" = "rs/artifact_pool/";
     "state-tool" = "rs/state_tool/";
-    "ic-btc-adapter" = "rs/bitcoin/adapter/";
     "ic-https-outcalls-adapter" = "rs/https_outcalls/adapter/";
     "canister_sandbox" = "rs/canister_sandbox/";
     "compiler_sandbox" = "rs/canister_sandbox/";
