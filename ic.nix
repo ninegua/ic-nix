@@ -72,7 +72,7 @@ let
       inherit profile hostTriple;
       name = "ic-" + binname;
       src = sources.ic;
-      cargoPatches = [ ];
+      cargoPatches = [ ./nix/ic.patch ];
       unpackPhase = ''
         cp -r $src ${name}
         echo source root is ${sourceRoot}
