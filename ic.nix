@@ -35,7 +35,7 @@ let
     "sns-governance-canister" = "rs/sns/governance/";
     "root-canister" = "rs/nns/handlers/root/impl/";
     "sns-root-canister" = "rs/sns/root/";
-    "lifeline" = "rs/nns/handlers/lifeline/impl/";
+    # "lifeline" = "rs/nns/handlers/lifeline/impl/";
   };
 
   stdenv = llvmPackages.libcxxStdenv;
