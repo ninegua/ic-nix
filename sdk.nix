@@ -1,16 +1,6 @@
 { pkgs, src, customRustPlatform }:
 with pkgs;
 let
-  patchedSrc = pkgs.stdenv.mkDerivation {
-    name = "sdk-src";
-    inherit src;
-    installPhase = ''
-      cp -r $src $out
-      chmod -R +rw $out
-      cd $out
-      patch -p1 < ${./nix/sdk.patch}
-    '';
-  };
   stdenv = llvmPackages.libcxxStdenv;
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
@@ -23,8 +13,7 @@ let
     "https://github.com/dfinity/bitcoin-canister/releases/latest/download/ic-btc-canister.wasm.gz";
   dfx = (customRustPlatform.buildRustPackage {
     name = "dfx";
-    src = patchedSrc;
-    inherit buildInputs;
+    inherit src buildInputs;
     cargoBuildFlags = [ "-p" "dfx" "-p" "icx-asset" ];
     nativeBuildInputs = [ perl pkg-config cmake binaryen python3 ];
     preConfigure = ''
