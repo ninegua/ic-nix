@@ -1,16 +1,6 @@
 { pkgs, src, customRustPlatform }:
 with pkgs;
 let
-  patchedSrc = pkgs.stdenv.mkDerivation {
-    name = "sdk-src";
-    inherit src;
-    installPhase = ''
-      cp -r $src $out
-      chmod -R +rw $out
-      cd $out
-      patch -p1 < ${./nix/sdk.patch}
-    '';
-  };
   stdenv = llvmPackages.libcxxStdenv;
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
@@ -23,8 +13,7 @@ let
     "https://github.com/dfinity/bitcoin-canister/releases/latest/download/ic-btc-canister.wasm.gz";
   dfx = (customRustPlatform.buildRustPackage {
     name = "dfx";
-    src = patchedSrc;
-    inherit buildInputs;
+    inherit src buildInputs;
     cargoBuildFlags = [ "-p" "dfx" "-p" "icx-asset" ];
     nativeBuildInputs = [ perl pkg-config cmake binaryen python3 ];
     preConfigure = ''
@@ -54,9 +43,21 @@ let
     # Placeholder, to allow a custom importCargoLock below
     cargoSha256 = lib.fakeHash;
   }).overrideAttrs (_: {
-    cargoDeps = rustPlatform.importCargoLock {
-      allowBuiltinFetchGit = true;
-      lockFile = "${patchedSrc}/Cargo.lock";
+    cargoDeps = customRustPlatform.importCargoLock {
+      # allowBuiltinFetchGit = true;
+      lockFile = "${src}/Cargo.lock";
+      outputHashes = {
+        "derive_more-0.99.8-alpha.0" =
+          "sha256-tEsfYC9oCAsDjinCsUDgRg3q6ruvayuA1lRmsEP9cys=";
+        "ic-base-types-0.9.0" =
+          "sha256-mM1FekwR0ZEyFTgs8aeN4kReksBSg8qcxK9wIEBv3vo=";
+        "ic-btc-interface-0.1.0" =
+          "sha256-BbFLvf9TKWxqVnzjFPEQZ6Vl45/Vbq7592B3ywqeyI0=";
+        "ic-certification-3.0.3" =
+          "sha256-0VzXwwiz0yoVI9GIKuUDIitso/p8YVawvkKSbxQZ18o=";
+        "pocket-ic-9.0.2" =
+          "sha256-ESgIGvHKGdqKTkcOD0aJuK/jLWgR2B8RkOsY71U1nCU=";
+      };
     };
   });
 in {

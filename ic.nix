@@ -12,13 +12,11 @@ let
   rustPlatform = customRustPlatform;
   bins = {
     "replica" = "rs/replica/";
-    "ic-starter" = "rs/starter/";
     "ic-admin" = "rs/registry/admin/";
     "ic-prep" = "rs/prep/";
     "ic-replay" = "rs/replay/";
     "ic-consensus-pool-util" = "rs/artifact_pool/";
     "state-tool" = "rs/state_tool/";
-    "ic-btc-adapter" = "rs/bitcoin/adapter/";
     "ic-https-outcalls-adapter" = "rs/https_outcalls/adapter/";
     "canister_sandbox" = "rs/canister_sandbox/";
     "compiler_sandbox" = "rs/canister_sandbox/";
@@ -73,7 +71,7 @@ let
       inherit profile hostTriple;
       name = "ic-" + binname;
       src = sources.ic;
-      cargoPatches = [ ];
+      cargoPatches = [ ./nix/ic.patch ];
       unpackPhase = ''
         cp -r $src ${name}
         echo source root is ${sourceRoot}
