@@ -1,8 +1,8 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = "91732387a03c7c82bdaea6f78d7f8321cc8cb559"; # pin
-    sha256 = "0bxk7gaxjpv9inyd51mr8i8ixh4cy1zqfnal204dmcf27m1gmbbl";
+    rev = "ab62c6ec1c3b5f492df53c05bb0bf5f2eb6298ba"; # pin
+    sha256 = "1pf0jl9zz3zb6akqdxs4qgnmmjqbpd18a8iz3k42nnx69ps22vj3";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # master
@@ -21,13 +21,13 @@
   };
   motoko = fetchgit {
     url = "https://github.com/dfinity/motoko"; # master
-    rev = "01a4a625efc8fe5830c13f2ff73a5407e86e32d8";
-    sha256 = "1jgq0v6wl7jv6i19g3g492h39w7kcljb974is0rprzas3k877grf";
+    rev = "13b30bd2728df1e839c75a8d6033ac83ab0e26ed";
+    sha256 = "1c0fwq5kp3biipck58hnnkpmmiibpb7jdc49lqp0s7i503jnd3v0";
   };
   motoko-base = fetchgit {
     url = "https://github.com/dfinity/motoko-base"; # next-moc
-    rev = "437a8d46e18ce3ddb42b33266991c52e637317ee";
-    sha256 = "0hb15f76kfcskydl076w3bxjijvhm33arxnj6xrf6gg1m112qp6r";
+    rev = "646e5f3edb6f400bc71db9991da7a81b8bc175f9";
+    sha256 = "0bks334zf086yyfpyaq3drzb4cwnz1q5fsy8j0hr4cr127yx6bc1";
   };
   musl-wasi = fetchgit {
     url = "https://github.com/WebAssembly/wasi-libc"; # main
@@ -36,8 +36,8 @@
   };
   sdk = fetchgit {
     url = "https://github.com/dfinity/sdk"; # master
-    rev = "c3bd57f80bc4ed7468df1f5631b604fffb846509";
-    sha256 = "19ggj90xwn06d2jj5wmh7x0nxbss6630907vbx5nw3scfg6y7mbs";
+    rev = "81af198571f2bcfe7b20e3a5d0c60efe7cfbd25c";
+    sha256 = "0npvl8nb65m8cgfkgm721ng6dwvp6nxhdv2d65xnw7vcd7s74kgv";
   };
   lmdb = fetchgit {
     url = "https://git.openldap.org/openldap/openldap.git"; # mdb.master
