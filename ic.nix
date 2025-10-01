@@ -148,7 +148,7 @@ let
           "icrc1-test-env-0.1.1" =
             "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
           "lmdb-rkv-0.14.99" =
-            "sha256-5WcUzapkrc/s3wCBNCuUDhtbp17n67rTbm2rx0qtITg=";
+            "sha256-0wbrIN5mQVZMuuzMNndC0i7wlqfpVI4TJWV6zLAN4iM=";
           "build-info-0.0.27" =
             "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
         };

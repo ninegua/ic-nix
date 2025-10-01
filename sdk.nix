@@ -55,8 +55,8 @@ let
           "sha256-BbFLvf9TKWxqVnzjFPEQZ6Vl45/Vbq7592B3ywqeyI0=";
         "ic-certification-3.0.3" =
           "sha256-0VzXwwiz0yoVI9GIKuUDIitso/p8YVawvkKSbxQZ18o=";
-        "pocket-ic-9.0.2" =
-          "sha256-VnS1eVcr6/dkHNNU485K24YZZPMJyrYdx5PT3E3UYCg=";
+        "pocket-ic-10.0.0" =
+          "sha256-xSvE8JCE9LoEtFyJSJoV5tOzbJWuOoM1n4cJqQm6Z6U=";
       };
     };
   });
