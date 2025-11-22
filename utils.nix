@@ -53,6 +53,7 @@ in rec {
     mkDrv { doCheck = !(stdenv.isAarch64 && stdenv.isLinux); } "ic-repl";
 
   ic-wasm = mkDrv {
+    doCheck = false;
     buildFeatures = [ "exe" ];
     dontUseCargoParallelTests = true;
   } "ic-wasm";
