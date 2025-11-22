@@ -100,6 +100,11 @@ let
 
       doCheck = false;
 
+      # The following 2 variables are required by build.rs of ic-admin.
+      STABLE_VERSION = sources.ic.rev;
+      # use a dummy date since it's not easy to get the actal date
+      COMMIT_DATE_ISO_8601_TXT_PATH = "1970-01-01T00:00:00+00:00";
+
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
       ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
       LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
