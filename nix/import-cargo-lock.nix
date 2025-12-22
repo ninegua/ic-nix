@@ -192,6 +192,9 @@ let
         cp -prvL "$tree/" $out
         chmod u+w $out
 
+        # remove lfs
+        find $out/ -name .gitattributes -exec sed -i '/filter=lfs/d;/diff=lfs/d;/merge=lfs/d' {} + || true
+
         if grep -q workspace "$out/Cargo.toml"; then
           chmod u+w "$out/Cargo.toml"
           ${replaceWorkspaceValues} "$out/Cargo.toml" "${tree}/Cargo.toml"
