@@ -92,7 +92,7 @@ let
   # Remove lfs
   removeLFS = tree:
     runCommand "removeLFS" { } ''
-      cp -prvL "$tree/" $out
+      cp -prvL "${tree}/" $out
       chmod -R u+w $out
       find $out/ -name .gitattributes -exec sed -i '/filter=lfs/d;/diff=lfs/d;/merge=lfs/d' {} +
     '';
