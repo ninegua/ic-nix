@@ -89,14 +89,6 @@ let
       value = hash;
     }) outputHashes;
 
-  # Remove lfs
-  removeLFS = tree:
-    runCommand "removeLFS" { } ''
-      cp -prvL "${tree}/" $out
-      chmod -R u+w $out
-      find $out/ -name .gitattributes -exec sed -i '/filter=lfs/d;/diff=lfs/d;/merge=lfs/d' {} +
-    '';
-
   # We can't use the existing fetchCrate function, since it uses a
   # recursive hash of the unpacked crate.
   fetchCrate = pkg: downloadUrl:
@@ -151,7 +143,7 @@ let
           If you use `buildRustPackage`, you can add this attribute to the `cargoLock`
           attribute set.
         '';
-        tree = removeLFS (
+        tree =
           if gitShaOutputHash ? ${gitParts.sha} then
             fetchgit {
               inherit (gitParts) url;
@@ -166,7 +158,7 @@ let
               submodules = true;
             }
           else
-            missingHash);
+            missingHash;
       in runCommand "${pkg.name}-${pkg.version}" {} ''
         tree=${tree}
 
