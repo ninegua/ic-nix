@@ -32,8 +32,8 @@ let
 
   rtsBuildInputs = with pkgs;
     [
-      llvmPackages_18.clang
-      llvmPackages_18.bintools
+      llvmPackages_19.clang
+      llvmPackages_19.bintools
       rust-nightly
       wasmtime
       rust-bindgen
@@ -43,11 +43,11 @@ let
   llvmEnv = ''
     # When compiling to wasm, we want to have more control over the flags,
     # so we do not use the nix-provided wrapper in clang
-    export WASM_CLANG="clang-18"
+    export WASM_CLANG="clang-19"
     export WASM_LD=wasm-ld
     # because we use the unwrapped clang, we have to pass in some flags/paths
     # that otherwise the wrapped clang would take care for us
-    export WASM_CLANG_LIB="${pkgs.llvmPackages_18.clang-unwrapped.lib}"
+    export WASM_CLANG_LIB="${pkgs.llvmPackages_19.clang-unwrapped.lib}"
 
     # When compiling natively, we want to use `clang` (which is a nixpkgs
     # provided wrapper that sets various include paths etc).
@@ -155,7 +155,7 @@ in rec {
     vendorRustStdDeps = "${cargoVendorTools}/bin/vendor-rust-std-deps";
 
     # SHA256 of Rust std deps
-    rustStdDepsHash = "sha256-U4BTr1CzFuOMdyLuhw5ry3/u8bkRiPmnMr4pLo3IdOQ=";
+    rustStdDepsHash = "sha256-kEj5g2v39atLfxuY8dmZ+9qdcJVNE8dwkaOghiLBhj0=";
 
     # Vendor directory for Rust std deps
     rustStdDeps = pkgs.stdenvNoCC.mkDerivation {
