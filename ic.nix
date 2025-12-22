@@ -93,12 +93,19 @@ let
         zlib-static
       ] ++ (if stdenv.isDarwin then
         with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
-      else if isDev then
-        [ libunwind cryptsetup ]
-      else
+      else if isDev then [
+        libunwind
+        cryptsetup
+      ] else
         [ libunwind-static ]);
 
       doCheck = false;
+
+      # Remove any lfs support
+      postPatch = ''
+        find .cargo/registry -name .gitattributes -exec sed -i '/filter=lfs/d; /diff=lfs/d; /merge=lfs/d' {} +
+          find vendor -name .gitattributes -exec sed -i '/lfs/d' {} + 2>/dev/null || true
+      '';
 
       # The following 2 variables are required by build.rs of ic-admin.
       VERSION_TXT_PATH = writeText "version.txt" sources.ic.rev;
