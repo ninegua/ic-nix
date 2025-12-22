@@ -156,7 +156,6 @@ let
               rev = gitParts.sha;
               allRefs = true;
               submodules = true;
-              lfs = false;
             }
           else
             missingHash;
