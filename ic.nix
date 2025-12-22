@@ -94,7 +94,7 @@ let
       ] ++ (if stdenv.isDarwin then
         with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
       else if isDev then
-        [ libunwind ]
+        [ libunwind cryptsetup ]
       else
         [ libunwind-static ]);
 
