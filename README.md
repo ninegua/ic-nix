@@ -3,7 +3,7 @@
 ![ci](https://github.com/ninegua/ic-nix/actions/workflows/ci.yml/badge.svg?branch=main)
 ![release](https://github.com/ninegua/ic-nix/actions/workflows/release.yml/badge.svg)
 
-Unofficial build of common binaries used by developers of the [Internet Computer](https://wiki.internetcomputer.org) (IC) blockchain.
+Unofficial build of common toolkits used by developers of the [Internet Computer](https://wiki.internetcomputer.org) (IC) blockchain.
 
 - Directly built from source.
 - Cross-platform (Linux and Mac OS X, `x86_64` and `aarch64`).
@@ -15,25 +15,26 @@ Unofficial build of common binaries used by developers of the [Internet Computer
 
 If you just need the latest binary pre-built for your platforms, go to [release page](https://github.com/ninegua/ic-nix/releases/latest).
 
-If you are a Nix user, you can immediately launch a canister development with a single `nix-shell` command, with the latest binary release from github:
+If you are a Nix user, you can start a canister development environment with a single `nix-shell` command.
+This will give you immediate access to commands like `dfx`, `moc`, `didc`, `ic-repl`, and many many others.
 ```
 nix-shell https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar.gz
 ```
 
-Additionally if you are interested in developing individual projects included in this package, you can
+Additionally if you are interested in developing individual projects included here, you can
 - build a project by `nix-build -A <project>`, or
 - enter a project's development environment by `nix-shell -A <project>.shell`.
 
 If you are not a Nix user, all you need is a working [nix] installation on your computer to get started.
 
-**Compile-yourself from source**
+**Compile from source**
 
 For those who prefer to compile from source:
 ```
-nix-shell https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar.gz --arg force true
+nix-shell --arg force true https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar.gz
 ```
 
-Pre-compiled Nix derivations are also provided in a binary cache (courtesy of [cachix]) `nix-shell -p cachix --run 'cachix use ninegua'`.
+Pre-compiled Nix derivations are also available if you use Nix binary cache (courtesy of [cachix]) `nix-shell -p cachix --run 'cachix use ninegua'`.
 
 **VSCode/direnv**
 
