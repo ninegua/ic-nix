@@ -93,9 +93,10 @@ let
         zlib-static
       ] ++ (if stdenv.isDarwin then
         with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
-      else if isDev then
-        [ libunwind ]
-      else
+      else if isDev then [
+        libunwind
+        cryptsetup
+      ] else
         [ libunwind-static ]);
 
       doCheck = false;
@@ -148,8 +149,6 @@ let
         outputHashes = {
           "cloudflare-0.12.0" =
             "sha256-67kQWJFRXZXHx+qwlyLa9NLF09b/4iRWxTLzCniCHZE=";
-          "ic-bn-lib-0.1.0" =
-            "sha256-6ABcruF7vuvTQkhGWdxUcSdO+qgOHKY1MhQRADHtJYw=";
           "icrc1-test-env-0.1.1" =
             "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
           "lmdb-rkv-0.14.99" =

@@ -56,7 +56,7 @@ let
         "ic-certification-3.0.3" =
           "sha256-0VzXwwiz0yoVI9GIKuUDIitso/p8YVawvkKSbxQZ18o=";
         "pocket-ic-10.0.0" =
-          "sha256-sNFyelEZrMK1xEBjXr1D97epFYGSww9AHXUFaNSNbNc=";
+          "sha256-u9zZBOnkOnLvKjhmqJzUcdgSoWn21VRrRRHLYvPuyiQ=";
       };
     };
   });
