@@ -3,24 +3,28 @@
 ![ci](https://github.com/ninegua/ic-nix/actions/workflows/ci.yml/badge.svg?branch=main)
 ![release](https://github.com/ninegua/ic-nix/actions/workflows/release.yml/badge.svg)
 
-Unofficial build of common binaries used by developers of the [Internet Computer blockchain](https://wiki.internetcomputer.org).
+Unofficial build of common binaries used by developers of the [Internet Computer](https://wiki.internetcomputer.org) (IC) blockchain.
 
 - Directly built from source.
 - Cross-platform (Linux and Mac OS X, `x86_64` and `aarch64`).
 - Mostly statically linked with no extra runtime dependency other than libc.
-- Weekly release of latest versions at build time.
-- Optionally, a standalone SDK environment for nix-shell.
+- Regular build of latest versions of everything.
+- Battery-loaded SDK environment for IC via nix-shell.
 
 **Usage**
 
-Depending on your objective, you can do any the following:
+If you just need the latest binary pre-built for your platforms, go to [release page](https://github.com/ninegua/ic-nix/releases/latest).
 
-- To build a project, run `nix-build -A <project>`
-- To enter a development environment for a project, run `nix-shell -A <project>.shell`
-- To download the latest pre-built binaries, go to [release page](https://github.com/ninegua/ic-nix/releases/latest).
-- To start canister SDK development with latest build, run `nix-shell https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar.gz`
+If you are a Nix user, you can immediately launch a canister development with a single `nix-shell` command, with the latest binary release from github:
+```
+nix-shell https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar.gz
+```
 
-All you need is a working [nix] installation on your computer.
+Additionally if you are interested in developing individual projects included in this package, you can
+- build a project by `nix-build -A <project>`, or
+- enter a project's development environment by `nix-shell -A <project>.shell`.
+
+If you are not a Nix user, all you need is a working [nix] installation on your computer to get started.
 
 **Compile-yourself from source**
 
@@ -29,7 +33,7 @@ For those who prefer to compile from source:
 nix-shell https://github.com/ninegua/ic-nix/releases/latest/download/dfx-env.tar.gz --arg force true
 ```
 
-You can use pre-compiled derivations by setting a binary cache (courtesy of [cachix]) `nix-shell -p cachix --run 'cachix use ninegua'`.
+Pre-compiled Nix derivations are also provided in a binary cache (courtesy of [cachix]) `nix-shell -p cachix --run 'cachix use ninegua'`.
 
 **VSCode/direnv**
 
