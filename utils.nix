@@ -87,7 +87,7 @@ in rec {
       "build-info-0.0.27" =
         "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
       "cycles-minting-canister-0.9.0" =
-        "sha256-vXbxdA0TevzgqxA3VnL0Nntop7cOEuEh2MuOk3knn2g=";
+        "sha256-Nnm+6eUX3YL8HxVWU78JXkXXLxhlGuEyVjbHOcHrwQ8=";
     };
   } "dfx-extensions").overrideAttrs (_: {
     LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
@@ -95,5 +95,5 @@ in rec {
       "../../ic-icrc1-0.9.0/wasm/ic-icrc1-archive.wasm.gz";
   });
 
-  shell = ic-wasm;
+  shell = dfx-extensions;
 }
