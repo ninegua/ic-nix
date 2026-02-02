@@ -1,210 +1,504 @@
 diff --git a/Cargo.lock b/Cargo.lock
-index 8a106e1..7f3eeac 100644
+index db05dd8..01cf83d 100644
 --- a/Cargo.lock
 +++ b/Cargo.lock
-@@ -3476,7 +3476,7 @@ source = "git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43d
- dependencies = [
-  "ic-btc-replica-types",
-  "ic-config",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-interfaces",
-  "ic-interfaces-adapter-client",
-  "ic-interfaces-registry",
-@@ -3510,7 +3510,7 @@ version = "0.9.0"
- source = "git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0#1bc0a59539613f6ec273a59a172ae43dfabb1ce0"
- dependencies = [
-  "candid",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-interfaces-adapter-client",
-  "ic-protobuf",
+@@ -3309,8 +3309,8 @@ dependencies = [
+  "hyper-util",
+  "ic-adapter-metrics-service",
+  "ic-http-endpoints-async-utils",
+- "prometheus",
+- "protobuf",
++ "prometheus 0.14.0",
++ "protobuf 3.7.2",
+  "slog",
+  "tokio",
+  "tonic",
+@@ -3326,7 +3326,7 @@ dependencies = [
+  "ic-adapter-metrics-service",
+  "ic-logger",
+  "ic-metrics",
+- "protobuf",
++ "protobuf 3.7.2",
+  "slog",
+  "tokio",
+  "tonic",
+@@ -3410,7 +3410,7 @@ dependencies = [
+  "lmdb-rkv",
+  "lmdb-rkv-sys",
+  "nix 0.24.3",
+- "prometheus",
++ "prometheus 0.14.0",
+  "prost 0.13.5",
+  "rocksdb",
   "serde",
-@@ -3606,7 +3606,7 @@ dependencies = [
-  "ic-canonical-state-tree-hash",
-  "ic-certification-version",
-  "ic-crypto-tree-hash",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
+@@ -3432,7 +3432,7 @@ dependencies = [
+  "comparable",
+  "hex",
+  "ic-crypto-sha2",
+- "ic-heap-bytes",
++ "ic-heap-bytes 0.9.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
   "ic-protobuf",
-  "ic-registry-routing-table",
-  "ic-registry-subnet-type",
-@@ -3642,7 +3642,7 @@ dependencies = [
+  "phantom_newtype",
+  "prost 0.13.5",
+@@ -3456,7 +3456,7 @@ dependencies = [
+  "ic-interfaces-adapter-client",
+  "ic-logger",
+  "ic-metrics",
+- "prometheus",
++ "prometheus 0.14.0",
+  "serde",
+  "serde_bytes",
+  "slog",
+@@ -3483,7 +3483,7 @@ dependencies = [
+  "ic-protobuf",
+  "ic-replicated-state",
+  "ic-types",
+- "prometheus",
++ "prometheus 0.14.0",
+  "prost 0.13.5",
+  "slog",
+  "thiserror 2.0.18",
+@@ -3582,7 +3582,7 @@ dependencies = [
+  "nix 0.24.3",
+  "num-traits",
+  "once_cell",
+- "prometheus",
++ "prometheus 0.14.0",
+  "rayon",
+  "regex",
+  "serde",
+@@ -3639,7 +3639,7 @@ dependencies = [
   "candid",
   "ic-cdk-executor",
   "ic-cdk-macros",
 - "ic-error-types 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
-+ "ic-error-types",
-  "ic-management-canister-types",
++ "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
+  "ic-management-canister-types 0.5.0",
   "ic0",
-  "serde",
-@@ -3766,7 +3766,7 @@ dependencies = [
-  "ic-crypto-prng",
-  "ic-crypto-test-utils-canister-threshold-sigs",
-  "ic-crypto-utils-threshold-sig-der",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-https-outcalls-consensus",
-  "ic-interfaces",
-  "ic-interfaces-registry",
-@@ -3854,7 +3854,7 @@ dependencies = [
-  "ic-config",
-  "ic-consensus-utils",
-  "ic-crypto",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-interfaces",
-  "ic-interfaces-registry",
-  "ic-interfaces-state-manager",
-@@ -3899,7 +3899,7 @@ source = "git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43d
- dependencies = [
-  "ic-consensus-utils",
-  "ic-crypto",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-interfaces",
-  "ic-interfaces-registry",
-  "ic-interfaces-state-manager",
-@@ -4712,7 +4712,7 @@ dependencies = [
-  "ic-btc-interface",
-  "ic-config",
-  "ic-cycles-account-manager",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-heap-bytes",
-  "ic-interfaces",
-  "ic-limits",
-@@ -4750,17 +4750,6 @@ dependencies = [
-  "wirm",
- ]
- 
--[[package]]
--name = "ic-error-types"
--version = "0.2.0"
--source = "registry+https://github.com/rust-lang/crates.io-index"
--checksum = "bbeeb3d91aa179d6496d7293becdacedfc413c825cac79fd54ea1906f003ee55"
--dependencies = [
-- "serde",
-- "strum 0.26.3",
-- "strum_macros 0.26.4",
--]
--
- [[package]]
- name = "ic-error-types"
- version = "0.2.0"
-@@ -4789,7 +4778,7 @@ dependencies = [
-  "ic-crypto-utils-canister-threshold-sig",
-  "ic-cycles-account-manager",
-  "ic-embedders",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-heap-bytes",
-  "ic-interfaces",
-  "ic-interfaces-state-manager",
-@@ -4899,7 +4888,7 @@ dependencies = [
-  "ic-crypto-tls-interfaces",
-  "ic-crypto-tree-hash",
-  "ic-crypto-utils-threshold-sig-der",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-http-endpoints-async-utils",
-  "ic-interfaces",
-  "ic-interfaces-registry",
-@@ -4969,7 +4958,7 @@ source = "git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43d
- dependencies = [
-  "hex",
-  "ic-consensus-utils",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-interfaces",
-  "ic-interfaces-adapter-client",
-  "ic-interfaces-registry",
-@@ -5148,7 +5137,7 @@ source = "git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43d
- dependencies = [
-  "ic-base-types",
-  "ic-crypto-interfaces-sig-verification",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-heap-bytes",
-  "ic-interfaces-state-manager",
-  "ic-management-canister-types-private",
-@@ -5290,7 +5279,7 @@ dependencies = [
-  "ic-base-types",
-  "ic-btc-interface",
-  "ic-btc-replica-types",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-protobuf",
-  "ic-utils 0.9.0",
+  "pin-project-lite",
+@@ -3774,7 +3774,7 @@ dependencies = [
+  "ic-replicated-state",
+  "ic-types",
   "num-traits",
-@@ -5312,7 +5301,7 @@ dependencies = [
-  "ic-crypto-utils-threshold-sig-der",
-  "ic-cycles-account-manager",
-  "ic-ed25519",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-interfaces",
-  "ic-interfaces-certified-stream-store",
-  "ic-interfaces-registry",
-@@ -5368,7 +5357,7 @@ dependencies = [
-  "cycles-minting-canister",
-  "ic-agent",
-  "ic-base-types",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-management-canister-types",
-  "ic-nervous-system-clients",
-  "ic-nns-common",
-@@ -5437,7 +5426,7 @@ dependencies = [
-  "dfn_candid",
-  "dfn_core",
-  "ic-base-types",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-ledger-core",
-  "ic-management-canister-types-private",
-  "ic-nervous-system-canisters",
-@@ -5814,7 +5803,7 @@ dependencies = [
-  "bincode",
-  "candid",
-  "erased-serde",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "prost 0.13.5",
+- "prometheus",
++ "prometheus 0.14.0",
+  "rand 0.8.5",
+  "rand_chacha 0.3.1",
+  "rayon",
+@@ -3795,7 +3795,7 @@ dependencies = [
+  "ic-metrics",
+  "ic-replicated-state",
+  "ic-types",
+- "prometheus",
++ "prometheus 0.14.0",
+  "slog",
+  "tokio",
+ ]
+@@ -3832,7 +3832,7 @@ dependencies = [
+  "ic-registry-client-helpers",
+  "ic-replicated-state",
+  "ic-types",
+- "prometheus",
++ "prometheus 0.14.0",
+  "rayon",
+  "slog",
+ ]
+@@ -3857,7 +3857,7 @@ dependencies = [
+  "ic-registry-subnet-features",
+  "ic-replicated-state",
+  "ic-types",
+- "prometheus",
++ "prometheus 0.14.0",
+  "rand 0.8.5",
+  "rayon",
+  "slog",
+@@ -3877,7 +3877,7 @@ dependencies = [
+  "ic-registry-client-helpers",
+  "ic-replicated-state",
+  "ic-types",
+- "prometheus",
++ "prometheus 0.14.0",
+  "rand 0.8.5",
+  "slog",
+ ]
+@@ -3901,7 +3901,7 @@ dependencies = [
+  "ic-replicated-state",
+  "ic-types",
+  "num-traits",
+- "prometheus",
++ "prometheus 0.14.0",
+  "rayon",
+  "slog",
+ ]
+@@ -4183,7 +4183,7 @@ version = "0.9.0"
+ source = "git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a#b291fd30707aeee276cdae62c35b404adcb9f11a"
+ dependencies = [
+  "ic-metrics",
+- "prometheus",
++ "prometheus 0.14.0",
+  "strum 0.26.3",
+  "strum_macros 0.26.4",
+ ]
+@@ -4645,7 +4645,7 @@ dependencies = [
+  "ic-registry-subnet-type",
+  "ic-replicated-state",
+  "ic-types",
+- "prometheus",
++ "prometheus 0.14.0",
   "serde",
-  "serde_json",
-@@ -6026,7 +6015,7 @@ dependencies = [
-  "ic-certification-version",
+  "slog",
+ ]
+@@ -4688,7 +4688,7 @@ dependencies = [
   "ic-config",
-  "ic-crypto-sha2",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
+  "ic-cycles-account-manager",
+  "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
+- "ic-heap-bytes",
++ "ic-heap-bytes 0.9.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
   "ic-interfaces",
   "ic-limits",
   "ic-logger",
-@@ -6495,7 +6484,7 @@ dependencies = [
-  "ic-crypto-utils-threshold-sig-der",
+@@ -4709,7 +4709,7 @@ dependencies = [
+  "memory_tracker",
+  "nix 0.24.3",
+  "num-traits",
+- "prometheus",
++ "prometheus 0.14.0",
+  "rayon",
+  "rustc-demangle",
+  "scopeguard",
+@@ -4727,9 +4727,9 @@ dependencies = [
+ [[package]]
+ name = "ic-error-types"
+ version = "0.2.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bbeeb3d91aa179d6496d7293becdacedfc413c825cac79fd54ea1906f003ee55"
++source = "git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0#1bc0a59539613f6ec273a59a172ae43dfabb1ce0"
+ dependencies = [
++ "ic-heap-bytes 0.9.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
+  "serde",
+  "strum 0.26.3",
+  "strum_macros 0.26.4",
+@@ -4740,7 +4740,7 @@ name = "ic-error-types"
+ version = "0.2.0"
+ source = "git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a#b291fd30707aeee276cdae62c35b404adcb9f11a"
+ dependencies = [
+- "ic-heap-bytes",
++ "ic-heap-bytes 0.9.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
+  "regex-lite",
+  "serde",
+  "strum 0.26.3",
+@@ -4765,7 +4765,7 @@ dependencies = [
   "ic-cycles-account-manager",
-  "ic-ed25519",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-execution-environment",
-  "ic-http-endpoints-public",
-  "ic-https-outcalls-consensus",
-@@ -6782,7 +6771,7 @@ dependencies = [
-  "ic-crypto-internal-types",
+  "ic-embedders",
+  "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
+- "ic-heap-bytes",
++ "ic-heap-bytes 0.9.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
+  "ic-interfaces",
+  "ic-interfaces-state-manager",
+  "ic-limits",
+@@ -4793,7 +4793,7 @@ dependencies = [
+  "num-rational",
+  "num-traits",
+  "phantom_newtype",
+- "prometheus",
++ "prometheus 0.14.0",
+  "rand 0.8.5",
+  "scoped_threadpool",
+  "serde",
+@@ -4807,18 +4807,41 @@ dependencies = [
+  "wasmparser 0.243.0",
+ ]
+ 
++[[package]]
++name = "ic-heap-bytes"
++version = "0.9.0"
++source = "git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0#1bc0a59539613f6ec273a59a172ae43dfabb1ce0"
++dependencies = [
++ "candid",
++ "ic-heap-bytes-derive 0.9.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
++ "paste",
++ "prometheus 0.13.4",
++ "tempfile",
++]
++
+ [[package]]
+ name = "ic-heap-bytes"
+ version = "0.9.0"
+ source = "git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a#b291fd30707aeee276cdae62c35b404adcb9f11a"
+ dependencies = [
+  "candid",
+- "ic-heap-bytes-derive",
++ "ic-heap-bytes-derive 0.9.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
+  "paste",
+- "prometheus",
++ "prometheus 0.14.0",
+  "tempfile",
+ ]
+ 
++[[package]]
++name = "ic-heap-bytes-derive"
++version = "0.9.0"
++source = "git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0#1bc0a59539613f6ec273a59a172ae43dfabb1ce0"
++dependencies = [
++ "darling 0.20.11",
++ "proc-macro2",
++ "quote",
++ "syn 2.0.114",
++]
++
+ [[package]]
+ name = "ic-heap-bytes-derive"
+ version = "0.9.0"
+@@ -4888,7 +4911,7 @@ dependencies = [
+  "ic-utils 0.9.0",
+  "ic-validator",
+  "inferno 0.12.3",
+- "prometheus",
++ "prometheus 0.14.0",
+  "prost 0.13.5",
+  "serde",
+  "serde_cbor",
+@@ -4951,7 +4974,7 @@ dependencies = [
+  "ic-replicated-state",
+  "ic-types",
+  "ic-utils 0.9.0",
+- "prometheus",
++ "prometheus 0.14.0",
+  "rand 0.8.5",
+  "slog",
+ ]
+@@ -5106,7 +5129,7 @@ dependencies = [
+  "ic-replicated-state",
+  "ic-types",
+  "ic-validator",
+- "prometheus",
++ "prometheus 0.14.0",
+  "slog",
+ ]
+ 
+@@ -5118,7 +5141,7 @@ dependencies = [
+  "ic-base-types",
+  "ic-crypto-interfaces-sig-verification",
+  "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
+- "ic-heap-bytes",
++ "ic-heap-bytes 0.9.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
+  "ic-management-canister-types-private",
+  "ic-protobuf",
+  "ic-registry-provisional-whitelist",
+@@ -5308,7 +5331,7 @@ dependencies = [
+  "ic-replicated-state",
+  "ic-types",
+  "ic-utils-thread",
+- "prometheus",
++ "prometheus 0.14.0",
+  "slog",
+  "tracing",
+ ]
+@@ -5322,8 +5345,8 @@ dependencies = [
+  "ic-adapter-metrics-client",
+  "libc",
+  "parking_lot",
+- "procfs",
+- "prometheus",
++ "procfs 0.17.0",
++ "prometheus 0.14.0",
+  "tokio-metrics",
+ ]
+ 
+@@ -5691,7 +5714,7 @@ dependencies = [
+  "ic-metrics",
+  "ic-registry-client-helpers",
+  "ic-types",
+- "prometheus",
++ "prometheus 0.14.0",
+  "rand 0.8.5",
+  "serde",
+  "serde_cbor",
+@@ -5800,7 +5823,7 @@ dependencies = [
+  "ic-metrics",
+  "ic-replicated-state",
+  "ic-types",
+- "prometheus",
++ "prometheus 0.14.0",
+  "slog",
+ ]
+ 
+@@ -6013,7 +6036,7 @@ dependencies = [
+  "maplit",
+  "nix 0.24.3",
+  "phantom_newtype",
+- "prometheus",
++ "prometheus 0.14.0",
+  "prost 0.13.5",
+  "rand 0.8.5",
+  "rand_chacha 0.3.1",
+@@ -6425,7 +6448,7 @@ dependencies = [
+  "ic-utils-thread",
+  "ic-wasm-types",
+  "libc",
+- "prometheus",
++ "prometheus 0.14.0",
+  "prost 0.13.5",
+  "scoped_threadpool",
+  "slog",
+@@ -6537,7 +6560,7 @@ dependencies = [
+  "ic-wasm-types",
+  "nix 0.24.3",
+  "parking_lot",
+- "prometheus",
++ "prometheus 0.14.0",
+  "prost 0.13.5",
+  "rand 0.8.5",
+  "rand_chacha 0.3.1",
+@@ -6630,7 +6653,7 @@ version = "0.9.0"
+ source = "git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a#b291fd30707aeee276cdae62c35b404adcb9f11a"
+ dependencies = [
+  "ic-metrics",
+- "prometheus",
++ "prometheus 0.14.0",
+ ]
+ 
+ [[package]]
+@@ -6739,7 +6762,7 @@ dependencies = [
   "ic-crypto-sha2",
   "ic-crypto-tree-hash",
-- "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=1bc0a59539613f6ec273a59a172ae43dfabb1ce0)",
-+ "ic-error-types",
-  "ic-heap-bytes",
+  "ic-error-types 0.2.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
+- "ic-heap-bytes",
++ "ic-heap-bytes 0.9.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
   "ic-limits",
   "ic-management-canister-types-private",
+  "ic-protobuf",
+@@ -6811,7 +6834,7 @@ name = "ic-utils-lru-cache"
+ version = "0.9.0"
+ source = "git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a#b291fd30707aeee276cdae62c35b404adcb9f11a"
+ dependencies = [
+- "ic-heap-bytes",
++ "ic-heap-bytes 0.9.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
+  "ic-types",
+  "lru",
+ ]
+@@ -6923,7 +6946,7 @@ version = "0.9.0"
+ source = "git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a#b291fd30707aeee276cdae62c35b404adcb9f11a"
+ dependencies = [
+  "ic-crypto-sha2",
+- "ic-heap-bytes",
++ "ic-heap-bytes 0.9.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
+  "ic-sys",
+  "ic-types",
+  "ic-utils 0.9.0",
+@@ -6976,7 +6999,7 @@ dependencies = [
+  "ic-types",
+  "ic-xnet-hyper",
+  "ic-xnet-uri",
+- "prometheus",
++ "prometheus 0.14.0",
+  "rand 0.8.5",
+  "slog",
+  "thiserror 2.0.18",
+@@ -8550,7 +8573,7 @@ version = "0.9.0"
+ source = "git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a#b291fd30707aeee276cdae62c35b404adcb9f11a"
+ dependencies = [
+  "candid",
+- "ic-heap-bytes",
++ "ic-heap-bytes 0.9.0 (git+https://github.com/dfinity/ic?rev=b291fd30707aeee276cdae62c35b404adcb9f11a)",
+  "num-traits",
+  "serde",
+  "slog",
+@@ -8948,6 +8971,19 @@ dependencies = [
+  "unicode-ident",
+ ]
+ 
++[[package]]
++name = "procfs"
++version = "0.16.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "731e0d9356b0c25f16f33b5be79b1c57b562f141ebfcdb0ad8ac2c13a24293b4"
++dependencies = [
++ "bitflags 2.9.4",
++ "hex",
++ "lazy_static",
++ "procfs-core 0.16.0",
++ "rustix 0.38.44",
++]
++
+ [[package]]
+ name = "procfs"
+ version = "0.17.0"
+@@ -8956,10 +8992,20 @@ checksum = "cc5b72d8145275d844d4b5f6d4e1eef00c8cd889edb6035c21675d1bb1f45c9f"
+ dependencies = [
+  "bitflags 2.9.4",
+  "hex",
+- "procfs-core",
++ "procfs-core 0.17.0",
+  "rustix 0.38.44",
+ ]
+ 
++[[package]]
++name = "procfs-core"
++version = "0.16.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "2d3554923a69f4ce04c4a754260c338f505ce22642d3830e049a399fc2059a29"
++dependencies = [
++ "bitflags 2.9.4",
++ "hex",
++]
++
+ [[package]]
+ name = "procfs-core"
+ version = "0.17.0"
+@@ -8970,6 +9016,23 @@ dependencies = [
+  "hex",
+ ]
+ 
++[[package]]
++name = "prometheus"
++version = "0.13.4"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "3d33c28a30771f7f96db69893f78b857f7450d7e0237e9c8fc6427a81bae7ed1"
++dependencies = [
++ "cfg-if",
++ "fnv",
++ "lazy_static",
++ "libc",
++ "memchr",
++ "parking_lot",
++ "procfs 0.16.0",
++ "protobuf 2.28.0",
++ "thiserror 1.0.69",
++]
++
+ [[package]]
+ name = "prometheus"
+ version = "0.14.0"
+@@ -8982,8 +9045,8 @@ dependencies = [
+  "libc",
+  "memchr",
+  "parking_lot",
+- "procfs",
+- "protobuf",
++ "procfs 0.17.0",
++ "protobuf 3.7.2",
+  "thiserror 2.0.18",
+ ]
+ 
+@@ -9112,6 +9175,12 @@ dependencies = [
+  "prost 0.13.5",
+ ]
+ 
++[[package]]
++name = "protobuf"
++version = "2.28.0"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "106dd99e98437432fed6519dedecfade6a06a73bb7b2a1e019fdd2bee5778d94"
++
+ [[package]]
+ name = "protobuf"
+ version = "3.7.2"
 diff --git a/Cargo.toml b/Cargo.toml
-index 2caebbe..df36540 100644
+index b44a2ca..b18190b 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -50,3 +50,6 @@ ic-sns-cli        = { git = "https://github.com/dfinity/ic", rev = "1bc0a5953961
+@@ -50,3 +50,6 @@ ic-sns-cli        = { git = "https://github.com/dfinity/ic", rev = "b291fd30707a
  [profile.dist]
  inherits = "release"
  lto = "thin"
@@ -212,7 +506,7 @@ index 2caebbe..df36540 100644
 +[patch.crates-io]
 +ic-error-types = { git = "https://github.com/dfinity/ic", rev = "1bc0a59539613f6ec273a59a172ae43dfabb1ce0" }
 diff --git a/extensions/nns/Cargo.toml b/extensions/nns/Cargo.toml
-index c548a60..d7bf30c 100644
+index a2b08fb..d45667e 100644
 --- a/extensions/nns/Cargo.toml
 +++ b/extensions/nns/Cargo.toml
 @@ -6,7 +6,7 @@ edition.workspace = true
@@ -270,7 +564,7 @@ index 4b2a73e..0000000
 -    }
 -}
 diff --git a/extensions/sns/Cargo.toml b/extensions/sns/Cargo.toml
-index 4afd13e..8278867 100644
+index e29f602..38f3163 100644
 --- a/extensions/sns/Cargo.toml
 +++ b/extensions/sns/Cargo.toml
 @@ -6,7 +6,7 @@ edition.workspace = true
