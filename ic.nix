@@ -147,8 +147,6 @@ let
         lockFile = "${sources.ic}/Cargo.lock";
         allowBuiltinFetchGit = true;
         outputHashes = {
-          "cloudflare-0.12.0" =
-            "sha256-67kQWJFRXZXHx+qwlyLa9NLF09b/4iRWxTLzCniCHZE=";
           "icrc1-test-env-0.1.1" =
             "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
           "lmdb-rkv-0.14.99" =
