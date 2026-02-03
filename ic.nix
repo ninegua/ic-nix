@@ -107,6 +107,9 @@ let
       COMMIT_DATE_ISO_8601_TXT_PATH =
         writeText "commit_date_iso_8601.txt" "1970-01-01T00:00:00+00:00";
 
+      # pocket-ic now requires and embeds this file at compile time.
+      MAINNET_ROUTING_TABLE = ./nix/mainnet_routing_table-55267.json;
+
       ROCKSDB_LIB_DIR = "${rocksdb}/lib";
       ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
       LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
@@ -214,4 +217,5 @@ let
 in {
   inherit binaries wasm-binaries canisters;
   shell = buildIC { isDev = true; };
+  pocket-ic = mkBinaries { "pocket-ic-server" = "rs/pocket_ic_server/"; };
 }
