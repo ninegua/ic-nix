@@ -138,7 +138,7 @@ let
         ]);
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
       buildPhase = ''
-        pushd "${subdir}" && cargo build --frozen --profile ${profile} --target ${hostTriple} --bin ${binname} && popd
+        pushd "${subdir}" && cargo build --frozen --profile ${profile} -j $NIX_BUILD_CORES --target ${hostTriple} --bin ${binname} && popd
       '';
       installPhase = ''
         install -m 755 -D target/${hostTriple}/${profile}/${binname} $out/bin/${binname}
