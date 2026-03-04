@@ -29,6 +29,17 @@ let
     };
     buildInputs = with ocamlPackages; [ menhirSdk menhirLib fix base ];
   };
+  grace = ocamlPackages.buildDunePackage {
+    pname = "grace";
+    version = "0.3.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "johnyob";
+      repo = "grace";
+      rev = "15251666a11a780dfd09f23e1b0c1e6b0e366dcf";
+      sha256 = "sha256-V5K9RGk47K/R+q4wS1FU02kMi1uWSCgdUjKHk7uXuGw=";
+    };
+    buildInputs = with ocamlPackages; [ dedent core ppx_jane iter uutf fmt ];
+  };
 
   rtsBuildInputs = with pkgs;
     [
@@ -57,6 +68,7 @@ let
   '';
   commonBuildInputs = with pkgs; [
     dune_3
+    grace
     ocamlPackages.ocaml
     ocamlPackages.atdgen
     ocamlPackages.checkseum
@@ -76,6 +88,9 @@ let
     ocamlPackages.ppx_expect
     ocamlPackages.bisect_ppx
     ocamlPackages.uucp
+    ocamlPackages.fmt
+    ocamlPackages.sexplib
+    ocamlPackages.iter
     wasm
     ocaml-recovery-parser
     obelisk
@@ -259,4 +274,6 @@ in rec {
     (rts.overrideAttrs (_: { dontCheck = true; }));
 
   shell = rts;
+
+  inherit grace;
 }

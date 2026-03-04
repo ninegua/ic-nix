@@ -87,7 +87,7 @@ in rec {
       "build-info-0.0.27" =
         "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
       "cycles-minting-canister-0.9.0" =
-        "sha256-Nnm+6eUX3YL8HxVWU78JXkXXLxhlGuEyVjbHOcHrwQ8=";
+        "sha256-kj2ISgydgZQgZA6p+AULcd/gCge4bYKqeevwaqlFSig=";
     };
   } "dfx-extensions").overrideAttrs (_: {
     LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
