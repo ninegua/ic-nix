@@ -28,7 +28,7 @@ jobs:
             channel: '25.05'
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v6
 
     - uses: cachix/install-nix-action@v31
       with:
@@ -97,7 +97,7 @@ jobs:
         df -h
       if: contains(matrix.os, 'ubuntu')
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v6
 
     - uses: cachix/install-nix-action@v31
       with:
