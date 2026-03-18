@@ -74,6 +74,8 @@ jobs:
           - os: macos-26
             channel: '25.11'
 
+    env:
+      OBJC_DISABLE_INITIALIZE_FORK_SAFETY: YES
 
     steps:
     - name: Maximize build space
