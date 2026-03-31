@@ -195,6 +195,10 @@ in rec {
   in pkgs.stdenv.mkDerivation (with pkgs; rec {
     name = "moc-rts";
     src = "${sources.motoko}/rts";
+    prePatch = ''
+       echo "ulimit -n = $(ulimit -n)"
+       ulimit -n 1024
+    '';
     patches = [ ./nix/motoko-rts.patch ];
     nativeBuildInputs = [ makeWrapper removeReferencesTo cacert wabt ];
     buildInputs = rtsBuildInputs ++ lib.optional doCheck [ wasmtime ];
