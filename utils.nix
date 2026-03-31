@@ -18,6 +18,7 @@ let
           src = sources."${name}";
           phases = [ "installPhase" ];
           installPhase = ''
+            ulimit -n 1024
             cp -r $src $out
             chmod -R +rw $out
             cd $out
