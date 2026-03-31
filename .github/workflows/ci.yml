@@ -40,7 +40,7 @@ jobs:
       with:
         nix_path: nixpkgs=channel:${{ matrix.prefix }}-${{ matrix.channel-darwin }}
         enable_kvm: false
-        extra_nix_config: "max-jobs = 2"
+        extra_nix_config: "max-jobs = 1"
       if: contains(matrix.os, 'macos')
 
     - name: nix cache warm up
@@ -114,7 +114,7 @@ jobs:
       with:
         nix_path: nixpkgs=channel:${{ matrix.prefix }}-${{ matrix.channel-darwin }}
         enable_kvm: false
-        extra_nix_config: "max-jobs = 2"
+        extra_nix_config: "max-jobs = 1"
       if: contains(matrix.os, 'macos')
 
     - name: nix build
