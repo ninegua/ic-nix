@@ -22,6 +22,8 @@ let
         enableStatic = true;
         enableShared = false;
       };
+      # This is a fix for NixOS on darwin
+      cxx-wrapper = super.callPackage ./nix/cxx-wrapper.nix {};
     })
   ]);
 in let

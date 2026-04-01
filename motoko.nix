@@ -5,19 +5,9 @@ let
     officialRelease = false;
   };
   ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_14;
-  wasm = ocamlPackages.wasm.overrideAttrs (_: {
-    version = "1.1.1";
-    src = pkgs.fetchFromGitHub {
-      owner = "WebAssembly";
-      repo = "spec";
-      rev = "opam-1.1.1";
-      sha256 = "1kp72yv4k176i94np0m09g10cviqp2pnpm7jmiq6ik7fmmbknk7c";
-    };
-    patchPhase = ''
-      substituteInPlace ./interpreter/Makefile \
-                          --replace-fail "+a-4-27-42-44-45" "+a-4-27-42-44-45-70"
-    '';
-  });
+  wasm = pkgs.callPackage ./nix/wasm-opam-1.1.1.nix {
+    inherit (ocamlPackages) ocaml findlib ocamlbuild ;
+  };
   ocaml-recovery-parser = ocamlPackages.buildDunePackage {
     pname = "ocaml-recovery-parser";
     version = "0.3.0";
@@ -131,8 +121,6 @@ let
         # in the binaries. But curiously, we can remove them
         # an the binaries still work. They are essentially static otherwise.
         remove-references-to \
-          -t ${pkgs.darwin.Libsystem} \
-          -t ${pkgs.darwin.CF} \
           -t ${pkgs.libiconv} \
           $out/bin/*
       '' + ''
@@ -205,6 +193,10 @@ in rec {
   in pkgs.stdenv.mkDerivation (with pkgs; rec {
     name = "moc-rts";
     src = "${sources.motoko}/rts";
+    prePatch = ''
+       echo "ulimit -n = $(ulimit -n)"
+       ulimit -n 1024
+    '';
     patches = [ ./nix/motoko-rts.patch ];
     nativeBuildInputs = [ makeWrapper removeReferencesTo cacert wabt ];
     buildInputs = rtsBuildInputs ++ lib.optional doCheck [ wasmtime ];

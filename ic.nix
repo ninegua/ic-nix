@@ -63,12 +63,15 @@ let
       CFLAGS =
         [ "-Wno-error=deprecated-copy" "-Wno-error=unused-private-field" ];
     });
+
+  hostTriple = if stdenv.isDarwin then "aarch64-apple-darwin" else stdenv.hostPlatform.config;
+
   buildIC = { customLinker ? false, binname ? "", subdir ? ""
-    , hostTriple ? stdenv.hostPlatform.config, profile ? "release"
+    , target ? hostTriple, profile ? "release"
     , isDev ? false }:
     let linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
     in (rustPlatform.buildRustPackage rec {
-      inherit profile hostTriple;
+      inherit profile target;
       name = "ic-" + binname;
       src = sources.ic;
       unpackPhase = ''
@@ -91,11 +94,9 @@ let
         sqlite
         openssl-static
         zlib-static
-      ] ++ (if stdenv.isDarwin then
-        with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
-      else if isDev then [
+      ] ++ (if isDev then [
         libunwind
-        cryptsetup
+        (lib.optional stdenv.isLinux cryptsetup)
       ] else
         [ libunwind-static ]);
 
@@ -137,11 +138,15 @@ let
           "-lstatic=lzma"
         ]);
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
+      preConfigure = lib.optional stdenv.isDarwin ''
+        echo CXX=${pkgs.cxx-wrapper}/bin/clang++wrapper
+        export CXX=${pkgs.cxx-wrapper}/bin/clang++wrapper
+      '';
       buildPhase = ''
-        pushd "${subdir}" && cargo build --frozen --profile ${profile} -j $NIX_BUILD_CORES --target ${hostTriple} --bin ${binname} && popd
+        pushd "${subdir}" && cargo build --frozen --profile ${profile} -j $NIX_BUILD_CORES --target ${target} --bin ${binname} && popd
       '';
       installPhase = ''
-        install -m 755 -D target/${hostTriple}/${profile}/${binname} $out/bin/${binname}
+        install -m 755 -D target/${target}/${profile}/${binname} $out/bin/${binname}
       '';
       # Placeholder, to allow a custom importCargoLock below
       cargoSha256 = lib.fakeHash;
@@ -185,14 +190,14 @@ let
 
   canisters = let
     profile = "canister-release";
-    hostTriple = "wasm32-unknown-unknown";
+    target = "wasm32-unknown-unknown";
     deps = lib.attrsets.mapAttrs (binname: subdir:
-      (buildIC { inherit binname subdir hostTriple profile; }).overrideAttrs
+      (buildIC { inherit binname subdir target profile; }).overrideAttrs
       (self: {
         installPhase = ''
           mkdir -p $out/bin/
           ${binaryen}/bin/wasm-opt -O2 -o $out/bin/${binname}.wasm \
-            target/${hostTriple}/${profile}/${binname}.wasm
+            target/${target}/${profile}/${binname}.wasm
         '';
       })) wasms;
   in stdenv.mkDerivation (rec {
