@@ -1,7 +1,7 @@
 { pkgs, sources, customRustPlatform }:
 with pkgs;
 let
-  lmdb = pkgs.callPackage ./nix/lmdb { src = sources.lmdb; };
+  lmdb = callPackage ./nix/lmdb { src = sources.lmdb; };
   stdenv = llvmPackages.libcxxStdenv;
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
   mkDrv = { doCheck ? true, buildFeatures ? [ ]
@@ -28,10 +28,14 @@ let
     in (customRustPlatform.buildRustPackage {
       inherit name buildFeatures doCheck dontUseCargoParallelTests
         cargoBuildFlags postUnpack;
+      # Rust build.rs (cc-rs) would fail because cxx prints a warning?!
+      # The fix is to make sure it prints no warning on Darwin.
+      preConfigure = lib.optional stdenv.isDarwin ''
+        echo CXX=${pkgs.cxx-wrapper}/bin/clang++wrapper
+        export CXX=${pkgs.cxx-wrapper}/bin/clang++wrapper
+      '';
       src = patchedSrc;
-      buildInputs = extraBuildInputs ++ [ openssl-static ]
-        ++ lib.optionals stdenv.isDarwin
-        (with darwin.apple_sdk.frameworks; [ SystemConfiguration Security ]);
+      buildInputs = extraBuildInputs ++ [ openssl-static ];
       nativeBuildInputs = [ pkg-config cmake perl protobuf ];
       cargoSha256 = lib.fakeHash;
       RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxx}/lib" ];
@@ -96,5 +100,5 @@ in rec {
       "../../ic-icrc1-0.9.0/wasm/ic-icrc1-archive.wasm.gz";
   });
 
-  shell = dfx-extensions;
+  shell = ic-wasm;
 }

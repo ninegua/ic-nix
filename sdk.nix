@@ -3,12 +3,7 @@ with pkgs;
 let
   stdenv = llvmPackages.libcxxStdenv;
   linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
-  buildInputs = [ openssl-static ] ++ lib.optionals stdenv.isDarwin
-    (with darwin.apple_sdk_11_0.frameworks; [
-      DiskArbitration
-      Security
-      Foundation
-    ]);
+  buildInputs = [ openssl-static ];
   ic_btc_canister = builtins.fetchurl
     "https://github.com/dfinity/bitcoin-canister/releases/latest/download/ic-btc-canister.wasm.gz";
   dfx = (customRustPlatform.buildRustPackage {
@@ -29,6 +24,9 @@ let
       cp "${ic_btc_canister}" "$DIR/ic-btc-canister.wasm.gz"
       tar -czf "$DFX_ASSETS"/btc_canister.tgz -C $DIR ic-btc-canister.wasm.gz
       rm -rf "$DIR"
+    '' + lib.optionalString stdenv.isDarwin ''
+      echo CXX=${pkgs.cxx-wrapper}/bin/clang++wrapper
+      export CXX=${pkgs.cxx-wrapper}/bin/clang++wrapper
     '';
     postInstall = ''
       mkdir -p $out/share/dfx-canisters/
