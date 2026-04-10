@@ -89,7 +89,6 @@ let
         libusb1
         llvmPackages.libclang.lib
         llvmPackages.llvm.lib
-        rocksdb
         lmdb.dev
         sqlite
         openssl-static
@@ -97,8 +96,8 @@ let
       ] ++ (if isDev then [
         libunwind
         (lib.optional stdenv.isLinux cryptsetup)
-      ] else
-        [ libunwind-static ]);
+      ] else [ libunwind-static ]) ++
+      lib.optionals stdenv.hostPlatform.isDarwin [ rocksdb ];
 
       doCheck = false;
 
