@@ -15,13 +15,13 @@
 
 stdenv.mkDerivation rec {
   pname = "rocksdb";
-  version = "10.8.3";
+  version = "8.10.0";
 
   src = fetchFromGitHub {
     owner = "facebook";
     repo = pname;
     rev = "v${version}";
-    sha256 = "sha256-fE2Uq7rapnENYabokWqv5Ox3ioHB8Ax9IzdPMOj8ieE=";
+    sha256 = "sha256-KGsYDBc1fz/90YYNGwlZ0LUKXYsP1zyhP29TnRQwgjQ=";
   };
 
   nativeBuildInputs = [ cmake ninja ];
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
   buildInputs = lib.optional enableJemalloc jemalloc;
 
   NIX_CFLAGS_COMPILE = lib.optionalString stdenv.cc.isGNU "-Wno-error=deprecated-copy -Wno-error=pessimizing-move"
-    + lib.optionalString stdenv.cc.isClang "-Wno-error=unused-private-field -faligned-allocation";
+    + lib.optionalString stdenv.cc.isClang "-Wno-error=unused-private-field -faligned-allocation -Wno-error=nontrivial-memcall";
 
   cmakeFlags = [
     "-DPORTABLE=1"
@@ -52,7 +52,6 @@ stdenv.mkDerivation rec {
         (stdenv.hostPlatform.isx86 && stdenv.hostPlatform.isLinux)
         "-DFORCE_SSE42=1")
     (lib.optional enableLite "-DROCKSDB_LITE=1")
-    "-DFAIL_ON_WARNINGS=${if stdenv.hostPlatform.isMinGW then "NO" else "YES"}"
   ] ++ lib.optional (!enableShared) "-DROCKSDB_BUILD_SHARED=0";
 
   # otherwise "cc1: error: -Wformat-security ignored without -Wformat [-Werror=format-security]"
