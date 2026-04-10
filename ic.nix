@@ -70,11 +70,11 @@ let
         sqlite
         openssl-static
         zlib-static
+        (lib.optionals stdenv.hostPlatform.isDarwin rocksdb)
       ] ++ (if isDev then [
         libunwind
         (lib.optional stdenv.isLinux cryptsetup)
-      ] else [ libunwind-static ]) ++
-      lib.optionals stdenv.hostPlatform.isDarwin [ rocksdb ];
+      ] else [ libunwind-static ]);
 
       doCheck = false;
 
@@ -87,8 +87,8 @@ let
       # pocket-ic now requires and embeds this file at compile time.
       MAINNET_ROUTING_TABLE = ./nix/mainnet_routing_table-55267.json;
 
-      ROCKSDB_LIB_DIR = "${rocksdb}/lib";
-      ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
+      ROCKSDB_LIB_DIR = lib.optionals stdenv.hostPlatform.isDarwin "${rocksdb}/lib";
+      ROCKSDB_INCLUDE_DIR = lib.optionals stdenv.hostPlatform.isDarwin "${rocksdb}/include";
       LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
       CC = "";
       CFLAGS = [ "-fno-stack-protector" ] ++ lib.optionals (!stdenv.isDarwin)

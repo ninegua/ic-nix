@@ -25,7 +25,7 @@ jobs:
             channel-darwin: '25.11-darwin'
         exclude:
           - os: macos-26
-            channel: '25.11'
+            channel: '25.05'
 
     steps:
     - uses: actions/checkout@v6
@@ -71,7 +71,7 @@ jobs:
             channel-darwin: '25.11-darwin'
         exclude:
           - os: macos-26
-            channel: '25.11'
+            channel: '25.05'
 
     env:
       OBJC_DISABLE_INITIALIZE_FORK_SAFETY: YES
