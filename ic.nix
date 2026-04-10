@@ -39,30 +39,7 @@ let
 
   stdenv = llvmPackages.libcxxStdenv;
 
-  rocksdb =
-    # (pkgsStatic.rocksdb_6_23.override ({ inherit stdenv; })).overrideAttrs (_: {
-    ((callPackage ./nix/rocksdb.nix { }).override ({
-      inherit stdenv;
-    })).overrideAttrs (_: {
-      cmakeFlags = [
-        "-DPORTABLE=1"
-        "-DWITH_JEMALLOC=0"
-        "-DWITH_JNI=0"
-        "-DWITH_BENCHMARK_TOOLS=0"
-        "-DWITH_TESTS=1"
-        "-DWITH_TOOLS=0"
-        "-DWITH_BZ2=0"
-        "-DWITH_LZ4=0"
-        "-DWITH_SNAPPY=0"
-        "-DWITH_ZLIB=1"
-        "-DWITH_ZSTD=0"
-        "-DWITH_GFLAGS=0"
-        "-DUSE_RTTI=1"
-        "-DROCKSDB_BUILD_SHARED=0"
-      ];
-      CFLAGS =
-        [ "-Wno-error=deprecated-copy" "-Wno-error=unused-private-field" ];
-    });
+  rocksdb = (callPackage ./nix/rocksdb.nix { }).override ({ inherit stdenv; });
 
   hostTriple = if stdenv.isDarwin then "aarch64-apple-darwin" else stdenv.hostPlatform.config;
 
