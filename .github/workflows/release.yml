@@ -20,8 +20,8 @@ jobs:
           - os: macos-26
             name: darwin
             prefix: nixpkgs
-          - channel: '25.05'
-            channel-darwin: '25.05-darwin'
+          - channel: '25.11'
+            channel-darwin: '25.11-darwin'
 
     steps:
     - uses: actions/checkout@v6
