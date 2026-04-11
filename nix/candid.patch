@@ -1,25 +1,13 @@
-diff --git a/rust/candid/Cargo.toml b/rust/candid/Cargo.toml
-index 93949ba..b4aaf50 100644
---- a/rust/candid/Cargo.toml
-+++ b/rust/candid/Cargo.toml
-@@ -46,6 +46,7 @@ printer = ["dep:pretty"]
- value = ["bignum", "printer"]
- default = ["serde_bytes", "printer", "bignum"]
- all = ["default", "value", "ic_principal/arbitrary"]
-+num-traits = []
- 
- [[test]]
- name = "types"
 diff --git a/rust/candid/tests/serde.rs b/rust/candid/tests/serde.rs
-index f42133a..13ba84b 100644
+index 6ae1620..b814494 100644
 --- a/rust/candid/tests/serde.rs
 +++ b/rust/candid/tests/serde.rs
-@@ -36,7 +36,7 @@ fn test_error() {
+@@ -38,7 +38,7 @@ fn test_error() {
          },
          // Depending on stack size, we either reach recursion limit or skipping limit
          "Recursion limit exceeded",
 -        "Skipping cost exceeds the limit",
-+        "binary parser error",
++        "unexpected end of LEB128",
      );
  }
  
