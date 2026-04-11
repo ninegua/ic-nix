@@ -2,7 +2,7 @@
 let
   pkgs_with_overlay = pkgs.appendOverlays ([
     (import (builtins.fetchTarball
-      "https://github.com/oxalica/rust-overlay/archive/master.tar.gz"))
+      "https://github.com/oxalica/rust-overlay/archive/refs/tags/snapshot/2026-03-11.tar.gz"))
     (self: super: {
       rust-stable = self.rust-bin.stable.latest.default.override {
         targets = [ "wasm32-unknown-unknown" ];
@@ -22,6 +22,8 @@ let
         enableStatic = true;
         enableShared = false;
       };
+      # This is a fix for NixOS on darwin
+      cxx-wrapper = super.callPackage ./nix/cxx-wrapper.nix {};
     })
   ]);
 in let

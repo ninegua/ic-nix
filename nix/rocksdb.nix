@@ -31,29 +31,25 @@ stdenv.mkDerivation rec {
   buildInputs = lib.optional enableJemalloc jemalloc;
 
   NIX_CFLAGS_COMPILE = lib.optionalString stdenv.cc.isGNU "-Wno-error=deprecated-copy -Wno-error=pessimizing-move"
-    + lib.optionalString stdenv.cc.isClang "-Wno-error=unused-private-field -faligned-allocation";
+  + lib.optionalString stdenv.cc.isClang ("-Wno-error=unused-private-field -faligned-allocation"
+  + lib.optionalString (lib.versionAtLeast stdenv.cc.version "21.0.0") " -Wno-error=nontrivial-memcall");
 
   cmakeFlags = [
-    "-DPORTABLE=1"
-    "-DWITH_JEMALLOC=${if enableJemalloc then "1" else "0"}"
-    "-DWITH_JNI=0"
-    "-DWITH_BENCHMARK_TOOLS=0"
-    "-DWITH_TESTS=1"
-    "-DWITH_TOOLS=0"
-    "-DWITH_BZ2=1"
-    "-DWITH_LZ4=1"
-    "-DWITH_SNAPPY=1"
-    "-DWITH_ZLIB=1"
-    "-DWITH_ZSTD=1"
-    "-DWITH_GFLAGS=0"
-    "-DUSE_RTTI=1"
-    "-DROCKSDB_INSTALL_ON_WINDOWS=YES" # harmless elsewhere
-    (lib.optional
-        (stdenv.hostPlatform.isx86 && stdenv.hostPlatform.isLinux)
-        "-DFORCE_SSE42=1")
-    (lib.optional enableLite "-DROCKSDB_LITE=1")
-    "-DFAIL_ON_WARNINGS=${if stdenv.hostPlatform.isMinGW then "NO" else "YES"}"
-  ] ++ lib.optional (!enableShared) "-DROCKSDB_BUILD_SHARED=0";
+        "-DPORTABLE=1"
+        "-DWITH_JEMALLOC=0"
+        "-DWITH_JNI=0"
+        "-DWITH_BENCHMARK_TOOLS=0"
+        "-DWITH_TESTS=1"
+        "-DWITH_TOOLS=0"
+        "-DWITH_BZ2=0"
+        "-DWITH_LZ4=0"
+        "-DWITH_SNAPPY=0"
+        "-DWITH_ZLIB=1"
+        "-DWITH_ZSTD=0"
+        "-DWITH_GFLAGS=0"
+        "-DUSE_RTTI=1"
+        "-DROCKSDB_BUILD_SHARED=0"
+      ];
 
   # otherwise "cc1: error: -Wformat-security ignored without -Wformat [-Werror=format-security]"
   hardeningDisable = lib.optional stdenv.hostPlatform.isWindows "format";

@@ -39,36 +39,16 @@ let
 
   stdenv = llvmPackages.libcxxStdenv;
 
-  rocksdb =
-    # (pkgsStatic.rocksdb_6_23.override ({ inherit stdenv; })).overrideAttrs (_: {
-    ((callPackage ./nix/rocksdb.nix { }).override ({
-      inherit stdenv;
-    })).overrideAttrs (_: {
-      cmakeFlags = [
-        "-DPORTABLE=1"
-        "-DWITH_JEMALLOC=0"
-        "-DWITH_JNI=0"
-        "-DWITH_BENCHMARK_TOOLS=0"
-        "-DWITH_TESTS=1"
-        "-DWITH_TOOLS=0"
-        "-DWITH_BZ2=0"
-        "-DWITH_LZ4=0"
-        "-DWITH_SNAPPY=0"
-        "-DWITH_ZLIB=1"
-        "-DWITH_ZSTD=0"
-        "-DWITH_GFLAGS=0"
-        "-DUSE_RTTI=1"
-        "-DROCKSDB_BUILD_SHARED=0"
-      ];
-      CFLAGS =
-        [ "-Wno-error=deprecated-copy" "-Wno-error=unused-private-field" ];
-    });
+  rocksdb = (callPackage ./nix/rocksdb.nix { }).override ({ inherit stdenv; });
+
+  hostTriple = if stdenv.isDarwin then "aarch64-apple-darwin" else stdenv.hostPlatform.config;
+
   buildIC = { customLinker ? false, binname ? "", subdir ? ""
-    , hostTriple ? stdenv.hostPlatform.config, profile ? "release"
+    , target ? hostTriple, profile ? "release"
     , isDev ? false }:
     let linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
     in (rustPlatform.buildRustPackage rec {
-      inherit profile hostTriple;
+      inherit profile target;
       name = "ic-" + binname;
       src = sources.ic;
       unpackPhase = ''
@@ -86,18 +66,15 @@ let
         libusb1
         llvmPackages.libclang.lib
         llvmPackages.llvm.lib
-        rocksdb
         lmdb.dev
         sqlite
         openssl-static
         zlib-static
-      ] ++ (if stdenv.isDarwin then
-        with darwin.apple_sdk.frameworks; [ CoreServices Foundation Security ]
-      else if isDev then [
+        (lib.optionals stdenv.hostPlatform.isDarwin rocksdb)
+      ] ++ (if isDev then [
         libunwind
-        cryptsetup
-      ] else
-        [ libunwind-static ]);
+        (lib.optional stdenv.isLinux cryptsetup)
+      ] else [ libunwind-static ]);
 
       doCheck = false;
 
@@ -110,8 +87,8 @@ let
       # pocket-ic now requires and embeds this file at compile time.
       MAINNET_ROUTING_TABLE = ./nix/mainnet_routing_table-55267.json;
 
-      ROCKSDB_LIB_DIR = "${rocksdb}/lib";
-      ROCKSDB_INCLUDE_DIR = "${rocksdb}/include";
+      ROCKSDB_LIB_DIR = lib.optionals stdenv.hostPlatform.isDarwin "${rocksdb}/lib";
+      ROCKSDB_INCLUDE_DIR = lib.optionals stdenv.hostPlatform.isDarwin "${rocksdb}/include";
       LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
       CC = "";
       CFLAGS = [ "-fno-stack-protector" ] ++ lib.optionals (!stdenv.isDarwin)
@@ -137,11 +114,15 @@ let
           "-lstatic=lzma"
         ]);
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
+      preConfigure = lib.optional stdenv.isDarwin ''
+        echo CXX=${pkgs.cxx-wrapper}/bin/clang++wrapper
+        export CXX=${pkgs.cxx-wrapper}/bin/clang++wrapper
+      '';
       buildPhase = ''
-        pushd "${subdir}" && cargo build --frozen --profile ${profile} -j $NIX_BUILD_CORES --target ${hostTriple} --bin ${binname} && popd
+        pushd "${subdir}" && cargo build --frozen --profile ${profile} -j $NIX_BUILD_CORES --target ${target} --bin ${binname} && popd
       '';
       installPhase = ''
-        install -m 755 -D target/${hostTriple}/${profile}/${binname} $out/bin/${binname}
+        install -m 755 -D target/${target}/${profile}/${binname} $out/bin/${binname}
       '';
       # Placeholder, to allow a custom importCargoLock below
       cargoSha256 = lib.fakeHash;
@@ -185,14 +166,14 @@ let
 
   canisters = let
     profile = "canister-release";
-    hostTriple = "wasm32-unknown-unknown";
+    target = "wasm32-unknown-unknown";
     deps = lib.attrsets.mapAttrs (binname: subdir:
-      (buildIC { inherit binname subdir hostTriple profile; }).overrideAttrs
+      (buildIC { inherit binname subdir target profile; }).overrideAttrs
       (self: {
         installPhase = ''
           mkdir -p $out/bin/
           ${binaryen}/bin/wasm-opt -O2 -o $out/bin/${binname}.wasm \
-            target/${hostTriple}/${profile}/${binname}.wasm
+            target/${target}/${profile}/${binname}.wasm
         '';
       })) wasms;
   in stdenv.mkDerivation (rec {
