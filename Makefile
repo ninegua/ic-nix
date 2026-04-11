@@ -1,5 +1,5 @@
 VERSION?=$(shell git rev-parse --abbrev-ref HEAD)
-SYSTEM?=$(subst ",,$(shell nix-instantiate --eval -E '(import <nixpkgs> {}).system'))
+SYSTEM?=$(subst ",,$(shell nix-instantiate --eval -E '(import <nixpkgs> {}).stdenv.hostPlatform.system'))
 TARGETS=dfx-env.tar.gz ic-binaries-$(VERSION)-$(SYSTEM).tar.gz ic-canisters-$(VERSION)-wasm32.tar.gz dfx-extensions-$(VERSION).tar.gz
 
 default:
