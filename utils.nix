@@ -63,6 +63,31 @@ in rec {
     dontUseCargoParallelTests = true;
   } "ic-wasm";
 
+  icp-cli = let
+    artifacts-src = builtins.fromJSON (builtins.readFile
+      "${sources.icp-cli}/crates/icp-cli/artifacts/source.json");
+    files = builtins.mapAttrs (name: src: fetchurl src) artifacts-src;
+    install =
+      lib.mapAttrsToList (name: file: "cp ${file} $out/${name}.bin") files;
+    artifacts = stdenv.mkDerivation {
+      name = "icp-cli-artifacts";
+      phases = [ "installPhase" ];
+      installPhase = "mkdir -p $out; ${builtins.concatStringsSep ";" install}";
+    };
+  in (mkDrv {
+    doCheck = false;
+    cargoPatches = [ ./nix/icp-cli.patch ];
+    extraBuildInputs = lib.optionals stdenv.isLinux [ dbus.dev dbus.lib ];
+  } "icp-cli").overrideAttrs (old: {
+    GIT_SHA = sources.icp-cli.rev;
+    cargoBuildFlags = [ "--no-default-features" ];
+    preConfigure = old.preConfigure ++ [ ''
+      pwd
+      mkdir -p target/icp-cli-artifact-cache/
+      cp ${artifacts}/* target/icp-cli-artifact-cache/
+    ''];
+  });
+
   candid = mkDrv {
     cargoPatches = [ ./nix/candid.patch ];
     dontUseCargoParallelTests = true;
@@ -100,5 +125,5 @@ in rec {
       "../../ic-icrc1-0.9.0/wasm/ic-icrc1-archive.wasm.gz";
   });
 
-  shell = ic-wasm;
+  shell = icp-cli;
 }
