@@ -8,7 +8,7 @@ let
         targets = [ "wasm32-unknown-unknown" ];
         extensions = [ "rust-src" ];
       };
-      rust-nightly = self.rust-bin.nightly."2025-06-19".default.override {
+      rust-nightly = self.rust-bin.nightly."2026-03-10".default.override {
         targets = [ "wasm32-wasip1" ];
         extensions = [ "rust-src" ];
       };

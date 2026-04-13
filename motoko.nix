@@ -5,9 +5,6 @@ let
     officialRelease = false;
   };
   ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_14;
-  wasm = pkgs.callPackage ./nix/wasm-opam-1.1.1.nix {
-    inherit (ocamlPackages) ocaml findlib ocamlbuild ;
-  };
   ocaml-recovery-parser = ocamlPackages.buildDunePackage {
     pname = "ocaml-recovery-parser";
     version = "0.3.0";
@@ -81,7 +78,7 @@ let
     ocamlPackages.fmt
     ocamlPackages.sexplib
     ocamlPackages.iter
-    wasm
+    ocamlPackages.wasm
     ocaml-recovery-parser
     obelisk
     perl
@@ -158,7 +155,7 @@ in rec {
     vendorRustStdDeps = "${cargoVendorTools}/bin/vendor-rust-std-deps";
 
     # SHA256 of Rust std deps
-    rustStdDepsHash = "sha256-kEj5g2v39atLfxuY8dmZ+9qdcJVNE8dwkaOghiLBhj0=";
+    rustStdDepsHash = "sha256-ZMCepUZNyqXZcR3EduSV38zFbI89WneU1iTXj3L38RA=";
 
     # Vendor directory for Rust std deps
     rustStdDeps = pkgs.stdenvNoCC.mkDerivation {
