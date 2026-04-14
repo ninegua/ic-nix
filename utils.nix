@@ -38,7 +38,8 @@ let
       buildInputs = extraBuildInputs ++ [ openssl-static ];
       nativeBuildInputs = [ pkg-config cmake perl protobuf ];
       cargoSha256 = lib.fakeHash;
-      RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxx}/lib" ] ++ extraRustFlags;
+      RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxx}/lib" ]
+        ++ extraRustFlags;
     }).overrideAttrs (_: {
       cargoDeps = customRustPlatform.importCargoLock {
         lockFile = "${patchedSrc}/Cargo.lock";
@@ -76,11 +77,13 @@ in rec {
     };
   in (mkDrv {
     doCheck = false;
-    cargoPatches = [ ./nix/icp-cli-git-sha.patch ] ++
-      lib.optionals stdenv.isLinux [ ./nix/icp-cli-keyring.patch ];
-      extraBuildInputs = lib.optionals stdenv.isLinux [ dbus.dev dbus.lib ] ++ [ 
-        ((pkgsStatic.libgit2.override { libiconv = libiconv-static; }).overrideAttrs ({ doCheck = false; }))
-      ];
+    cargoPatches = [ ./nix/icp-cli-git-sha.patch ]
+      ++ lib.optionals stdenv.isLinux [ ./nix/icp-cli-keyring.patch ];
+    extraBuildInputs = lib.optionals stdenv.isLinux [ dbus.dev dbus.lib ] ++ [
+      ((pkgsStatic.libgit2.override {
+        libiconv = libiconv-static;
+      }).overrideAttrs ({ doCheck = false; }))
+    ];
     extraRustFlags = [
       "-Lnative=${pkgsStatic.llhttp.out}/lib"
       "-Lnative=${pkgsStatic.pcre2.out}/lib"
@@ -91,7 +94,7 @@ in rec {
     LIBGIT2_NO_VENDOR = 1;
     GIT_SHA = sources.icp-cli.rev;
     cargoBuildFlags = [ "--no-default-features" ];
-    preConfigure = old.preConfigure ++ [ ''
+    preConfigure = old.preConfigure ++ [''
       pwd
       mkdir -p target/icp-cli-artifact-cache/
       cp ${artifacts}/* target/icp-cli-artifact-cache/
