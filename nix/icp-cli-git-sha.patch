@@ -1,0 +1,21 @@
+diff --git a/crates/icp-cli/build.rs b/crates/icp-cli/build.rs
+index 15672d5..4286fc7 100644
+--- a/crates/icp-cli/build.rs
++++ b/crates/icp-cli/build.rs
+@@ -2,7 +2,7 @@ use std::process::Command;
+ 
+ mod artifacts;
+ 
+-fn define_git_sha() {
++fn _define_git_sha() {
+     let git_sha = Command::new("git")
+         .arg("rev-parse")
+         .arg("HEAD")
+@@ -20,6 +20,6 @@ fn main() {
+     println!("cargo:rerun-if-changed=artifacts/mod.rs");
+     println!("cargo:rerun-if-changed=artifacts/source.json");
+ 
+-    define_git_sha();
++    // define_git_sha();
+     artifacts::bundle_artifacts();
+ }

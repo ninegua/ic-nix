@@ -1,0 +1,380 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index 7477930..5427a03 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -52,7 +52,7 @@ ic-ed25519 = "0.6.0"
+ ic-ledger-types = "0.16.0"
+ ic-management-canister-types = { version = "0.7.1" }
+ ic-utils = { version = "0.47.0" }
+-icp = { path = "crates/icp" }
++icp = { path = "crates/icp", default-features = false }
+ icp-canister-interfaces = { path = "crates/icp-canister-interfaces" }
+ ic-identity-hsm = "0.47.0"
+ icrc-ledger-types = "0.1.10"
+diff --git a/crates/icp-cli/Cargo.toml b/crates/icp-cli/Cargo.toml
+index 3209a1c..18e6a02 100644
+--- a/crates/icp-cli/Cargo.toml
++++ b/crates/icp-cli/Cargo.toml
+@@ -105,3 +105,7 @@ sha2.workspace = true
+ # explicitly opt-in to distribution via `dist`
+ [package.metadata.dist]
+ dist = true
++
++[features]
++default = [ "keyring" ]
++keyring = [ "icp/keyring" ]
+diff --git a/crates/icp-cli/src/commands/identity/import.rs b/crates/icp-cli/src/commands/identity/import.rs
+index 1b901af..108af0d 100644
+--- a/crates/icp-cli/src/commands/identity/import.rs
++++ b/crates/icp-cli/src/commands/identity/import.rs
+@@ -63,6 +63,7 @@ pub(crate) struct ImportArgs {
+ pub(crate) async fn exec(ctx: &Context, args: &ImportArgs) -> Result<(), anyhow::Error> {
+     let format = match args.storage {
+         StorageMode::Plaintext => CreateFormat::Plaintext,
++        #[cfg(feature = "keyring")]
+         StorageMode::Keyring => CreateFormat::Keyring,
+         StorageMode::Password => {
+             let password = if let Some(path) = &args.storage_password_file {
+diff --git a/crates/icp-cli/src/commands/identity/mod.rs b/crates/icp-cli/src/commands/identity/mod.rs
+index b06ac69..4ac4e71 100644
+--- a/crates/icp-cli/src/commands/identity/mod.rs
++++ b/crates/icp-cli/src/commands/identity/mod.rs
+@@ -27,10 +27,19 @@ pub(crate) enum Command {
+     Rename(rename::RenameArgs),
+ }
+ 
+-#[derive(Debug, Clone, ValueEnum, Default)]
++#[derive(Debug, Clone, ValueEnum)]
+ enum StorageMode {
+     Plaintext,
+-    #[default]
++    #[cfg(feature = "keyring")]
+     Keyring,
+     Password,
+ }
++
++impl Default for StorageMode {
++    fn default() -> Self {
++        #[cfg(feature = "keyring")]
++        return Self::Keyring;
++        #[cfg(not(feature = "keyring"))]
++        return Self::Password;
++    }
++}
+diff --git a/crates/icp-cli/src/commands/identity/new.rs b/crates/icp-cli/src/commands/identity/new.rs
+index 7dd3ee9..fe6f740 100644
+--- a/crates/icp-cli/src/commands/identity/new.rs
++++ b/crates/icp-cli/src/commands/identity/new.rs
+@@ -54,6 +54,7 @@ pub(crate) async fn exec(ctx: &Context, args: &NewArgs) -> Result<(), anyhow::Er
+     );
+     let format = match args.storage {
+         StorageMode::Plaintext => CreateFormat::Plaintext,
++        #[cfg(feature = "keyring")]
+         StorageMode::Keyring => CreateFormat::Keyring,
+         StorageMode::Password => {
+             let password = if let Some(path) = &args.storage_password_file {
+diff --git a/crates/icp/Cargo.toml b/crates/icp/Cargo.toml
+index 66809c5..bddbddd 100644
+--- a/crates/icp/Cargo.toml
++++ b/crates/icp/Cargo.toml
+@@ -38,7 +38,7 @@ icrc-ledger-types = { workspace = true }
+ indoc = { workspace = true }
+ itertools = { workspace = true }
+ k256 = { workspace = true }
+-keyring = { workspace = true }
++keyring = { workspace = true, optional = true }
+ notify = { workspace = true }
+ num-bigint = { workspace = true }
+ num-integer = { workspace = true }
+@@ -76,3 +76,6 @@ winreg = { workspace = true }
+ 
+ [dev-dependencies]
+ jsonschema = { workspace = true }
++
++[features]
++default = [ "keyring" ]
+diff --git a/crates/icp/src/context/init.rs b/crates/icp/src/context/init.rs
+index 636fb23..f1a677d 100644
+--- a/crates/icp/src/context/init.rs
++++ b/crates/icp/src/context/init.rs
+@@ -92,6 +92,7 @@ pub fn initialize(
+         password_func,
+         telemetry_data.clone(),
+     ));
++    #[cfg(feature = "keyring")]
+     if let Ok(mockdir) = std::env::var("ICP_CLI_KEYRING_MOCK_DIR") {
+         keyring::set_default_credential_builder(Box::new(
+             crate::identity::keyring_mock::MockKeyring {
+diff --git a/crates/icp/src/identity/key.rs b/crates/icp/src/identity/key.rs
+index 9f6cfc1..2261cd6 100644
+--- a/crates/icp/src/identity/key.rs
++++ b/crates/icp/src/identity/key.rs
+@@ -9,7 +9,6 @@ use ic_agent::{
+ };
+ use ic_ed25519::PrivateKeyFormat;
+ use ic_identity_hsm::HardwareIdentity;
+-use keyring::Entry;
+ use pem::Pem;
+ use pkcs8::{
+     DecodePrivateKey, EncodePrivateKey, EncryptedPrivateKeyInfo, PrivateKeyInfo, SecretDocument,
+@@ -47,6 +46,7 @@ pub enum IdentityKey {
+ pub enum CreateFormat {
+     Plaintext,
+     Pbes2 { password: Zeroizing<String> },
++    #[cfg(feature = "keyring")]
+     Keyring,
+ }
+ 
+@@ -94,9 +94,11 @@ pub enum LoadIdentityError {
+     #[snafu(transparent)]
+     LockError { source: crate::fs::lock::LockError },
+ 
++    #[cfg(feature = "keyring")]
+     #[snafu(display("failed to load keyring entry"))]
+     LoadEntryError { source: keyring::Error },
+ 
++    #[cfg(feature = "keyring")]
+     #[snafu(display("failed to load password from keyring entry"))]
+     LoadPasswordFromEntryError { source: keyring::Error },
+ 
+@@ -121,6 +123,7 @@ pub fn load_identity(
+         IdentitySpec::Pem {
+             format, algorithm, ..
+         } => load_pem_identity(dirs, name, format, algorithm, password_func),
++        #[cfg(feature = "keyring")]
+         IdentitySpec::Keyring { algorithm, .. } => load_keyring_identity(name, algorithm),
+         IdentitySpec::Hsm {
+             module,
+@@ -226,11 +229,12 @@ fn load_plaintext_identity(
+ 
+ const SERVICE_NAME: &str = "icp-cli";
+ 
++#[cfg(feature = "keyring")]
+ fn load_keyring_identity(
+     name: &str,
+     algorithm: &IdentityKeyAlgorithm,
+ ) -> Result<Arc<dyn Identity>, LoadIdentityError> {
+-    let entry = Entry::new(SERVICE_NAME, name).context(LoadEntrySnafu)?;
++    let entry = keyring::Entry::new(SERVICE_NAME, name).context(LoadEntrySnafu)?;
+     let password = entry.get_password().context(LoadPasswordFromEntrySnafu)?;
+     let origin = PemOrigin::Keyring {
+         service: SERVICE_NAME.to_string(),
+@@ -392,11 +396,12 @@ pub fn create_identity(
+             let pem = make_pkcs5_encrypted_pem(&doc, password);
+             write_identity(dirs, name, &pem)?;
+         }
++        #[cfg(feature = "keyring")]
+         CreateFormat::Keyring => {
+             let pem = doc
+                 .to_pem(PrivateKeyInfo::PEM_LABEL, Default::default())
+                 .expect("infallible PKI encoding");
+-            let entry = Entry::new(SERVICE_NAME, name).context(CreateEntrySnafu)?;
++            let entry = keyring::Entry::new(SERVICE_NAME, name).context(CreateEntrySnafu)?;
+             let res = entry.set_password(&pem);
+             #[cfg(target_os = "linux")]
+             if let Err(keyring::Error::NoStorageAccess(err)) = &res
+@@ -418,6 +423,7 @@ pub fn create_identity(
+             algorithm,
+             principal,
+         },
++        #[cfg(feature = "keyring")]
+         CreateFormat::Keyring => IdentitySpec::Keyring {
+             principal,
+             algorithm,
+@@ -440,10 +446,14 @@ pub enum WriteIdentityError {
+     #[snafu(transparent)]
+     LockError { source: crate::fs::lock::LockError },
+ 
++    #[cfg(feature = "keyring")]
+     #[snafu(display("failed to create keyring entry"))]
+     CreateEntryError { source: keyring::Error },
++
++    #[cfg(feature = "keyring")]
+     #[snafu(display("failed to set keyring entry password"))]
+     SetEntryPasswordError { source: keyring::Error },
++
+     #[cfg(target_os = "linux")]
+     #[snafu(display(
+         "no keyring available - have you set it up? gnome-keyring must be installed and configured with a default keyring."
+@@ -488,30 +498,35 @@ pub enum RenameIdentityError {
+     #[snafu(display("failed to delete old key file"))]
+     DeleteOldKeyFile { source: fs::IoError },
+ 
++    #[cfg(feature = "keyring")]
+     #[snafu(display("failed to load keyring entry for identity `{name}`"))]
+     LoadKeyringEntry {
+         name: String,
+         source: keyring::Error,
+     },
+ 
++    #[cfg(feature = "keyring")]
+     #[snafu(display("failed to read keyring entry for identity `{name}`"))]
+     ReadKeyringEntry {
+         name: String,
+         source: keyring::Error,
+     },
+ 
++    #[cfg(feature = "keyring")]
+     #[snafu(display("failed to create keyring entry for identity `{new_name}`"))]
+     CreateKeyringEntry {
+         new_name: String,
+         source: keyring::Error,
+     },
+ 
++    #[cfg(feature = "keyring")]
+     #[snafu(display("failed to set keyring entry password for identity `{new_name}`"))]
+     SetKeyringEntryPassword {
+         new_name: String,
+         source: keyring::Error,
+     },
+ 
++    #[cfg(feature = "keyring")]
+     #[snafu(display("failed to delete old keyring entry for identity `{old_name}`"))]
+     DeleteKeyringEntry {
+         old_name: String,
+@@ -551,7 +566,8 @@ pub fn rename_identity(
+     // Copy key material to new location before updating the list
+     enum OldKeyMaterial {
+         Pem(PathBuf),
+-        Keyring(Entry),
++        #[cfg(feature = "keyring")]
++        Keyring(keyring::Entry),
+         None,
+     }
+ 
+@@ -564,16 +580,17 @@ pub fn rename_identity(
+             fs::write(&new_path, &contents).context(CopyKeyFileSnafu)?;
+             OldKeyMaterial::Pem(old_path)
+         }
++        #[cfg(feature = "keyring")]
+         IdentitySpec::Keyring { .. } => {
+             // Copy the keyring entry to the new name
+-            let old_entry = Entry::new(SERVICE_NAME, old_name)
++            let old_entry = keyring::Entry::new(SERVICE_NAME, old_name)
+                 .context(LoadKeyringEntrySnafu { name: old_name })?;
+             let password = old_entry
+                 .get_password()
+                 .context(ReadKeyringEntrySnafu { name: old_name })?;
+ 
+             let new_entry =
+-                Entry::new(SERVICE_NAME, new_name).context(CreateKeyringEntrySnafu { new_name })?;
++                keyring::Entry::new(SERVICE_NAME, new_name).context(CreateKeyringEntrySnafu { new_name })?;
+             new_entry
+                 .set_password(&password)
+                 .context(SetKeyringEntryPasswordSnafu { new_name })?;
+@@ -605,6 +622,7 @@ pub fn rename_identity(
+         OldKeyMaterial::Pem(old_path) => {
+             fs::remove_file(&old_path).context(DeleteOldKeyFileSnafu)?;
+         }
++        #[cfg(feature = "keyring")]
+         OldKeyMaterial::Keyring(entry) => {
+             entry
+                 .delete_credential()
+@@ -638,12 +656,14 @@ pub enum DeleteIdentityError {
+     #[snafu(transparent)]
+     DeleteKeyFile { source: fs::IoError },
+ 
++    #[cfg(feature = "keyring")]
+     #[snafu(display("failed to load keyring entry for identity `{name}`"))]
+     LoadKeyringEntryForDelete {
+         name: String,
+         source: keyring::Error,
+     },
+ 
++    #[cfg(feature = "keyring")]
+     #[snafu(display("failed to delete keyring entry for identity `{name}`"))]
+     DeleteKeyringEntryForDelete {
+         name: String,
+@@ -686,10 +706,11 @@ pub fn delete_identity(
+             let pem_path = dirs.key_pem_path(name);
+             fs::remove_file(&pem_path)?;
+         }
++        #[cfg(feature = "keyring")]
+         IdentitySpec::Keyring { .. } => {
+             // Delete the keyring entry
+             let entry =
+-                Entry::new(SERVICE_NAME, name).context(LoadKeyringEntryForDeleteSnafu { name })?;
++                keyring::Entry::new(SERVICE_NAME, name).context(LoadKeyringEntryForDeleteSnafu { name })?;
+             entry
+                 .delete_credential()
+                 .context(DeleteKeyringEntryForDeleteSnafu { name })?;
+@@ -819,12 +840,14 @@ pub enum ExportIdentityError {
+     #[snafu(display("failed to read password: {message}"))]
+     GetPasswordForExport { message: String },
+ 
++    #[cfg(feature = "keyring")]
+     #[snafu(display("failed to load keyring entry for identity `{name}`"))]
+     LoadKeyringEntryForExport {
+         name: String,
+         source: keyring::Error,
+     },
+ 
++    #[cfg(feature = "keyring")]
+     #[snafu(display("failed to read keyring entry for identity `{name}`"))]
+     ReadKeyringEntryForExport {
+         name: String,
+@@ -895,10 +918,11 @@ pub fn export_identity(
+                 }
+             }
+         }
++        #[cfg(feature = "keyring")]
+         IdentitySpec::Keyring { .. } => {
+             // Read from keyring (already stored as plaintext PEM)
+             let entry =
+-                Entry::new(SERVICE_NAME, name).context(LoadKeyringEntryForExportSnafu { name })?;
++                keyring::Entry::new(SERVICE_NAME, name).context(LoadKeyringEntryForExportSnafu { name })?;
+             entry
+                 .get_password()
+                 .context(ReadKeyringEntryForExportSnafu { name })?
+diff --git a/crates/icp/src/identity/manifest.rs b/crates/icp/src/identity/manifest.rs
+index 260f312..0587ce6 100644
+--- a/crates/icp/src/identity/manifest.rs
++++ b/crates/icp/src/identity/manifest.rs
+@@ -118,6 +118,7 @@ pub enum IdentitySpec {
+         principal: Principal,
+     },
+     Anonymous,
++    #[cfg(feature = "keyring")]
+     Keyring {
+         principal: Principal,
+         algorithm: IdentityKeyAlgorithm,
+@@ -135,6 +136,7 @@ impl IdentitySpec {
+         match self {
+             IdentitySpec::Pem { principal, .. } => *principal,
+             IdentitySpec::Anonymous => Principal::anonymous(),
++            #[cfg(feature = "keyring")]
+             IdentitySpec::Keyring { principal, .. } => *principal,
+             IdentitySpec::Hsm { principal, .. } => *principal,
+         }
+diff --git a/crates/icp/src/identity/mod.rs b/crates/icp/src/identity/mod.rs
+index e277efe..c9d1459 100644
+--- a/crates/icp/src/identity/mod.rs
++++ b/crates/icp/src/identity/mod.rs
+@@ -17,6 +17,7 @@ use crate::{
+ };
+ 
+ pub mod key;
++#[cfg(feature = "keyring")]
+ pub mod keyring_mock;
+ pub mod manifest;
+ pub mod seed;
+diff --git a/crates/icp/src/telemetry_data.rs b/crates/icp/src/telemetry_data.rs
+index c0c4116..808ed35 100644
+--- a/crates/icp/src/telemetry_data.rs
++++ b/crates/icp/src/telemetry_data.rs
+@@ -68,6 +68,7 @@ impl TelemetryData {
+ #[serde(rename_all = "kebab-case")]
+ pub enum IdentityStorageType {
+     Pem,
++    #[cfg(feature = "keyring")]
+     Keyring,
+     Hsm,
+     Anonymous,
+@@ -86,6 +87,7 @@ impl From<&IdentitySpec> for IdentityStorageType {
+     fn from(spec: &IdentitySpec) -> Self {
+         match spec {
+             IdentitySpec::Pem { .. } => Self::Pem,
++            #[cfg(feature = "keyring")]
+             IdentitySpec::Keyring { .. } => Self::Keyring,
+             IdentitySpec::Hsm { .. } => Self::Hsm,
+             IdentitySpec::Anonymous => Self::Anonymous,
