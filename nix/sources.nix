@@ -79,4 +79,14 @@
     rev = "d06dd90c65509d4e9880379917e51803cc35a269";
     sha256 = "1xxq9grcx954spxfjpy7hdq092i2zhfspgc54rd1qwlmcfyqwfx0";
   };
+  icp-cli = fetchgit {
+    url = "https://github.com/dfinity/icp-cli"; # main
+    rev = "caeac373c450c865c2af97d4f5f68892c613f595";
+    sha256 = "sha256-51QoiDZPMJnjR+K2eR7+FHOvC6ob0ZDEiWoyAc3yxww=";
+  };
+  icp-cli-network-launcher = fetchgit {
+    url = "https://github.com/dfinity/icp-cli-network-launcher"; # main
+    rev = "4e01cb161732f6806e8506f8d04e6b67a4318d9f";
+    sha256 = "sha256-BSEBQ4hIs2tyr8Hx4EoRspeQhayWeXL6aViJRF3hrF0=";
+  };
 }
