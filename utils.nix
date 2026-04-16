@@ -101,6 +101,10 @@ in rec {
     ''];
   });
 
+  icp-cli-network-launcher = mkDrv {
+    doCheck = false;
+  } "icp-cli-network-launcher";
+
   candid = mkDrv {
     cargoPatches = [ ./nix/candid.patch ];
     dontUseCargoParallelTests = true;
