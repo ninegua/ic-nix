@@ -109,6 +109,7 @@ let
       nobuildPhase = "touch $out";
       nativeBuildInputs = [ drv ];
       DFX_CACHE_ROOT = "${drv}/share/dfx";
+      ICP_CLI_NETWORK_LAUNCHER_PATH = "${drv}/bin/icp-cli-network-launcher";
     } // modify (dfxPaths drv dfxBins));
   warn = mkShell ({
     phases = [ "WARNING" ];

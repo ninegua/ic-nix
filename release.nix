@@ -56,6 +56,8 @@ in rec {
       cp ${candid}/bin/* $out/bin/
       cp ${candid-extractor}/bin/candid-extractor $out/bin/
       cp ${agent-rs}/bin/* $out/bin/
+      cp ${icp-cli}/bin/* $out/bin/
+      cp ${icp-cli-network-launcher}/bin/* $out/bin/
     '' + pkgs.lib.optionalString pkgs.stdenv.isLinux (''
       for exe in $out/bin/*; do
         chmod 755 $exe
