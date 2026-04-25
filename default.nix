@@ -23,7 +23,7 @@ let
         enableShared = false;
       };
       # This is a fix for NixOS on darwin
-      cxx-wrapper = super.callPackage ./nix/cxx-wrapper.nix {};
+      cxx-wrapper = super.callPackage ./nix/cxx-wrapper.nix { };
     })
   ]);
 in let
@@ -56,8 +56,9 @@ in let
     inherit pkgs;
     sources = { inherit (sources) motoko libtommath musl-wasi; };
   };
+  mainnet-canisters = import ./mainnet-canisters.nix { inherit pkgs sources; };
   ic = import ./ic.nix {
-    inherit pkgs sources;
+    inherit pkgs sources mainnet-canisters;
     customRustPlatform = pkgsRust.rustPlatform;
     moc = motoko.moc;
   };
@@ -77,8 +78,11 @@ in let
       buildInputs = builtins.concatMap (drv: drv.buildInputs) drvs;
       nativeBuildInputs = builtins.concatMap (drv: drv.nativeBuildInputs) drvs;
     };
-  ic-no-shell = ic // { shell = null; };
-  projects = { inherit motoko ic ic-no-shell sdk utils; };
+  ic-no-shell = ic // {
+    shell = null;
+    wasm-binaries = null;
+  };
+  projects = { inherit motoko mainnet-canisters ic ic-no-shell sdk utils; };
 in with builtins;
 let derivations = pkgs.lib.lists.fold (a: b: a // b) { } (attrValues projects);
 in projects // derivations // { deps = depsOf (attrValues derivations); }

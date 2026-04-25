@@ -41,7 +41,7 @@ let
       installPhase = ''
         mkdir -p $out/bin $out/share
         cp -r ${binaries}/bin/* $out/bin
-        ln -s ${canisters}/share/{dfx-canisters,ic-canisters} $out/share
+        ln -s ${canisters}/share/wasms $out/share
         ls -R $out
         echo $phases
       '';

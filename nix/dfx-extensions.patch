@@ -216,6 +216,19 @@ index 4b2a73e..0000000
 -        std::fs::copy(&bin_in_manifest_dir, &bin_in_target_dir).unwrap();
 -    }
 -}
+diff --git a/extensions/nns/src/install_nns.rs b/extensions/nns/src/install_nns.rs
+index 2588b4d..b7f72e9 100644
+--- a/extensions/nns/src/install_nns.rs
++++ b/extensions/nns/src/install_nns.rs
+@@ -616,7 +616,7 @@ pub fn upload_nns_sns_wasms_canister_wasms(dfx_cache_path: &Path) -> anyhow::Res
+         ..
+     } in SNS_CANISTERS
+     {
+-        let wasm_path = nns_wasm_dir(dfx_cache_path).join(wasm_name);
++        let wasm_path = nns_wasm_dir(dfx_cache_path).join(format!("{}.gz", wasm_name));
+         add_sns_wasm_for_tests(AddSnsWasmForTestsArgs {
+             wasm_file: wasm_path.clone(),
+             canister_type: upload_name.to_string(),
 diff --git a/extensions/sns/Cargo.toml b/extensions/sns/Cargo.toml
 index 4adb315..3f08d24 100644
 --- a/extensions/sns/Cargo.toml
