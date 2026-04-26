@@ -92,6 +92,7 @@ in rec {
           rev = "v${version}";
           hash = "sha256-TCeEh8DpVoxpF/HkahxM3ONDjawAkIiMo6S7ogG3fLg=";
         };
+        patches = [];
       }))
     ];
     extraRustFlags = [
