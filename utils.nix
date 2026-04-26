@@ -82,7 +82,17 @@ in rec {
     extraBuildInputs = lib.optionals stdenv.isLinux [ dbus.dev dbus.lib ] ++ [
       ((pkgsStatic.libgit2.override {
         libiconv = libiconv-static;
-      }).overrideAttrs ({ doCheck = false; }))
+      }).overrideAttrs (rec {
+        doCheck = false;
+        # override the version because the one in 25.05 is too old.
+        version = "1.9.2";
+        src = fetchFromGitHub {
+          owner = "libgit2";
+          repo = "libgit2";
+          rev = "v${version}";
+          hash = "sha256-TCeEh8DpVoxpF/HkahxM3ONDjawAkIiMo6S7ogG3fLg=";
+        };
+      }))
     ];
     extraRustFlags = [
       "-Lnative=${pkgsStatic.llhttp.out}/lib"
@@ -101,9 +111,8 @@ in rec {
     ''];
   });
 
-  icp-cli-network-launcher = mkDrv {
-    doCheck = false;
-  } "icp-cli-network-launcher";
+  icp-cli-network-launcher =
+    mkDrv { doCheck = false; } "icp-cli-network-launcher";
 
   candid = mkDrv {
     cargoPatches = [ ./nix/candid.patch ];
