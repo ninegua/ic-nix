@@ -1,8 +1,8 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = "606cab75d9840e2e1c5ef1ce734a7e6a4f754f0b"; # pin
-    sha256 = "0gdynbr9kxy0nbk4zh9x6bq7jr3z5d1pj1nw852nfrfszsgzvja7";
+    rev = "719ff387aab462ce5759c4c20c30de959fe9538c"; # pin
+    sha256 = "sha256-QMJWB1yRAgrvmugmGqG6zvk7Z3hzXkGTsGej5EJ3z8g=";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # master
@@ -78,5 +78,15 @@
     url = "https://github.com/dfinity/dfx-extensions"; # main
     rev = "d06dd90c65509d4e9880379917e51803cc35a269";
     sha256 = "1xxq9grcx954spxfjpy7hdq092i2zhfspgc54rd1qwlmcfyqwfx0";
+  };
+  icp-cli = fetchgit {
+    url = "https://github.com/dfinity/icp-cli"; # main
+    rev = "caeac373c450c865c2af97d4f5f68892c613f595";
+    sha256 = "sha256-51QoiDZPMJnjR+K2eR7+FHOvC6ob0ZDEiWoyAc3yxww=";
+  };
+  icp-cli-network-launcher = fetchgit {
+    url = "https://github.com/dfinity/icp-cli-network-launcher"; # main
+    rev = "04431641dec2d1b9276157815958a5d0dc25cae3";
+    sha256 = "sha256-NuVnYvYt2cTdUrC0ALLrseTvi5RmiNK+nKtZ5NF6f40=";
   };
 }

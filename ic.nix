@@ -1,4 +1,4 @@
-{ pkgs, customRustPlatform, sources, moc }:
+{ pkgs, customRustPlatform, sources, mainnet-canisters, moc }:
 let
   pkgs-with-overlays = pkgs.appendOverlays ([ ]
     ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
@@ -23,7 +23,6 @@ let
     "sandbox_launcher" = "rs/canister_sandbox/";
     "ic-nns-init" = "rs/nns/init/";
     "sns" = "rs/sns/";
-    "pocket-ic-server" = "rs/pocket_ic_server/";
   };
 
   wasms = {
@@ -41,11 +40,13 @@ let
 
   rocksdb = (callPackage ./nix/rocksdb.nix { }).override ({ inherit stdenv; });
 
-  hostTriple = if stdenv.isDarwin then "aarch64-apple-darwin" else stdenv.hostPlatform.config;
+  hostTriple = if stdenv.isDarwin then
+    "aarch64-apple-darwin"
+  else
+    stdenv.hostPlatform.config;
 
   buildIC = { customLinker ? false, binname ? "", subdir ? ""
-    , target ? hostTriple, profile ? "release"
-    , isDev ? false }:
+    , target ? hostTriple, profile ? "release", isDev ? false, extraEnv ? { } }:
     let linker = callPackage ./nix/static-linker.nix { inherit stdenv; };
     in (rustPlatform.buildRustPackage rec {
       inherit profile target;
@@ -74,7 +75,8 @@ let
       ] ++ (if isDev then [
         libunwind
         (lib.optional stdenv.isLinux cryptsetup)
-      ] else [ libunwind-static ]);
+      ] else
+        [ libunwind-static ]);
 
       doCheck = false;
 
@@ -87,8 +89,10 @@ let
       # pocket-ic now requires and embeds this file at compile time.
       MAINNET_ROUTING_TABLE = ./nix/mainnet_routing_table-55267.json;
 
-      ROCKSDB_LIB_DIR = lib.optionals stdenv.hostPlatform.isDarwin "${rocksdb}/lib";
-      ROCKSDB_INCLUDE_DIR = lib.optionals stdenv.hostPlatform.isDarwin "${rocksdb}/include";
+      ROCKSDB_LIB_DIR =
+        lib.optionals stdenv.hostPlatform.isDarwin "${rocksdb}/lib";
+      ROCKSDB_INCLUDE_DIR =
+        lib.optionals stdenv.hostPlatform.isDarwin "${rocksdb}/include";
       LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
       CC = "";
       CFLAGS = [ "-fno-stack-protector" ] ++ lib.optionals (!stdenv.isDarwin)
@@ -114,10 +118,10 @@ let
           "-lstatic=lzma"
         ]);
       RUST_SRC_PATH = "${rust-stable}/lib/rustlib/src/rust/library";
-      preConfigure = lib.optional stdenv.isDarwin ''
-        echo CXX=${pkgs.cxx-wrapper}/bin/clang++wrapper
-        export CXX=${pkgs.cxx-wrapper}/bin/clang++wrapper
-      '';
+      preConfigure = lib.optional stdenv.isDarwin [
+        "echo CXX=${pkgs.cxx-wrapper}/bin/clang++wrapper"
+        "export CXX=${pkgs.cxx-wrapper}/bin/clang++wrapper"
+      ] ++ lib.mapAttrsToList (name: value: "export ${name}=${value}") extraEnv;
       buildPhase = ''
         pushd "${subdir}" && cargo build --frozen --profile ${profile} -j $NIX_BUILD_CORES --target ${target} --bin ${binname} && popd
       '';
@@ -143,11 +147,11 @@ let
       hardeningDisable = [ "zerocallusedregs" ];
     });
 
-  mkBinaries = targets:
+  mkBinaries = targets: extraEnv:
     let
       deps = lib.attrsets.mapAttrs (binname: subdir:
         buildIC {
-          inherit binname subdir;
+          inherit binname subdir extraEnv;
           customLinker = true;
         }) targets;
     in stdenv.mkDerivation (rec {
@@ -161,8 +165,8 @@ let
         '' + acc) "" deps;
     });
 
-  binaries = mkBinaries bins;
-  wasm-binaries = mkBinaries wasms;
+  binaries = mkBinaries bins { };
+  wasm-binaries = mkBinaries wasms { };
 
   canisters = let
     profile = "canister-release";
@@ -198,5 +202,6 @@ let
 in {
   inherit binaries wasm-binaries canisters;
   shell = buildIC { isDev = true; };
-  pocket-ic = mkBinaries { "pocket-ic-server" = "rs/pocket_ic_server/"; };
+  pocket-ic = mkBinaries { "pocket-ic-server" = "rs/pocket_ic_server/"; }
+    (mainnet-canisters.env);
 }

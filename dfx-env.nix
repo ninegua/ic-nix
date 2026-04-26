@@ -41,7 +41,7 @@ let
       installPhase = ''
         mkdir -p $out/bin $out/share
         cp -r ${binaries}/bin/* $out/bin
-        ln -s ${canisters}/share/{dfx-canisters,ic-canisters} $out/share
+        ln -s ${canisters}/share/wasms $out/share
         ls -R $out
         echo $phases
       '';
@@ -109,6 +109,7 @@ let
       nobuildPhase = "touch $out";
       nativeBuildInputs = [ drv ];
       DFX_CACHE_ROOT = "${drv}/share/dfx";
+      ICP_CLI_NETWORK_LAUNCHER_PATH = "${drv}/bin/icp-cli-network-launcher";
     } // modify (dfxPaths drv dfxBins));
   warn = mkShell ({
     phases = [ "WARNING" ];

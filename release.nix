@@ -4,11 +4,13 @@ let
   sources = import ./nix/sources.nix { inherit (pkgs) fetchgit; };
   ic_commit = sources.ic.rev;
   wasm_names = [
+    "registry-canister_test.wasm"
     "registry-canister.wasm"
     "governance-canister_test.wasm"
     "governance-canister.wasm"
-    "ledger-canister_notify-method.wasm"
+    "ledger-canister.wasm"
     "root-canister.wasm"
+    "migration-canister.wasm"
     "cycles-minting-canister.wasm"
     "lifeline_canister.wasm"
     "genesis-token-canister.wasm"
@@ -44,7 +46,7 @@ in rec {
       cp ${ic.binaries}/bin/{replica,ic-admin,ic-prep,ic-https-outcalls-adapter,ic-nns-init,canister_sandbox,compiler_sandbox,sandbox_launcher} $out/bin/
       cp ${dfx-extensions}/bin/{nns,sns} $out/bin/
       cp ${ic.binaries}/bin/sns $out/bin/sns-cli
-      cp ${ic.binaries}/bin/pocket-ic-server $out/bin/pocket-ic
+      cp ${ic.pocket-ic}/bin/pocket-ic-server $out/bin/pocket-ic
       cp ${dfx}/bin/* $out/bin/
       cp ${icx-proxy}/bin/* $out/bin/
       cp ${idl2json}/bin/* $out/bin/
@@ -54,6 +56,8 @@ in rec {
       cp ${candid}/bin/* $out/bin/
       cp ${candid-extractor}/bin/candid-extractor $out/bin/
       cp ${agent-rs}/bin/* $out/bin/
+      cp ${icp-cli}/bin/* $out/bin/
+      cp ${icp-cli-network-launcher}/bin/* $out/bin/
     '' + pkgs.lib.optionalString pkgs.stdenv.isLinux (''
       for exe in $out/bin/*; do
         chmod 755 $exe
@@ -68,8 +72,6 @@ in rec {
     phases = [ "installPhase" ];
     installPhase = ''
       mkdir -p $out/share
-      cp -r ${ic.canisters}/share/ic-canisters $out/share/
-      cp -r ${sdk.dfx}/share/dfx-canisters $out/share/
       mkdir -p $out/share/wasms
       for file in ${pkgs.lib.strings.concatStringsSep " " downloads}; do
         echo Copying $file
