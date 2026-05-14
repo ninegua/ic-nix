@@ -21,8 +21,8 @@
   };
   motoko = fetchgit {
     url = "https://github.com/dfinity/motoko"; # master
-    rev = "96045f27d7bbae64baf054a2f147fc87f5add232";
-    sha256 = "0z0xmi6fnhqc0c4kmr9l4a9qg4ww70jab237zxgdv412anc8cciy";
+    rev = "5d3c2f39a77b36ff592d470296b87c1a7fa77ffa";
+    sha256 = "sha256-H/omb7JQMxglaAZ6dHGKuGijNRFoy3eCxc0JaM4+uGo=";
   };
   motoko-base = fetchgit {
     url = "https://github.com/dfinity/motoko-base"; # next-moc

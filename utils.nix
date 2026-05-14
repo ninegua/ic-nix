@@ -38,7 +38,8 @@ let
       buildInputs = extraBuildInputs ++ [ openssl-static ];
       nativeBuildInputs = [ pkg-config cmake perl protobuf ];
       cargoSha256 = lib.fakeHash;
-      RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxx}/lib" ]
+      RUSTFLAGS = [ "-Lnative=${libiconv-static}/lib" "-lstatic=iconv" ]
+        ++ lib.optionals (stdenv.isLinux) [ "-Clinker=${linker}" ]
         ++ extraRustFlags;
     }).overrideAttrs (_: {
       cargoDeps = customRustPlatform.importCargoLock {
@@ -77,8 +78,7 @@ in rec {
     };
   in (mkDrv {
     doCheck = false;
-    cargoPatches = [ ./nix/icp-cli-git-sha.patch ]
-      ++ lib.optionals stdenv.isLinux [ ./nix/icp-cli-keyring.patch ];
+    cargoPatches = lib.optionals stdenv.isLinux [ ./nix/icp-cli-keyring.patch ];
     extraBuildInputs = lib.optionals stdenv.isLinux [ dbus.dev dbus.lib ] ++ [
       ((pkgsStatic.libgit2.override {
         libiconv = libiconv-static;
@@ -92,7 +92,7 @@ in rec {
           rev = "v${version}";
           hash = "sha256-TCeEh8DpVoxpF/HkahxM3ONDjawAkIiMo6S7ogG3fLg=";
         };
-        patches = [];
+        patches = [ ];
       }))
     ];
     extraRustFlags = [

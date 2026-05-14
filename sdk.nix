@@ -32,7 +32,7 @@ let
       mkdir -p $out/share/dfx-canisters/
       cp $src/src/distributed/*.{wasm,did} $out/share/dfx-canisters/
     '';
-    RUSTFLAGS = [ "-Clinker=${linker}" "-Lnative=${libcxx}/lib" ]
+    RUSTFLAGS = lib.optionals stdenv.isLinux [ "-Clinker=${linker}" ]
       ++ lib.optionals stdenv.isDarwin [
         "-Lnative=${libiconv-static.out}/lib"
         "-lstatic=iconv"
@@ -49,8 +49,8 @@ let
           "sha256-u9zZBOnkOnLvKjhmqJzUcdgSoWn21VRrRRHLYvPuyiQ=";
         "ic-certification-3.0.3" =
           "sha256-IQOCbC7eZ5W+V0kdmvZkwCRIzQQfj/XMJkYx0mpPqnE=";
-        "pocket-ic-12.0.0" =
-          "sha256-5+Hm2mbVoHLPJLgV8OAZUJXnBRPRFsPknFQ8SUSR/GE=";
+        "pocket-ic-13.0.0" =
+          "sha256-QMJWB1yRAgrvmugmGqG6zvk7Z3hzXkGTsGej5EJ3z8g=";
       };
     };
   });
