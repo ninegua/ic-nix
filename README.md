@@ -54,6 +54,7 @@ Releases are built against the latest main branches of each project at the time.
 **Supported projects**
 
  - [ic]
+ - [icp-cli]
  - [sdk]
  - [motoko]
  - [agent-rs]
@@ -68,11 +69,11 @@ Releases are built against the latest main branches of each project at the time.
 
 Supported platforms and nixpkgs:
 
-|                  | 25.05  | 25.11    |
-| -------------    | ------ | -------- |
-| darwin x86_64    |   ❌   |    ❌    |
-| linux  x86_64    |   ✅︎   |    ✅︎    |
-| darwin aarch64   |   ✅︎   |    ✅︎    |
+|                  | 25.11    |
+| -------------    | -------- |
+| darwin x86_64    |    ❌    |
+| linux  x86_64    |    ✅︎    |
+| darwin aarch64   |    ✅︎    |
 
 Only the outdated nixpkgs 23.05 supports darwin `x86_64`, and it does not provide the required empscripten version to compile motoko.
 
@@ -89,6 +90,7 @@ Note that this effort requires no nix support of a project unless it already has
 
 [nix]: https://nixos.org/download.html
 [ic]: https://github.com/dfinity/ic
+[icp-cli]: https://github.com/dfinity/icp-cli
 [sdk]: https://github.com/dfinity/sdk
 [motoko]: https://github.com/dfinity/motoko
 [cachix]: https://github.com/cachix/cachix
