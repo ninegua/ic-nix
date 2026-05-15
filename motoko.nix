@@ -4,7 +4,7 @@ let
     inherit pkgs;
     officialRelease = false;
   };
-  ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_14;
+  ocamlPackages = pkgs.ocaml-ng.ocamlPackages_5_4;
   ocaml-recovery-parser = ocamlPackages.buildDunePackage {
     pname = "ocaml-recovery-parser";
     version = "0.3.0";
@@ -57,7 +57,6 @@ let
     dune_3
     grace
     ocamlPackages.ocaml
-    ocamlPackages.atdgen
     ocamlPackages.checkseum
     ocamlPackages.findlib
     ocamlPackages.menhir
@@ -66,7 +65,6 @@ let
     ocamlPackages.cow
     ocamlPackages.num
     ocamlPackages.stdint
-    ocamlPackages.vlq
     ocamlPackages.zarith
     ocamlPackages.yojson
     ocamlPackages.ppxlib

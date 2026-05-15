@@ -1,4 +1,4 @@
-{ writeShellScript, stdenv, libiconv-static, libcxx, libcxxabi ? libcxx }:
+{ writeShellScript, stdenv, libiconv-static, libcxx }:
 writeShellScript "linker.sh" ''
   lzma=$(echo "$*"|sed -e 's/ /\n/g'|grep '^-llzma$')
   lz=$(echo "$*"|sed -e 's/ /\n/g'|grep '^-lz$')

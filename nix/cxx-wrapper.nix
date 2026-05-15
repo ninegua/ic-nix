@@ -21,6 +21,5 @@ writeScriptBin "clang++wrapper" ''
   done
 
   # Call the real clang++ with modified arguments
-  echo "${clang}"/bin/clang++ "''${new_args[@]}" >> /tmp/x
   exec "${clang}"/bin/clang++ "''${new_args[@]}"
 ''
