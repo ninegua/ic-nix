@@ -1,0 +1,16 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index e082a14..61483c1 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -2683,9 +2683,9 @@ checksum = "3582f63211428f83597b51b2ddb88e2a91a9d52d12831f9d08f5e624e8977422"
+ 
+ [[package]]
+ name = "rpassword"
+-version = "7.5.0"
++version = "7.5.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f3bc4a3dd492cd6974dd3f32d6626ba9f36e5122e3df3b083474b104aebd139b"
++checksum = "2da316a15f47e3d053de9cb2c439650bd8fa4aaeb9365f2e5f27f492ff73c196"
+ dependencies = [
+  "libc",
+  "rtoolbox",
