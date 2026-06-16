@@ -82,7 +82,7 @@
   icp-cli = fetchgit {
     url = "https://github.com/dfinity/icp-cli"; # main
     rev = "9eed60c87336d9ac665e7fc72bab5bfd529cdc18";
-    sha256 = "085fg2x5m045sw7i6b8gv6b7hhcs7gi34bvc8d8mkmsjjgq05xsc";
+    sha256 = "sha256-NvGxWgAdGlSv3y+9qE8leJFaXTrxFdAw/9dS1vrI+kc=";
   };
   icp-cli-network-launcher = fetchgit {
     url = "https://github.com/dfinity/icp-cli-network-launcher"; # main
