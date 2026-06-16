@@ -56,8 +56,10 @@ in rec {
 
   vessel = mkDrv { } "vessel";
 
-  ic-repl =
-    mkDrv { doCheck = !(stdenv.isAarch64 && stdenv.isLinux); } "ic-repl";
+  ic-repl = mkDrv {
+    doCheck = !(stdenv.isAarch64 && stdenv.isLinux);
+    cargoPatches = [ ./nix/ic-repl.patch ];
+  } "ic-repl";
 
   ic-wasm = mkDrv {
     doCheck = false;
