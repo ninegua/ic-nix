@@ -50,7 +50,7 @@
     sha256 = "0apzqy22warj0lxd9vqrkn4247ll6pd2wnz8lfw3pldhgn7849n2";
   };
   ic-repl = fetchgit {
-    url = "https://github.com/chenyan2002/ic-repl"; # master
+    url = "https://github.com/dfinity/ic-repl"; # master
     rev = "4ef8268d347a583c280c0521d4afee9d886b200d";
     sha256 = "0acw6rap1k998bn68b18vv9k7cg69f1pnm7xjpay98dfvzkjnk9h";
   };
