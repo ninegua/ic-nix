@@ -58,7 +58,6 @@ in rec {
 
   ic-repl = mkDrv {
     doCheck = !(stdenv.isAarch64 && stdenv.isLinux);
-    cargoPatches = [ ./nix/ic-repl.patch ];
   } "ic-repl";
 
   ic-wasm = mkDrv {
