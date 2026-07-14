@@ -16,7 +16,35 @@ let
     };
     patches = [ ];
   });
-  recover-cycles-wasm = { };
+  recover-cycles-canister = (customRustPlatform.buildRustPackage (rec {
+    name = "recover_cycles_canister";
+    inherit src;
+    unpackPhase = ''
+      cp -r $src/crates/icp-cli/recover-cycles-canister ${name}
+      echo source root is ${sourceRoot}
+      chmod -R u+w -- "$sourceRoot"
+      runHook postUnpack
+    '';
+    sourceRoot = "${name}";
+    profile = "release";
+    target = "wasm32-unknown-unknown";
+    doCheck = false;
+    buildPhase = ''
+      cargo build --frozen --profile ${profile} -j $NIX_BUILD_CORES --target ${target}
+    '';
+    installPhase = ''
+      mkdir -p $out
+      ${binaryen}/bin/wasm-opt --enable-bulk-memory-opt -O2 -o $out/${name}.wasm target/${target}/${profile}/${name}.wasm
+    '';
+    cargoSha256 = lib.fakeHash;
+  })).overrideAttrs (_: {
+    cargoDeps = customRustPlatform.importCargoLock {
+      lockFile = "${src}/crates/icp-cli/recover-cycles-canister/Cargo.lock";
+      allowBuiltinFetchGit = true;
+      outputHashes = { };
+    };
+  });
+
   artifacts-src = builtins.fromJSON
     (builtins.readFile "${src}/crates/icp-cli/artifacts/source.json");
   files = builtins.mapAttrs (name: src: fetchurl src) artifacts-src;
@@ -44,7 +72,7 @@ let
         "-lstatic=llhttp"
         "-lstatic=pcre2-8"
       ];
-    RECOVER_CYCLES_WASM = "/dev/null";
+    RECOVER_CYCLES_WASM = "${recover-cycles-canister}/recover_cycles_canister.wasm";
     LIBGIT2_NO_VENDOR = 1;
     GIT_SHA = src.rev;
     cargoBuildFlags = [ "--no-default-features" ];
@@ -62,4 +90,4 @@ let
     };
   });
 
-in { inherit icp-cli; }
+in { inherit recover-cycles-canister icp-cli; }
