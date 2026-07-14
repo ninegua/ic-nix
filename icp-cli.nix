@@ -63,8 +63,8 @@ let
       ++ lib.optionals stdenv.isLinux [ ./nix/icp-cli-keyring.patch ];
     doCheck = false;
     nativeBuildInputs = [ pkg-config perl ];
-    buildInputs = [ openssl-static ]
-      ++ lib.optionals stdenv.isLinux [ dbus.dev dbus.lib libgit2 ];
+    buildInputs = [ openssl-static libgit2 ]
+      ++ lib.optionals stdenv.isLinux [ dbus.dev dbus.lib ];
     RUSTFLAGS = [ "-Lnative=${libiconv-static}/lib" "-lstatic=iconv" ]
       ++ lib.optionals (stdenv.isLinux) [ "-Clinker=${linker}" ] ++ [
         "-Lnative=${pkgsStatic.llhttp.out}/lib"
