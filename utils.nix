@@ -66,53 +66,6 @@ in rec {
     dontUseCargoParallelTests = true;
   } "ic-wasm";
 
-  icp-cli = let
-    artifacts-src = builtins.fromJSON (builtins.readFile
-      "${sources.icp-cli}/crates/icp-cli/artifacts/source.json");
-    files = builtins.mapAttrs (name: src: fetchurl src) artifacts-src;
-    install =
-      lib.mapAttrsToList (name: file: "cp ${file} $out/${name}.bin") files;
-    artifacts = stdenv.mkDerivation {
-      name = "icp-cli-artifacts";
-      phases = [ "installPhase" ];
-      installPhase = "mkdir -p $out; ${builtins.concatStringsSep ";" install}";
-    };
-  in (mkDrv {
-    doCheck = false;
-    cargoPatches = lib.optionals stdenv.isLinux [ ./nix/icp-cli-keyring.patch ];
-    extraBuildInputs = lib.optionals stdenv.isLinux [ dbus.dev dbus.lib ] ++ [
-      ((pkgsStatic.libgit2.override {
-        libiconv = libiconv-static;
-      }).overrideAttrs (rec {
-        doCheck = false;
-        # override the version because the one in 25.05 is too old.
-        version = "1.9.2";
-        src = fetchFromGitHub {
-          owner = "libgit2";
-          repo = "libgit2";
-          rev = "v${version}";
-          hash = "sha256-TCeEh8DpVoxpF/HkahxM3ONDjawAkIiMo6S7ogG3fLg=";
-        };
-        patches = [ ];
-      }))
-    ];
-    extraRustFlags = [
-      "-Lnative=${pkgsStatic.llhttp.out}/lib"
-      "-Lnative=${pkgsStatic.pcre2.out}/lib"
-      "-lstatic=llhttp"
-      "-lstatic=pcre2-8"
-    ];
-  } "icp-cli").overrideAttrs (old: {
-    LIBGIT2_NO_VENDOR = 1;
-    GIT_SHA = sources.icp-cli.rev;
-    cargoBuildFlags = [ "--no-default-features" ];
-    preConfigure = old.preConfigure ++ [''
-      pwd
-      mkdir -p target/icp-cli-artifact-cache/
-      cp ${artifacts}/* target/icp-cli-artifact-cache/
-    ''];
-  });
-
   icp-cli-network-launcher =
     mkDrv { doCheck = false; } "icp-cli-network-launcher";
 
@@ -153,5 +106,5 @@ in rec {
       "../../ic-icrc1-0.9.0/wasm/ic-icrc1-archive.wasm.gz";
   });
 
-  shell = icp-cli;
+  shell = ic-wasm;
 }
