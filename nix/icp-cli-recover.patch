@@ -1,0 +1,13 @@
+diff --git a/crates/icp-cli/build.rs b/crates/icp-cli/build.rs
+index 3e087279..c8251c29 100644
+--- a/crates/icp-cli/build.rs
++++ b/crates/icp-cli/build.rs
+@@ -112,5 +112,7 @@ fn main() {
+     }
+     define_test_network_launcher_version();
+     artifacts::bundle_artifacts();
+-    build_recover_cycles_canister();
++    if option_env!("RECOVER_CYCLES_WASM").is_none() {
++        build_recover_cycles_canister();
++    }
+ }

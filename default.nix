@@ -66,6 +66,11 @@ in let
     inherit pkgs sources;
     customRustPlatform = pkgsRust.rustPlatform;
   };
+  icp-cli = import ./icp-cli.nix {
+    inherit pkgs;
+    src = sources.icp-cli;
+    customRustPlatform = pkgsRust.rustPlatform;
+  };
   sdk = import ./sdk.nix {
     inherit pkgs;
     src = sources.sdk;
@@ -82,7 +87,7 @@ in let
     shell = null;
     wasm-binaries = null;
   };
-  projects = { inherit motoko mainnet-canisters ic ic-no-shell sdk utils; };
+  projects = { inherit motoko mainnet-canisters ic ic-no-shell icp-cli sdk utils; };
 in with builtins;
 let derivations = pkgs.lib.lists.fold (a: b: a // b) { } (attrValues projects);
 in projects // derivations // {
