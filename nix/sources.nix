@@ -1,8 +1,8 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = "8a655ede1f59ea0cb3079a9aa0601b7905b7ca37"; # pin
-    sha256 = "0nivi46zfa4xqjm6nicfgh8gwjj4m6mbjki1b8qrhb9azh98y4kj";
+    rev = "992628c4f26cc7320396b6b8be37133a666a4386"; # pin
+    sha256 = "1yx3rq1hdkdr6mw5ji1hq7s8ss2wcala7xa0sd277xh61bk73lkk";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # master
@@ -21,8 +21,8 @@
   };
   motoko = fetchgit {
     url = "https://github.com/dfinity/motoko"; # master
-    rev = "1b1177be2bde422282421e38474e475a48ab4c1d";
-    sha256 = "0q5bffm6plxcjf4i487myvkhd2jkczqdv5gf6jrz4j13l7205w2n";
+    rev = "ac060c45baa8389619247ac196ea317576570e3b";
+    sha256 = "0pwcp9kmk2vflqxxam21s4xbwq7j59f6z5xi0i1a7qsqhm9vy8vw";
   };
   motoko-base = fetchgit {
     url = "https://github.com/dfinity/motoko-base"; # next-moc
@@ -71,8 +71,8 @@
   };
   agent-rs = fetchgit {
     url = "https://github.com/dfinity/agent-rs"; # main
-    rev = "3ac041c31dee0dbe7c202d16154bc68b50fc6ab2";
-    sha256 = "1x0y72zgsdl325rnfb366667pjr5nn79safp06q0gx97y2w2wms5";
+    rev = "e9e76f707b0e16f0e1cd81dce2f6e43a751a860c";
+    sha256 = "0qzhllf917q67ycgprlldx8c9lqfwk6v46ajz8cgcjpz6mwnkbg2";
   };
   dfx-extensions = fetchgit {
     url = "https://github.com/dfinity/dfx-extensions"; # main
@@ -81,12 +81,12 @@
   };
   icp-cli = fetchgit {
     url = "https://github.com/dfinity/icp-cli"; # main
-    rev = "f7e696d1fbd43c8f382d3825adc1180a0fed88c5";
-    sha256 = "10m6k396nn9i8qz0v9q4j8z7vcj64mvnp7d8jqi3i4w0prj87fbh";
+    rev = "d35154c58ba45948aa9a35b77020afcee2b0b377";
+    sha256 = "11g97kkf6spv0bi740bq3pfs2d0s1sxpfcrczzphamq33q46m3mv";
   };
   icp-cli-network-launcher = fetchgit {
     url = "https://github.com/dfinity/icp-cli-network-launcher"; # main
-    rev = "d62a5ec29d3ea21ac2847e51fff2828a26d79616";
-    sha256 = "10wkj2brpx3nkkdl5kymlhvd118jj337kjjyfrjz4agkrh55mvwm";
+    rev = "5f7b2f2e29109682229f98f6870a1e31c4e0f7c0";
+    sha256 = "1yvh0c9bzd90qmfxxqy0sy9x5vfqkgaf0ybg48wa488h5md2z01d";
   };
 }
