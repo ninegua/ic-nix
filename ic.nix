@@ -135,12 +135,14 @@ let
         lockFile = "${sources.ic}/Cargo.lock";
         allowBuiltinFetchGit = true;
         outputHashes = {
-          "icrc1-test-env-0.1.1" =
-            "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
-          "lmdb-rkv-0.14.99" =
-            "sha256-6yRjugQ1mshOgX6RFVjEyuli2wOhLvLkzm580lsTI3w=";
-          "build-info-0.0.27" =
-            "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
+          "icrc1-test-env-0.1.1" = "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
+          "lmdb-rkv-0.14.99" = "sha256-6yRjugQ1mshOgX6RFVjEyuli2wOhLvLkzm580lsTI3w=";
+          "build-info-0.0.45" = "sha256-M4dctGQ/HQxM9OK8w9sgQlZSEyUSSZgXpeNqpCScivc=";
+          "comparable-0.5.6" = "sha256-6MKANOtzYmcXvERPffto10D2abC+vXGc80XFnjNzxvE=";
+          "ic-gateway-0.2.0" = lib.fakeHash;
+          "ic-http-gateway-protocol-0.0.0-git" = lib.fakeHash;
+          "pprof-0.15.0" = lib.fakeHash;
+          "tarpc-0.37.0" = lib.fakeHash;
         };
       };
       # not available for wasm32 targets
