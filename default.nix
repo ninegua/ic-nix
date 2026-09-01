@@ -36,13 +36,7 @@ in let
         rustc = self.rust-stable;
         cargo = self.rust-stable;
         stdenv = self.llvmPackages.libcxxStdenv;
-      }) // {
-        importCargoLock = super.callPackage
-          (if pkgs.lib.versionAtLeast pkgs.lib.version "24.11pre" then
-            ./nix/import-cargo-lock-24.11.nix
-          else
-            ./nix/import-cargo-lock.nix) { cargo = self.rust-stable; };
-      };
+      });
       # workaround for nixpkgs 23.11 for HOST_CC when invoking cargo.
       rust = if super.rust ? envVars then
         super.rust // { envVars = super.rust.envVars // { setEnv = ""; }; }
