@@ -133,7 +133,7 @@ let
         allowBuiltinFetchGit = true;
         outputHashes = {
           "icrc1-test-env-0.1.1" = "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
-          "lmdb-rkv-0.14.99" = "sha256-6yRjugQ1mshOgX6RFVjEyuli2wOhLvLkzm580lsTI3w=";
+          "lmdb-rkv-0.14.99" = "sha256-EzXwReeE5LGVp3Po3UEBanX3qOad/JUmDUKiDZrtnds=";
           "build-info-0.0.45" = "sha256-M4dctGQ/HQxM9OK8w9sgQlZSEyUSSZgXpeNqpCScivc=";
           "comparable-0.5.6" = "sha256-6MKANOtzYmcXvERPffto10D2abC+vXGc80XFnjNzxvE=";
           "ic-gateway-0.2.0" = "sha256-2iByDeE3QvjS7shVAdq2MpuHA6GSfZisF9/ghYtzVAM=";
