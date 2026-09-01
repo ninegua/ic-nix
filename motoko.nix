@@ -147,7 +147,6 @@ in rec {
       name = "cargo-vendor-tools";
       src = "${sources.motoko}/rts/${name}/";
       cargoLock = { lockFile = "${sources.motoko}/rts/${name}/Cargo.lock"; };
-      patches = [ ./nix/motoko-cargo-vendor-tools.patch ];
     };
 
     # Path to vendor-rust-std-deps, provided by cargo-vendor-tools
