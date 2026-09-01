@@ -71,12 +71,9 @@ let
         sqlite
         openssl-static
         zlib-static
-        (lib.optionals stdenv.hostPlatform.isDarwin rocksdb)
-      ] ++ (if isDev then [
-        libunwind
-        (lib.optional stdenv.isLinux cryptsetup)
-      ] else
-        [ libunwind-static ]);
+      ] ++ (lib.optional stdenv.hostPlatform.isDarwin rocksdb)
+        ++ (if isDev then [ libunwind ] ++ lib.optional stdenv.isLinux cryptsetup
+                     else [ libunwind-static ]);
 
       doCheck = false;
 
@@ -139,10 +136,10 @@ let
           "lmdb-rkv-0.14.99" = "sha256-6yRjugQ1mshOgX6RFVjEyuli2wOhLvLkzm580lsTI3w=";
           "build-info-0.0.45" = "sha256-M4dctGQ/HQxM9OK8w9sgQlZSEyUSSZgXpeNqpCScivc=";
           "comparable-0.5.6" = "sha256-6MKANOtzYmcXvERPffto10D2abC+vXGc80XFnjNzxvE=";
-          "ic-gateway-0.2.0" = lib.fakeHash;
-          "ic-http-gateway-protocol-0.0.0-git" = lib.fakeHash;
-          "pprof-0.15.0" = lib.fakeHash;
-          "tarpc-0.37.0" = lib.fakeHash;
+          "ic-gateway-0.2.0" = "sha256-2iByDeE3QvjS7shVAdq2MpuHA6GSfZisF9/ghYtzVAM=";
+          "ic-http-gateway-protocol-0.0.0-git" = "sha256-ZU3EdrPVSpfo4adhBZ16qESia8fmP8dj7FEKoUujoaw=";
+          "pprof-0.15.0" = "sha256-BdZUWMMrNVVmTQOFGUf2965eEDMhKNZqHKkgQ49NZLI=";
+          "tarpc-0.37.0" = "sha256-R3qUsGu5eGk4SVY8HO39uxB+4kBRIRXTTwh+x0cAcZM=";
         };
       };
       # not available for wasm32 targets

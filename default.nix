@@ -89,7 +89,7 @@ in let
   };
   projects = { inherit motoko mainnet-canisters ic ic-no-shell icp-cli sdk utils; };
 in with builtins;
-let derivations = pkgs.lib.lists.fold (a: b: a // b) { } (attrValues projects);
+let derivations = pkgs.lib.lists.foldr (a: b: a // b) { } (attrValues projects);
 in projects // derivations // {
   deps = depsOf (attrValues
     (pkgs.lib.filterAttrs (_: value: pkgs.lib.isDerivation value) derivations));
