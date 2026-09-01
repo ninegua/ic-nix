@@ -15,6 +15,9 @@ def load_file(path: str) -> dict[str, Any]:
         return tomli.load(f)
 
 
+# This replicates the dependency merging logic from Cargo.
+# See `inner_dependency_inherit_with`:
+# https://github.com/rust-lang/cargo/blob/4de0094ac78743d2c8ff682489e35c8a7cafe8e4/src/cargo/util/toml/mod.rs#L982
 def replace_key(
     workspace_manifest: dict[str, Any], table: dict[str, Any], section: str, key: str
 ) -> bool:
@@ -25,28 +28,53 @@ def replace_key(
     ):
         print("replacing " + key)
 
-        replaced = table[key]
-        del replaced["workspace"]
+        local_dep = table[key]
+        del local_dep["workspace"]
 
-        workspace_copy = workspace_manifest[section][key]
+        try:
+            workspace_dep = workspace_manifest[section][key]
+        except KeyError:
+            # Key is not present in workspace manifest, we can't inherit the value, so we mark it for deletion
+            table[key] = {}
+            return True
 
         if section == "dependencies":
-            crate_features = replaced.get("features")
+            if isinstance(workspace_dep, str):
+                workspace_dep = {"version": workspace_dep}
 
-            if type(workspace_copy) is str:
-                replaced["version"] = workspace_copy
-            else:
-                replaced.update(workspace_copy)
+            final: dict[str, Any] = workspace_dep.copy()
 
-                merged_features = (crate_features or []) + (
-                    workspace_copy.get("features") or []
+            merged_features = local_dep.pop("features", []) + workspace_dep.get(
+                "features", []
+            )
+            if merged_features:
+                final["features"] = merged_features
+
+            local_default_features = local_dep.pop(
+                "default-features", local_dep.pop("default_features", None)
+            )
+            workspace_default_features = workspace_dep.get(
+                "default-features", workspace_dep.get("default_features")
+            )
+
+            if not workspace_default_features and local_default_features:
+                final["default-features"] = True
+
+            optional = local_dep.pop("optional", False)
+            if optional:
+                final["optional"] = True
+
+            if "package" in local_dep:
+                final["package"] = local_dep.pop("package")
+
+            if local_dep:
+                raise Exception(
+                    f"Unhandled keys in inherited dependency {key}: {local_dep}"
                 )
 
-                if len(merged_features) > 0:
-                    # Dictionaries are guaranteed to be ordered (https://stackoverflow.com/a/7961425)
-                    replaced["features"] = list(dict.fromkeys(merged_features))
+            table[key] = final
         elif section == "package":
-            table[key] = replaced = workspace_copy
+            table[key] = workspace_dep
 
         return True
 
@@ -83,10 +111,18 @@ def main() -> None:
 
     changed = False
 
+    to_remove = []
     for key in crate_manifest["package"].keys():
-        changed |= replace_key(
+        changed_key = replace_key(
             workspace_manifest, crate_manifest["package"], "package", key
         )
+        if changed_key and crate_manifest["package"][key] == {}:
+            # Key is missing from workspace manifest, mark for deletion
+            to_remove.append(key)
+        changed |= changed_key
+    # Remove keys which have no value
+    for key in to_remove:
+        del crate_manifest["package"][key]
 
     changed |= replace_dependencies(workspace_manifest, crate_manifest)
 
@@ -95,6 +131,14 @@ def main() -> None:
             changed |= replace_dependencies(
                 workspace_manifest, crate_manifest["target"][key]
             )
+
+    if (
+        "lints" in crate_manifest
+        and "workspace" in crate_manifest["lints"]
+        and crate_manifest["lints"]["workspace"] is True
+    ):
+        crate_manifest["lints"] = workspace_manifest["lints"]
+        changed = True
 
     if not changed:
         return
