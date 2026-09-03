@@ -37,11 +37,7 @@ in let
         cargo = self.rust-stable;
         stdenv = self.llvmPackages.libcxxStdenv;
       }) // {
-        importCargoLock = super.callPackage
-          (if pkgs.lib.versionAtLeast pkgs.lib.version "24.11pre" then
-            ./nix/import-cargo-lock-24.11.nix
-          else
-            ./nix/import-cargo-lock.nix) { cargo = self.rust-stable; };
+        importCargoLock = super.callPackage ./nix/import-cargo-lock.nix { cargo = self.rust-stable; };
       };
       # workaround for nixpkgs 23.11 for HOST_CC when invoking cargo.
       rust = if super.rust ? envVars then
@@ -89,7 +85,7 @@ in let
   };
   projects = { inherit motoko mainnet-canisters ic ic-no-shell icp-cli sdk utils; };
 in with builtins;
-let derivations = pkgs.lib.lists.fold (a: b: a // b) { } (attrValues projects);
+let derivations = pkgs.lib.lists.foldr (a: b: a // b) { } (attrValues projects);
 in projects // derivations // {
   deps = depsOf (attrValues
     (pkgs.lib.filterAttrs (_: value: pkgs.lib.isDerivation value) derivations));

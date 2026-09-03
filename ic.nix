@@ -71,12 +71,9 @@ let
         sqlite
         openssl-static
         zlib-static
-        (lib.optionals stdenv.hostPlatform.isDarwin rocksdb)
-      ] ++ (if isDev then [
-        libunwind
-        (lib.optional stdenv.isLinux cryptsetup)
-      ] else
-        [ libunwind-static ]);
+      ] ++ (lib.optional stdenv.hostPlatform.isDarwin rocksdb)
+        ++ (if isDev then [ libunwind ] ++ lib.optional stdenv.isLinux cryptsetup
+                     else [ libunwind-static ]);
 
       doCheck = false;
 
@@ -135,12 +132,10 @@ let
         lockFile = "${sources.ic}/Cargo.lock";
         allowBuiltinFetchGit = true;
         outputHashes = {
-          "icrc1-test-env-0.1.1" =
-            "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
-          "lmdb-rkv-0.14.99" =
-            "sha256-6yRjugQ1mshOgX6RFVjEyuli2wOhLvLkzm580lsTI3w=";
-          "build-info-0.0.27" =
-            "sha256-SkwWwDNrTsntkNiCv6rsyTFGazhpRDnKtVzPpYLKF9U=";
+          "icrc1-test-env-0.1.1" = "sha256-2PB7e64Owin/Eji3k8UoeWs+pfDfOOTaAyXjvjOZ/4g=";
+          "lmdb-rkv-0.14.99" = "sha256-EzXwReeE5LGVp3Po3UEBanX3qOad/JUmDUKiDZrtnds=";
+          "build-info-0.0.45" = "sha256-M4dctGQ/HQxM9OK8w9sgQlZSEyUSSZgXpeNqpCScivc=";
+          "tarpc-0.37.0" = "sha256-R3qUsGu5eGk4SVY8HO39uxB+4kBRIRXTTwh+x0cAcZM=";
         };
       };
       # not available for wasm32 targets
