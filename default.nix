@@ -83,7 +83,7 @@ in let
     shell = null;
     wasm-binaries = null;
   };
-  projects = { inherit motoko mainnet-canisters ic ic-no-shell icp-cli sdk utils; };
+  projects = { inherit motoko mainnet-canisters ic ic-no-shell icp-cli sdk utils; rust-bin = pkgs_with_overlay.rust-bin; };
 in with builtins;
 let derivations = pkgs.lib.lists.foldr (a: b: a // b) { } (attrValues projects);
 in projects // derivations // {
