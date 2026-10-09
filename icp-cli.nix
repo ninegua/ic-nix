@@ -7,12 +7,12 @@ let
   }).overrideAttrs (rec {
     doCheck = false;
     # override the version because the one in 25.05 is too old.
-    version = "1.9.4";
+    version = "1.9.7";
     src = fetchFromGitHub {
       owner = "libgit2";
       repo = "libgit2";
       rev = "v${version}";
-      hash = "sha256-ZKUiz3pdFE2SKxh53X2oyr7hs32Njj5YVA0OXDXz7h0=";
+      hash = "sha256-kBQqTxMIWMCZJA1SuxVb29Y7k+V1Y2qVR2EntoY4FUo=";
     };
     patches = [ ];
   });

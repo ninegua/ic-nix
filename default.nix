@@ -2,13 +2,13 @@
 let
   pkgs_with_overlay = pkgs.appendOverlays ([
     (import (builtins.fetchTarball
-      "https://github.com/oxalica/rust-overlay/archive/refs/tags/snapshot/2026-03-11.tar.gz"))
+      "https://github.com/oxalica/rust-overlay/archive/master.tar.gz"))
     (self: super: {
-      rust-stable = self.rust-bin.stable.latest.default.override {
+      rust-stable = self.rust-bin.stable."1.99.0".default.override {
         targets = [ "wasm32-unknown-unknown" ];
         extensions = [ "rust-src" ];
       };
-      rust-nightly = self.rust-bin.nightly."2026-03-10".default.override {
+      rust-nightly = self.rust-bin.nightly."2026-07-25".default.override {
         targets = [ "wasm32-wasip1" ];
         extensions = [ "rust-src" ];
       };

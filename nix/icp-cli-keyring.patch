@@ -1,139 +1,42 @@
 diff --git a/Cargo.toml b/Cargo.toml
-index 01934100..f56d6bf9 100644
+index 22980d03..686cd936 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
 @@ -58,7 +58,7 @@ ic-ed25519 = "0.6.0"
  ic-ledger-types = "0.16.0"
- ic-management-canister-types = { version = "0.8.0" }
+ ic-management-canister-types = { version = "0.9.0" }
  ic-utils = { version = "0.49.1" }
--icp = { path = "crates/icp" }
-+icp = { path = "crates/icp", default-features = false }
+-icp-app = { path = "crates/icp-app" }
++icp-app = { path = "crates/icp-app", default-features = false }
  icp-canister-interfaces = { path = "crates/icp-canister-interfaces" }
  icp-events = { path = "crates/icp-events" }
- icp-sync-plugin = { path = "crates/icp-sync-plugin" }
-diff --git a/crates/icp-cli/Cargo.toml b/crates/icp-cli/Cargo.toml
-index 9d0427b2..66faeef1 100644
---- a/crates/icp-cli/Cargo.toml
-+++ b/crates/icp-cli/Cargo.toml
-@@ -108,3 +108,7 @@ sha2.workspace = true
- # explicitly opt-in to distribution via `dist`
- [package.metadata.dist]
- dist = true
-+
-+[features]
+ icp-project = { path = "crates/icp-project" }
+diff --git a/crates/icp-app/Cargo.toml b/crates/icp-app/Cargo.toml
+index 1ba361e0..05d13583 100644
+--- a/crates/icp-app/Cargo.toml
++++ b/crates/icp-app/Cargo.toml
+@@ -6,6 +6,7 @@ license = { workspace = true }
+ publish.workspace = true
+ 
+ [features]
 +default = [ "keyring" ]
-+keyring = [ "icp/keyring" ]
-diff --git a/crates/icp-cli/src/commands/identity/delegation/request.rs b/crates/icp-cli/src/commands/identity/delegation/request.rs
-index f095a7e0..147a4641 100644
---- a/crates/icp-cli/src/commands/identity/delegation/request.rs
-+++ b/crates/icp-cli/src/commands/identity/delegation/request.rs
-@@ -30,6 +30,7 @@ pub(crate) struct RequestArgs {
- pub(crate) async fn exec(ctx: &Context, args: &RequestArgs) -> Result<(), RequestError> {
-     let create_format = match args.storage {
-         StorageMode::Plaintext => key::CreateFormat::Plaintext,
-+        #[cfg(feature = "keyring")]
-         StorageMode::Keyring => key::CreateFormat::Keyring,
-         StorageMode::Password => {
-             let password = if let Some(path) = &args.storage_password_file {
-diff --git a/crates/icp-cli/src/commands/identity/import.rs b/crates/icp-cli/src/commands/identity/import.rs
-index 28dc343a..c9efdb98 100644
---- a/crates/icp-cli/src/commands/identity/import.rs
-+++ b/crates/icp-cli/src/commands/identity/import.rs
-@@ -80,6 +80,7 @@ pub(crate) struct ImportArgs {
- pub(crate) async fn exec(ctx: &Context, args: &ImportArgs) -> Result<(), anyhow::Error> {
-     let format = match args.storage {
-         StorageMode::Plaintext => CreateFormat::Plaintext,
-+        #[cfg(feature = "keyring")]
-         StorageMode::Keyring => CreateFormat::Keyring,
-         StorageMode::Password => {
-             let password = if let Some(path) = &args.storage_password_file {
-diff --git a/crates/icp-cli/src/commands/identity/link/web.rs b/crates/icp-cli/src/commands/identity/link/web.rs
-index 330fe2fc..34c4f950 100644
---- a/crates/icp-cli/src/commands/identity/link/web.rs
-+++ b/crates/icp-cli/src/commands/identity/link/web.rs
-@@ -82,6 +82,7 @@ pub(crate) async fn exec(ctx: &Context, args: &WebArgs) -> Result<(), WebAuthErr
- 
-     let create_format = match args.storage {
-         StorageMode::Plaintext => key::CreateFormat::Plaintext,
-+        #[cfg(feature = "keyring")]
-         StorageMode::Keyring => key::CreateFormat::Keyring,
-         StorageMode::Password => {
-             let password = if let Some(path) = &args.storage_password_file {
-diff --git a/crates/icp-cli/src/commands/identity/mod.rs b/crates/icp-cli/src/commands/identity/mod.rs
-index 637ff7ff..19bcc81e 100644
---- a/crates/icp-cli/src/commands/identity/mod.rs
-+++ b/crates/icp-cli/src/commands/identity/mod.rs
-@@ -32,10 +32,19 @@ pub(crate) enum Command {
-     Rename(rename::RenameArgs),
- }
- 
--#[derive(Debug, Clone, ValueEnum, Default)]
-+#[derive(Debug, Clone, ValueEnum)]
- enum StorageMode {
-     Plaintext,
--    #[default]
-+    #[cfg(feature = "keyring")]
-     Keyring,
-     Password,
- }
-+
-+impl Default for StorageMode {
-+    fn default() -> Self {
-+        #[cfg(feature = "keyring")]
-+        return Self::Keyring;
-+        #[cfg(not(feature = "keyring"))]
-+        return Self::Password;
-+    }
-+}
-diff --git a/crates/icp-cli/src/commands/identity/new.rs b/crates/icp-cli/src/commands/identity/new.rs
-index 524e6ce1..abd9da51 100644
---- a/crates/icp-cli/src/commands/identity/new.rs
-+++ b/crates/icp-cli/src/commands/identity/new.rs
-@@ -68,6 +68,7 @@ pub(crate) async fn exec(ctx: &Context, args: &NewArgs) -> Result<(), anyhow::Er
-     );
-     let format = match args.storage {
-         StorageMode::Plaintext => CreateFormat::Plaintext,
-+        #[cfg(feature = "keyring")]
-         StorageMode::Keyring => CreateFormat::Keyring,
-         StorageMode::Password => {
-             let password = if let Some(path) = &args.storage_password_file {
-diff --git a/crates/icp-cli/src/commands/identity/reauth.rs b/crates/icp-cli/src/commands/identity/reauth.rs
-index 937cd1f2..54cbdad1 100644
---- a/crates/icp-cli/src/commands/identity/reauth.rs
-+++ b/crates/icp-cli/src/commands/identity/reauth.rs
-@@ -88,6 +88,7 @@ pub(crate) async fn exec(ctx: &Context, args: &ReauthArgs) -> Result<(), LoginEr
-             info!("Identity `{}` re-authenticated", args.name);
-         }
- 
-+        #[cfg(feature = "keyring")]
-         IdentitySpec::Pem {
-             format: PemFormat::Pbes2,
-             algorithm,
-diff --git a/crates/icp/Cargo.toml b/crates/icp/Cargo.toml
-index 1ea3d7a7..e0d6143d 100644
---- a/crates/icp/Cargo.toml
-+++ b/crates/icp/Cargo.toml
-@@ -44,7 +44,7 @@ indexmap = { workspace = true }
- indoc = { workspace = true }
+ # `clap::ValueEnum` derives on the settings/identity enums used as CLI value
+ # types. Enabled by `icp-cli`.
+ clap = ["dep:clap", "icp-project/clap"]
+@@ -47,7 +48,7 @@ icp-events = { workspace = true }
+ icrc-ledger-types = { workspace = true }
  itertools = { workspace = true }
  k256 = { workspace = true }
 -keyring = { workspace = true }
 +keyring = { workspace = true, optional = true }
  notify = { workspace = true }
  num-bigint = { workspace = true }
- num-integer = { workspace = true }
-@@ -90,3 +90,6 @@ winreg = { workspace = true }
- [dev-dependencies]
- httptest = { workspace = true }
- jsonschema = { workspace = true }
-+
-+[features]
-+default = [ "keyring" ]
-diff --git a/crates/icp/src/context/init.rs b/crates/icp/src/context/init.rs
-index 4af5cda7..02ef9ef6 100644
---- a/crates/icp/src/context/init.rs
-+++ b/crates/icp/src/context/init.rs
-@@ -120,6 +120,7 @@ pub fn initialize(
+ num-traits = { workspace = true }
+diff --git a/crates/icp-app/src/context/init.rs b/crates/icp-app/src/context/init.rs
+index b0dc0bf0..6d924116 100644
+--- a/crates/icp-app/src/context/init.rs
++++ b/crates/icp-app/src/context/init.rs
+@@ -138,6 +138,7 @@ pub fn initialize(
          pem_session_duration,
          telemetry_data.clone(),
      ));
@@ -141,10 +44,10 @@ index 4af5cda7..02ef9ef6 100644
      if let Ok(mockdir) = std::env::var("ICP_CLI_KEYRING_MOCK_DIR") {
          keyring::set_default_credential_builder(Box::new(
              crate::identity::keyring_mock::MockKeyring {
-diff --git a/crates/icp/src/identity/key.rs b/crates/icp/src/identity/key.rs
-index 3c28075e..1eb26b5a 100644
---- a/crates/icp/src/identity/key.rs
-+++ b/crates/icp/src/identity/key.rs
+diff --git a/crates/icp-app/src/identity/key.rs b/crates/icp-app/src/identity/key.rs
+index 8dbf414a..3b7fd003 100644
+--- a/crates/icp-app/src/identity/key.rs
++++ b/crates/icp-app/src/identity/key.rs
 @@ -13,6 +13,7 @@ use ic_agent::{
  };
  use ic_ed25519::PrivateKeyFormat;
@@ -153,7 +56,7 @@ index 3c28075e..1eb26b5a 100644
  use keyring::Entry;
  use pem::Pem;
  use pkcs8::{
-@@ -54,7 +55,10 @@ pub enum IdentityKey {
+@@ -53,7 +54,10 @@ pub enum IdentityKey {
  #[derive(Debug, Clone)]
  pub enum CreateFormat {
      Plaintext,
@@ -165,9 +68,9 @@ index 3c28075e..1eb26b5a 100644
      Keyring,
  }
  
-@@ -102,9 +106,11 @@ pub enum LoadIdentityError {
-     #[snafu(transparent)]
-     LockError { source: crate::fs::lock::LockError },
+@@ -104,9 +108,11 @@ pub enum LoadIdentityError {
+         source: icp_project::fs::lock::LockError,
+     },
  
 +    #[cfg(feature = "keyring")]
      #[snafu(display("failed to load keyring entry"))]
@@ -177,7 +80,7 @@ index 3c28075e..1eb26b5a 100644
      #[snafu(display("failed to load password from keyring entry"))]
      LoadPasswordFromEntryError { source: keyring::Error },
  
-@@ -174,6 +180,7 @@ pub fn load_identity(
+@@ -178,6 +184,7 @@ pub fn load_identity(
              password_func,
              pem_session_duration,
          ),
@@ -185,7 +88,7 @@ index 3c28075e..1eb26b5a 100644
          IdentitySpec::Keyring { algorithm, .. } => load_keyring_identity(name, algorithm),
          IdentitySpec::Hsm {
              module,
-@@ -214,6 +221,7 @@ fn load_pem_identity(
+@@ -218,6 +225,7 @@ fn load_pem_identity(
      password_func: PasswordFunc,
      pem_session_duration: Option<Duration>,
  ) -> Result<Arc<dyn Identity>, LoadIdentityError> {
@@ -193,7 +96,7 @@ index 3c28075e..1eb26b5a 100644
      // For password-protected PEMs, check for a valid cached session delegation first.
      if *format == PemFormat::Pbes2
          && let Some(id) = try_load_pem_session(dirs.read(), name)
-@@ -236,6 +244,7 @@ fn load_pem_identity(
+@@ -240,6 +248,7 @@ fn load_pem_identity(
      };
  
      // After unlocking a Pbes2 PEM, create and cache a short-lived session delegation.
@@ -201,7 +104,7 @@ index 3c28075e..1eb26b5a 100644
      if *format == PemFormat::Pbes2
          && let Some(duration) = pem_session_duration
      {
-@@ -332,6 +341,7 @@ fn dlg_keyring_key(name: &str) -> String {
+@@ -336,6 +345,7 @@ fn dlg_keyring_key(name: &str) -> String {
  ///
  /// Returns `None` on any failure (missing, expired, or keyring unavailable) so the
  /// caller falls back to normal PEM loading.
@@ -209,7 +112,7 @@ index 3c28075e..1eb26b5a 100644
  fn try_load_pem_session(dirs: LRead<&IdentityPaths>, name: &str) -> Option<Arc<dyn Identity>> {
      // Load chain from disk; missing file is the common case on first use.
      let chain_path = dirs.delegation_chain_path(name);
-@@ -419,9 +429,11 @@ pub enum CreateExplicitPemSessionError {
+@@ -423,9 +433,11 @@ pub enum CreateExplicitPemSessionError {
      #[snafu(display("failed to sign session delegation: {message}"))]
      SignDelegation { message: String },
  
@@ -221,7 +124,7 @@ index 3c28075e..1eb26b5a 100644
      #[snafu(display("failed to store session key in keyring"))]
      SetSessionKeyringPassword { source: keyring::Error },
  
-@@ -443,6 +455,7 @@ pub enum CreateExplicitPemSessionError {
+@@ -447,6 +459,7 @@ pub enum CreateExplicitPemSessionError {
  ///
  /// Returns an error if any step fails. Automatic callers silence errors via `let Ok(...) =`;
  /// explicit callers propagate them.
@@ -229,7 +132,7 @@ index 3c28075e..1eb26b5a 100644
  fn create_pem_session_and_build_identity(
      dirs: LWrite<&IdentityPaths>,
      name: &str,
-@@ -561,6 +574,7 @@ fn create_pem_session_and_build_identity(
+@@ -565,6 +578,7 @@ fn create_pem_session_and_build_identity(
  ///
  /// Unlike the automatic path (which silences errors), this propagates them.
  /// The `duration` should already include the 2-minute clock-drift boost.
@@ -237,7 +140,7 @@ index 3c28075e..1eb26b5a 100644
  pub fn create_explicit_pem_session(
      dirs: LWrite<&IdentityPaths>,
      name: &str,
-@@ -583,6 +597,7 @@ pub fn create_explicit_pem_session(
+@@ -587,6 +601,7 @@ pub fn create_explicit_pem_session(
      Ok(())
  }
  
@@ -245,7 +148,7 @@ index 3c28075e..1eb26b5a 100644
  fn load_keyring_identity(
      name: &str,
      algorithm: &IdentityKeyAlgorithm,
-@@ -672,8 +687,9 @@ fn load_webauth_identity(
+@@ -676,8 +691,9 @@ fn load_webauth_identity(
          delegation::to_agent_types(&stored_chain).context(DelegationConversionSnafu)?;
  
      let inner: Arc<dyn Identity> = match storage {
@@ -257,7 +160,7 @@ index 3c28075e..1eb26b5a 100644
              format: PemFormat::Plaintext,
          } => load_plaintext_identity(&doc, algorithm, &origin)?,
          DelegationKeyStorage::Pem {
-@@ -728,8 +744,9 @@ pub fn load_webauth_session_public_key(
+@@ -732,8 +748,9 @@ pub fn load_webauth_session_public_key(
      let (doc, origin) = load_webauth_session_pem(dirs, name, storage)?;
  
      match storage {
@@ -269,7 +172,7 @@ index 3c28075e..1eb26b5a 100644
              format: PemFormat::Plaintext,
          } => load_webauth_public_key_plaintext(&doc, algorithm, &origin),
          DelegationKeyStorage::Pem {
-@@ -748,6 +765,7 @@ fn load_webauth_session_pem(
+@@ -752,6 +769,7 @@ fn load_webauth_session_pem(
      storage: &DelegationKeyStorage,
  ) -> Result<(Pem, PemOrigin), LoadIdentityError> {
      match storage {
@@ -277,7 +180,7 @@ index 3c28075e..1eb26b5a 100644
          DelegationKeyStorage::Keyring => {
              let username = dlg_keyring_key(name);
              let entry = Entry::new(SERVICE_NAME, &username).context(LoadEntrySnafu)?;
-@@ -1024,6 +1042,7 @@ pub fn create_identity(
+@@ -1028,6 +1046,7 @@ pub fn create_identity(
              let pem = make_pkcs5_encrypted_pem(&doc, password);
              write_identity(dirs, name, &pem)?;
          }
@@ -285,7 +188,7 @@ index 3c28075e..1eb26b5a 100644
          CreateFormat::Keyring => {
              let pem = doc
                  .to_pem(PrivateKeyInfo::PEM_LABEL, Default::default())
-@@ -1048,6 +1067,7 @@ pub fn create_identity(
+@@ -1052,6 +1071,7 @@ pub fn create_identity(
      // Whether a session key was just stored in the keyring that must be rolled back if the
      // writes below fail: the manifest would never be written, so `identity remove` could not
      // later find the orphaned `delegation:<name>` credential.
@@ -293,7 +196,7 @@ index 3c28075e..1eb26b5a 100644
      let rollback_keyring = delegation.is_some() && matches!(format, CreateFormat::Keyring);
  
      let spec = if delegation.is_some() {
-@@ -1058,6 +1078,7 @@ pub fn create_identity(
+@@ -1062,6 +1082,7 @@ pub fn create_identity(
              CreateFormat::Pbes2 { .. } => DelegationKeyStorage::Pem {
                  format: PemFormat::Pbes2,
              },
@@ -301,7 +204,7 @@ index 3c28075e..1eb26b5a 100644
              CreateFormat::Keyring => DelegationKeyStorage::Keyring,
          };
          IdentitySpec::Delegation {
-@@ -1077,6 +1098,7 @@ pub fn create_identity(
+@@ -1081,6 +1102,7 @@ pub fn create_identity(
                  algorithm,
                  principal,
              },
@@ -309,7 +212,7 @@ index 3c28075e..1eb26b5a 100644
              CreateFormat::Keyring => IdentitySpec::Keyring {
                  principal,
                  algorithm,
-@@ -1100,6 +1122,7 @@ pub fn create_identity(
+@@ -1104,6 +1126,7 @@ pub fn create_identity(
          Ok(())
      };
      if let Err(e) = persist() {
@@ -317,9 +220,9 @@ index 3c28075e..1eb26b5a 100644
          if rollback_keyring && let Ok(entry) = Entry::new(SERVICE_NAME, &dlg_keyring_key(name)) {
              let _ = entry.delete_credential();
          }
-@@ -1120,10 +1143,14 @@ pub enum WriteIdentityError {
-     #[snafu(transparent)]
-     LockError { source: crate::fs::lock::LockError },
+@@ -1126,10 +1149,14 @@ pub enum WriteIdentityError {
+         source: icp_project::fs::lock::LockError,
+     },
  
 +    #[cfg(feature = "keyring")]
      #[snafu(display("failed to create keyring entry"))]
@@ -332,7 +235,7 @@ index 3c28075e..1eb26b5a 100644
      #[cfg(target_os = "linux")]
      #[snafu(display(
          "no keyring available - have you set it up? gnome-keyring must be installed and configured with a default keyring."
-@@ -1168,30 +1195,35 @@ pub enum RenameIdentityError {
+@@ -1174,30 +1201,35 @@ pub enum RenameIdentityError {
      #[snafu(display("failed to delete old key file"))]
      DeleteOldKeyFile { source: fs::IoError },
  
@@ -368,7 +271,7 @@ index 3c28075e..1eb26b5a 100644
      #[snafu(display("failed to delete old keyring entry for identity `{old_name}`"))]
      DeleteKeyringEntry {
          old_name: String,
-@@ -1231,9 +1263,12 @@ pub fn rename_identity(
+@@ -1237,9 +1269,12 @@ pub fn rename_identity(
      // Copy key material to new location before updating the list
      enum OldKeyMaterial {
          Pem(PathBuf),
@@ -381,16 +284,16 @@ index 3c28075e..1eb26b5a 100644
          WebAuthKeyringAndDelegation(Entry, PathBuf),
          WebAuthPemAndDelegation(PathBuf, PathBuf),
          None,
-@@ -1247,6 +1282,8 @@ pub fn rename_identity(
+@@ -1253,6 +1288,8 @@ pub fn rename_identity(
              let contents = fs::read(&old_path).context(CopyKeyFileSnafu)?;
-             fs::write(&new_path, &contents).context(CopyKeyFileSnafu)?;
+             fs::write_private(&new_path, &contents).context(CopyKeyFileSnafu)?;
  
 +            #[cfg(feature = "keyring")]
 +            {
              // Best-effort: migrate any cached session delegation.
              if let Ok(old_entry) = Entry::new(SERVICE_NAME, &dlg_keyring_key(old_name))
                  && let Ok(pem_str) = old_entry.get_password()
-@@ -1256,6 +1293,7 @@ pub fn rename_identity(
+@@ -1262,6 +1299,7 @@ pub fn rename_identity(
                  }
                  let _ = old_entry.delete_credential();
              }
@@ -398,7 +301,7 @@ index 3c28075e..1eb26b5a 100644
              let old_chain_path = dirs.delegation_chain_path(old_name);
              if let Ok(chain_bytes) = fs::read(&old_chain_path)
                  && let Ok(new_chain_path) = (*dirs).ensure_delegation_chain_path(new_name)
-@@ -1266,6 +1304,7 @@ pub fn rename_identity(
+@@ -1272,6 +1310,7 @@ pub fn rename_identity(
  
              OldKeyMaterial::Pem(old_path)
          }
@@ -406,15 +309,15 @@ index 3c28075e..1eb26b5a 100644
          IdentitySpec::Keyring { .. } => {
              // Copy the keyring entry to the new name
              let old_entry = Entry::new(SERVICE_NAME, old_name)
-@@ -1291,6 +1330,7 @@ pub fn rename_identity(
-             fs::write(&new_delegation, &delegation_contents).context(CopyKeyFileSnafu)?;
+@@ -1297,6 +1336,7 @@ pub fn rename_identity(
+             fs::write_private(&new_delegation, &delegation_contents).context(CopyKeyFileSnafu)?;
  
              match storage {
 +                #[cfg(feature = "keyring")]
                  DelegationKeyStorage::Keyring => {
                      let old_entry = Entry::new(SERVICE_NAME, &dlg_keyring_key(old_name))
                          .context(LoadKeyringEntrySnafu { name: old_name })?;
-@@ -1321,6 +1361,7 @@ pub fn rename_identity(
+@@ -1327,6 +1367,7 @@ pub fn rename_identity(
              unreachable!("anonymous identity should have been rejected above")
          }
          IdentitySpec::PendingDelegation { storage, .. } => match storage {
@@ -422,15 +325,15 @@ index 3c28075e..1eb26b5a 100644
              DelegationKeyStorage::Keyring => {
                  let old_entry = Entry::new(SERVICE_NAME, &dlg_keyring_key(old_name))
                      .context(LoadKeyringEntrySnafu { name: old_name })?;
-@@ -1351,6 +1392,7 @@ pub fn rename_identity(
-             fs::write(&new_delegation, &delegation_contents).context(CopyKeyFileSnafu)?;
+@@ -1357,6 +1398,7 @@ pub fn rename_identity(
+             fs::write_private(&new_delegation, &delegation_contents).context(CopyKeyFileSnafu)?;
  
              match storage {
 +                #[cfg(feature = "keyring")]
                  DelegationKeyStorage::Keyring => {
                      let old_entry = Entry::new(SERVICE_NAME, &dlg_keyring_key(old_name))
                          .context(LoadKeyringEntrySnafu { name: old_name })?;
-@@ -1391,11 +1433,13 @@ pub fn rename_identity(
+@@ -1397,11 +1439,13 @@ pub fn rename_identity(
          OldKeyMaterial::Pem(old_path) => {
              fs::remove_file(&old_path).context(DeleteOldKeyFileSnafu)?;
          }
@@ -444,7 +347,7 @@ index 3c28075e..1eb26b5a 100644
          OldKeyMaterial::DelegationKeyring(old_entry) => {
              old_entry
                  .delete_credential()
-@@ -1404,6 +1448,7 @@ pub fn rename_identity(
+@@ -1410,6 +1454,7 @@ pub fn rename_identity(
          OldKeyMaterial::DelegationPem(old_pem) => {
              fs::remove_file(&old_pem).context(DeleteOldKeyFileSnafu)?;
          }
@@ -452,7 +355,7 @@ index 3c28075e..1eb26b5a 100644
          OldKeyMaterial::WebAuthKeyringAndDelegation(old_entry, old_delegation) => {
              old_entry
                  .delete_credential()
-@@ -1442,12 +1487,14 @@ pub enum DeleteIdentityError {
+@@ -1448,12 +1493,14 @@ pub enum DeleteIdentityError {
      #[snafu(transparent)]
      DeleteKeyFile { source: fs::IoError },
  
@@ -467,7 +370,7 @@ index 3c28075e..1eb26b5a 100644
      #[snafu(display("failed to delete keyring entry for identity `{name}`"))]
      DeleteKeyringEntryForDelete {
          name: String,
-@@ -1490,11 +1537,13 @@ pub fn delete_identity(
+@@ -1496,11 +1543,13 @@ pub fn delete_identity(
              let pem_path = dirs.key_pem_path(name);
              fs::remove_file(&pem_path)?;
              // Best-effort: clean up any cached session delegation.
@@ -481,7 +384,7 @@ index 3c28075e..1eb26b5a 100644
          IdentitySpec::Keyring { .. } => {
              // Delete the keyring entry
              let entry =
-@@ -1505,6 +1554,7 @@ pub fn delete_identity(
+@@ -1511,6 +1560,7 @@ pub fn delete_identity(
          }
          IdentitySpec::WebAuth { storage, .. } => {
              match storage {
@@ -489,7 +392,7 @@ index 3c28075e..1eb26b5a 100644
                  DelegationKeyStorage::Keyring => {
                      let entry = Entry::new(SERVICE_NAME, &dlg_keyring_key(name))
                          .context(LoadKeyringEntryForDeleteSnafu { name })?;
-@@ -1527,6 +1577,7 @@ pub fn delete_identity(
+@@ -1533,6 +1583,7 @@ pub fn delete_identity(
              unreachable!("anonymous identity should have been rejected above")
          }
          IdentitySpec::PendingDelegation { storage, .. } => match storage {
@@ -497,7 +400,7 @@ index 3c28075e..1eb26b5a 100644
              DelegationKeyStorage::Keyring => {
                  let entry = Entry::new(SERVICE_NAME, &dlg_keyring_key(name))
                      .context(LoadKeyringEntryForDeleteSnafu { name })?;
-@@ -1541,6 +1592,7 @@ pub fn delete_identity(
+@@ -1547,6 +1598,7 @@ pub fn delete_identity(
          },
          IdentitySpec::Delegation { storage, .. } => {
              match storage {
@@ -505,7 +408,7 @@ index 3c28075e..1eb26b5a 100644
                  DelegationKeyStorage::Keyring => {
                      let entry = Entry::new(SERVICE_NAME, &dlg_keyring_key(name))
                          .context(LoadKeyringEntryForDeleteSnafu { name })?;
-@@ -1624,9 +1676,11 @@ pub enum CreatePendingDelegationError {
+@@ -1630,9 +1682,11 @@ pub enum CreatePendingDelegationError {
      #[snafu(display("identity `{name}` already exists"))]
      DlgNameTaken { name: String },
  
@@ -517,7 +420,7 @@ index 3c28075e..1eb26b5a 100644
      #[snafu(display("failed to store session key in keyring"))]
      DlgSetKeyringEntryPassword { source: keyring::Error },
  
-@@ -1742,6 +1796,7 @@ pub fn link_webauth_identity(
+@@ -1751,6 +1805,7 @@ pub fn link_webauth_identity(
      };
  
      let webauth_storage = match &create_format {
@@ -525,7 +428,7 @@ index 3c28075e..1eb26b5a 100644
          CreateFormat::Keyring => {
              let pem = doc
                  .to_pem(PrivateKeyInfo::PEM_LABEL, Default::default())
-@@ -1876,6 +1931,7 @@ pub fn create_pending_delegation(
+@@ -1885,6 +1940,7 @@ pub fn create_pending_delegation(
      let doc = key.to_pkcs8_der().expect("infallible PKI encoding");
  
      let storage = match &create_format {
@@ -533,7 +436,7 @@ index 3c28075e..1eb26b5a 100644
          CreateFormat::Keyring => {
              let pem = doc
                  .to_pem(PrivateKeyInfo::PEM_LABEL, Default::default())
-@@ -2063,12 +2119,14 @@ pub enum ExportIdentityError {
+@@ -2075,12 +2131,14 @@ pub enum ExportIdentityError {
      #[snafu(display("failed to read password: {message}"))]
      GetPasswordForExport { message: String },
  
@@ -548,7 +451,7 @@ index 3c28075e..1eb26b5a 100644
      #[snafu(display("failed to read keyring entry for identity `{name}`"))]
      ReadKeyringEntryForExport {
          name: String,
-@@ -2139,6 +2197,7 @@ pub fn export_identity(
+@@ -2151,6 +2209,7 @@ pub fn export_identity(
                  }
              }
          }
@@ -556,10 +459,10 @@ index 3c28075e..1eb26b5a 100644
          IdentitySpec::Keyring { .. } => {
              // Read from keyring (already stored as plaintext PEM)
              let entry =
-diff --git a/crates/icp/src/identity/manifest.rs b/crates/icp/src/identity/manifest.rs
-index bb6f6f2a..0cb84215 100644
---- a/crates/icp/src/identity/manifest.rs
-+++ b/crates/icp/src/identity/manifest.rs
+diff --git a/crates/icp-app/src/identity/manifest.rs b/crates/icp-app/src/identity/manifest.rs
+index 3df33ed7..d9f4dabb 100644
+--- a/crates/icp-app/src/identity/manifest.rs
++++ b/crates/icp-app/src/identity/manifest.rs
 @@ -2,7 +2,7 @@ use std::{collections::HashMap, io::ErrorKind};
  
  use ic_agent::export::Principal;
@@ -598,11 +501,11 @@ index bb6f6f2a..0cb84215 100644
  }
  
  #[derive(Deserialize, Serialize, Clone, Debug, EnumString, Display)]
-diff --git a/crates/icp/src/identity/mod.rs b/crates/icp/src/identity/mod.rs
-index 5f4cd21a..27ad6338 100644
---- a/crates/icp/src/identity/mod.rs
-+++ b/crates/icp/src/identity/mod.rs
-@@ -21,6 +21,7 @@ use crate::{
+diff --git a/crates/icp-app/src/identity/mod.rs b/crates/icp-app/src/identity/mod.rs
+index a36ae9f1..4d9df759 100644
+--- a/crates/icp-app/src/identity/mod.rs
++++ b/crates/icp-app/src/identity/mod.rs
+@@ -23,6 +23,7 @@ use icp_project::{
  
  pub mod delegation;
  pub mod key;
@@ -610,11 +513,11 @@ index 5f4cd21a..27ad6338 100644
  pub mod keyring_mock;
  pub mod manifest;
  pub mod seed;
-diff --git a/crates/icp/src/telemetry_data.rs b/crates/icp/src/telemetry_data.rs
-index d74a9678..bf3b20fd 100644
---- a/crates/icp/src/telemetry_data.rs
-+++ b/crates/icp/src/telemetry_data.rs
-@@ -68,6 +68,7 @@ impl TelemetryData {
+diff --git a/crates/icp-app/src/telemetry_data.rs b/crates/icp-app/src/telemetry_data.rs
+index eb84347b..d41eeed3 100644
+--- a/crates/icp-app/src/telemetry_data.rs
++++ b/crates/icp-app/src/telemetry_data.rs
+@@ -86,6 +86,7 @@ impl icp_project::host::Observe for TelemetryData {
  #[serde(rename_all = "kebab-case")]
  pub enum IdentityStorageType {
      Pem,
@@ -622,7 +525,7 @@ index d74a9678..bf3b20fd 100644
      Keyring,
      Hsm,
      Anonymous,
-@@ -89,6 +90,7 @@ impl From<&IdentitySpec> for IdentityStorageType {
+@@ -107,6 +108,7 @@ impl From<&IdentitySpec> for IdentityStorageType {
      fn from(spec: &IdentitySpec) -> Self {
          match spec {
              IdentitySpec::Pem { .. } => Self::Pem,
@@ -630,3 +533,101 @@ index d74a9678..bf3b20fd 100644
              IdentitySpec::Keyring { .. } => Self::Keyring,
              IdentitySpec::Hsm { .. } => Self::Hsm,
              IdentitySpec::Anonymous => Self::Anonymous,
+diff --git a/crates/icp-cli/Cargo.toml b/crates/icp-cli/Cargo.toml
+index 319d5e1e..0e4d8184 100644
+--- a/crates/icp-cli/Cargo.toml
++++ b/crates/icp-cli/Cargo.toml
+@@ -109,3 +109,7 @@ sha2.workspace = true
+ # explicitly opt-in to distribution via `dist`
+ [package.metadata.dist]
+ dist = true
++
++[features]
++default = [ "keyring" ]
++keyring = [ "icp-app/keyring" ]
+diff --git a/crates/icp-cli/src/commands/identity/delegation/request.rs b/crates/icp-cli/src/commands/identity/delegation/request.rs
+index 941355b4..4cffd13b 100644
+--- a/crates/icp-cli/src/commands/identity/delegation/request.rs
++++ b/crates/icp-cli/src/commands/identity/delegation/request.rs
+@@ -31,6 +31,7 @@ pub(crate) struct RequestArgs {
+ pub(crate) async fn exec(ctx: &Context, args: &RequestArgs) -> Result<(), RequestError> {
+     let create_format = match args.storage {
+         StorageMode::Plaintext => key::CreateFormat::Plaintext,
++        #[cfg(feature = "keyring")]
+         StorageMode::Keyring => key::CreateFormat::Keyring,
+         StorageMode::Password => {
+             let password = if let Some(path) = &args.storage_password_file {
+diff --git a/crates/icp-cli/src/commands/identity/import.rs b/crates/icp-cli/src/commands/identity/import.rs
+index 751952f3..8d587393 100644
+--- a/crates/icp-cli/src/commands/identity/import.rs
++++ b/crates/icp-cli/src/commands/identity/import.rs
+@@ -80,6 +80,7 @@ pub(crate) struct ImportArgs {
+ pub(crate) async fn exec(ctx: &Context, args: &ImportArgs) -> Result<(), anyhow::Error> {
+     let format = match args.storage {
+         StorageMode::Plaintext => CreateFormat::Plaintext,
++        #[cfg(feature = "keyring")]
+         StorageMode::Keyring => CreateFormat::Keyring,
+         StorageMode::Password => {
+             let password = if let Some(path) = &args.storage_password_file {
+diff --git a/crates/icp-cli/src/commands/identity/link/web.rs b/crates/icp-cli/src/commands/identity/link/web.rs
+index 46ac4a03..68e50de5 100644
+--- a/crates/icp-cli/src/commands/identity/link/web.rs
++++ b/crates/icp-cli/src/commands/identity/link/web.rs
+@@ -81,6 +81,7 @@ pub(crate) async fn exec(ctx: &Context, args: &WebArgs) -> Result<(), WebAuthErr
+ 
+     let create_format = match args.storage {
+         StorageMode::Plaintext => key::CreateFormat::Plaintext,
++        #[cfg(feature = "keyring")]
+         StorageMode::Keyring => key::CreateFormat::Keyring,
+         StorageMode::Password => {
+             let password = if let Some(path) = &args.storage_password_file {
+diff --git a/crates/icp-cli/src/commands/identity/mod.rs b/crates/icp-cli/src/commands/identity/mod.rs
+index 637ff7ff..19bcc81e 100644
+--- a/crates/icp-cli/src/commands/identity/mod.rs
++++ b/crates/icp-cli/src/commands/identity/mod.rs
+@@ -32,10 +32,19 @@ pub(crate) enum Command {
+     Rename(rename::RenameArgs),
+ }
+ 
+-#[derive(Debug, Clone, ValueEnum, Default)]
++#[derive(Debug, Clone, ValueEnum)]
+ enum StorageMode {
+     Plaintext,
+-    #[default]
++    #[cfg(feature = "keyring")]
+     Keyring,
+     Password,
+ }
++
++impl Default for StorageMode {
++    fn default() -> Self {
++        #[cfg(feature = "keyring")]
++        return Self::Keyring;
++        #[cfg(not(feature = "keyring"))]
++        return Self::Password;
++    }
++}
+diff --git a/crates/icp-cli/src/commands/identity/new.rs b/crates/icp-cli/src/commands/identity/new.rs
+index 51dcc35f..5b395fb0 100644
+--- a/crates/icp-cli/src/commands/identity/new.rs
++++ b/crates/icp-cli/src/commands/identity/new.rs
+@@ -65,6 +65,7 @@ pub(crate) async fn exec(ctx: &Context, args: &NewArgs) -> Result<(), anyhow::Er
+     );
+     let format = match args.storage {
+         StorageMode::Plaintext => CreateFormat::Plaintext,
++        #[cfg(feature = "keyring")]
+         StorageMode::Keyring => CreateFormat::Keyring,
+         StorageMode::Password => {
+             let password = if let Some(path) = &args.storage_password_file {
+diff --git a/crates/icp-cli/src/commands/identity/reauth.rs b/crates/icp-cli/src/commands/identity/reauth.rs
+index cfc5b949..73e85dc7 100644
+--- a/crates/icp-cli/src/commands/identity/reauth.rs
++++ b/crates/icp-cli/src/commands/identity/reauth.rs
+@@ -88,6 +88,7 @@ pub(crate) async fn exec(ctx: &Context, args: &ReauthArgs) -> Result<(), LoginEr
+             info!("Identity `{}` re-authenticated", args.name);
+         }
+ 
++        #[cfg(feature = "keyring")]
+         IdentitySpec::Pem {
+             format: PemFormat::Pbes2,
+             algorithm,
