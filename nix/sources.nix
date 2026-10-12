@@ -1,8 +1,8 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = "0ec627118654351acff526328b01c8395d7de414"; # pin
-    sha256 = "0h0a5nxz5xbyi5771pz58s5l1pp679wjd6swfk0adrbphnjr0sg2";
+    rev = "1b6645442d798538117e1030ea59f500b90bec3f"; # pin
+    sha256 = "14lj6aa13y2qqqa6cx2zjlhd7c1qhn399xhdvn8pll05gviirx17";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # master
@@ -21,8 +21,8 @@
   };
   motoko = fetchgit {
     url = "https://github.com/dfinity/motoko"; # master
-    rev = "991c93cc136a598abf2c73c211d804ff18168d49";
-    sha256 = "12wamxsfnj5fil5j0mipcmmf0n4iqgfrrbpc9wnyxh0m4dr30lnr";
+    rev = "52113d40c403e06de3de4a8615c8c3d82df5ed5d";
+    sha256 = "0lkapznzmra45c8jsvmbq76s7iz2bhfnisa8a158z6ydddq3qc7g";
   };
   motoko-base = fetchgit {
     url = "https://github.com/dfinity/motoko-base"; # next-moc
@@ -61,8 +61,8 @@
   };
   candid = fetchgit {
     url = "https://github.com/dfinity/candid"; # master
-    rev = "89b7cff95ff706507ced4563f4069379eb50bb7b";
-    sha256 = "1w6g2cqx9z07lyn0b94ixvcifbl1csig6zc0lwz08abay51rf9xv";
+    rev = "10423fae0c84f6a3f13abf1042f28f2ae40ac3af";
+    sha256 = "1qrwsyic56jhrp226zymgyydb2rwmscwb18yx8yvz4bvfzsxpv3q";
   };
   candid-extractor = fetchgit {
     url = "https://github.com/dfinity/candid-extractor"; # main
@@ -81,12 +81,12 @@
   };
   icp-cli = fetchgit {
     url = "https://github.com/dfinity/icp-cli"; # main
-    rev = "169028606a8b3ff453466f68b990dcb50ac831d9";
-    sha256 = "04qzbs8x51hh7hvgfbxmk92lmng202gc14fgckw4q5dx05qqv8wd";
+    rev = "08201a6382559d8eac851509f7984cfe55d0620d";
+    sha256 = "0pkz0kvbf77bnc3cd130ay8jji9dgm1p09rq98yjyn030dyw3mm3";
   };
   icp-cli-network-launcher = fetchgit {
     url = "https://github.com/dfinity/icp-cli-network-launcher"; # main
-    rev = "60b70487eb986a8a28f09cba2c39c430ce9afa2d";
-    sha256 = "15lfdjgns83vkn48ms6dgkwwywhbay5hf74yhjxzqhqrkjw69rmp";
+    rev = "07184a990652c24fa28174d32fec4fed7cfe3323";
+    sha256 = "15sir2gahyv2jl1d545xzr7j141f856rncldfd11n4f460l3xrfc";
   };
 }
