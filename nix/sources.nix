@@ -1,8 +1,8 @@
 { fetchgit }: {
   ic = fetchgit {
     url = "https://github.com/dfinity/ic"; # master
-    rev = "5e8370e0a84ffb783d6a9d77e0d3e90fa3914cfe"; # pin
-    sha256 = "01bnagr3627x4kml8sx8w9cdg7q4grsvp4n45j671q1lp6m43y62";
+    rev = "8d892f1e75ca908f0ec2c555239e2402da3c78aa"; # pin
+    sha256 = "0hjjr8z6y7xbl33jjwmlrbvqj8392srz4vg8anzfsc32fwz5ndh0";
   };
   icx-proxy = fetchgit {
     url = "https://github.com/dfinity/icx-proxy"; # master
@@ -21,8 +21,8 @@
   };
   motoko = fetchgit {
     url = "https://github.com/dfinity/motoko"; # master
-    rev = "61ea72bd9cfadfb54751d938647b9e2b32d1ea43";
-    sha256 = "04gbj0186h4gcb1nlxy8s3f9297v91drd1cxwh45ang55nz1g5pr";
+    rev = "2ab250d764e174d09d706418e242af39fc5d2df2";
+    sha256 = "0blbdnm5k16z8ah2m0m4bm1cnjw5av67h0rij9x45zskh98ivyxr";
   };
   motoko-base = fetchgit {
     url = "https://github.com/dfinity/motoko-base"; # next-moc
@@ -61,8 +61,8 @@
   };
   candid = fetchgit {
     url = "https://github.com/dfinity/candid"; # master
-    rev = "572c80a867b935c1de5c428366e6762aa1cc6c71";
-    sha256 = "10p8iqq5wzdr7sk9fr99bdbp2hp40ffrvg6iqnc6p34fhk2rzcxb";
+    rev = "f8a42490db72212b744514aac40c688cae62be40";
+    sha256 = "0nyygddwa8862n3zwhd05dncj92pa7s7b3j7hzdvk32zwrsgkdyn";
   };
   candid-extractor = fetchgit {
     url = "https://github.com/dfinity/candid-extractor"; # main
@@ -81,12 +81,12 @@
   };
   icp-cli = fetchgit {
     url = "https://github.com/dfinity/icp-cli"; # main
-    rev = "805017f9f7eb1ec110d7095fc063aec1845bf2bc";
-    sha256 = "0bbm4kaxv1xvcd9ilhdyj5asxv0vap608jyfxc2kq3d4b4l2rwni";
+    rev = "a04901d0b8f863f001329ca41b87032ec62e25fc";
+    sha256 = "151bkjwmnw80j27nl4zb3nd4lzi85yygm877kwh2665qvdv1clm5";
   };
   icp-cli-network-launcher = fetchgit {
     url = "https://github.com/dfinity/icp-cli-network-launcher"; # main
-    rev = "de75e303480288709a733ddf9086fc98632f281d";
-    sha256 = "0qc5qjsdknbrc311kyr82kzp1wgcv2lql18xaniipcqxxpkblg7j";
+    rev = "2a13b07964df81dff213f05ebb7a235c121b7935";
+    sha256 = "0z458731081m7n98hb635rw6s8xf2j4x0z5rjc5b8wrn0v2gl6wl";
   };
 }
