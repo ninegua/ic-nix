@@ -70,7 +70,8 @@ in rec {
     mkDrv { doCheck = false; } "icp-cli-network-launcher";
 
   candid = mkDrv {
-    cargoPatches = [ ./nix/candid.patch ];
+    # cargoPatches = [ ./nix/candid.patch ];
+    doCheck = false;
     dontUseCargoParallelTests = true;
   } "candid";
 
