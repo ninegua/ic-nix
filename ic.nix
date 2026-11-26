@@ -1,7 +1,6 @@
 { pkgs, customRustPlatform, sources, mainnet-canisters, moc }:
 let
-  pkgs-with-overlays = pkgs.appendOverlays ([ ]
-    ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+  pkgs-with-overlays = pkgs.appendOverlays ([
       (self: super: {
         lmdb = self.callPackage ./nix/lmdb { src = sources.lmdb; };
       })

@@ -1,18 +1,18 @@
 diff --git a/Cargo.toml b/Cargo.toml
-index 22980d03..686cd936 100644
+index 42037086..ba957b5a 100644
 --- a/Cargo.toml
 +++ b/Cargo.toml
-@@ -58,7 +58,7 @@ ic-ed25519 = "0.6.0"
+@@ -60,7 +60,7 @@ ic-ed25519 = "0.6.0"
  ic-ledger-types = "0.16.0"
  ic-management-canister-types = { version = "0.9.0" }
  ic-utils = { version = "0.49.1" }
 -icp-app = { path = "crates/icp-app" }
 +icp-app = { path = "crates/icp-app", default-features = false }
- icp-canister-interfaces = { path = "crates/icp-canister-interfaces" }
- icp-events = { path = "crates/icp-events" }
- icp-project = { path = "crates/icp-project" }
+ # Published crates. The four below go to crates.io with each icp-cli release,
+ # for other tools to build on, so each carries the version a registry build
+ # resolves it to.
 diff --git a/crates/icp-app/Cargo.toml b/crates/icp-app/Cargo.toml
-index 1ba361e0..05d13583 100644
+index c14ae86a..5f669bde 100644
 --- a/crates/icp-app/Cargo.toml
 +++ b/crates/icp-app/Cargo.toml
 @@ -6,6 +6,7 @@ license = { workspace = true }
@@ -23,7 +23,7 @@ index 1ba361e0..05d13583 100644
  # `clap::ValueEnum` derives on the settings/identity enums used as CLI value
  # types. Enabled by `icp-cli`.
  clap = ["dep:clap", "icp-project/clap"]
-@@ -47,7 +48,7 @@ icp-events = { workspace = true }
+@@ -48,7 +49,7 @@ icp-extension = { workspace = true }
  icrc-ledger-types = { workspace = true }
  itertools = { workspace = true }
  k256 = { workspace = true }
@@ -33,10 +33,10 @@ index 1ba361e0..05d13583 100644
  num-bigint = { workspace = true }
  num-traits = { workspace = true }
 diff --git a/crates/icp-app/src/context/init.rs b/crates/icp-app/src/context/init.rs
-index b0dc0bf0..6d924116 100644
+index 293b645d..e4c7a0d7 100644
 --- a/crates/icp-app/src/context/init.rs
 +++ b/crates/icp-app/src/context/init.rs
-@@ -138,6 +138,7 @@ pub fn initialize(
+@@ -241,6 +241,7 @@ pub fn initialize(
          pem_session_duration,
          telemetry_data.clone(),
      ));
@@ -534,10 +534,10 @@ index eb84347b..d41eeed3 100644
              IdentitySpec::Hsm { .. } => Self::Hsm,
              IdentitySpec::Anonymous => Self::Anonymous,
 diff --git a/crates/icp-cli/Cargo.toml b/crates/icp-cli/Cargo.toml
-index 319d5e1e..0e4d8184 100644
+index 3155fc88..61d3adf5 100644
 --- a/crates/icp-cli/Cargo.toml
 +++ b/crates/icp-cli/Cargo.toml
-@@ -109,3 +109,7 @@ sha2.workspace = true
+@@ -112,3 +112,7 @@ sha2.workspace = true
  # explicitly opt-in to distribution via `dist`
  [package.metadata.dist]
  dist = true
